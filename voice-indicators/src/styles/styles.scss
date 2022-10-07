@@ -1,0 +1,215 @@
+.vi {
+
+  &--icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    margin-left: 4px;
+    z-index: 99;
+  }
+
+  &--icon {
+    display: flex;
+    transition: filter 100ms ease-in-out;
+    color: white;
+    width: 14px;
+    height: 14px;
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+
+  &--red-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ed4245;
+    box-shadow: 0px 0px 4px #ed4245;
+  }
+}
+
+.vi--modal-root {
+  display: flex;
+  flex-direction: column;
+
+  .vi--modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+
+    & > .title-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+
+      .icon {
+        width: 64px;
+        height: 64px;
+        background-position: center;
+        background-size: contain;
+        border-radius: 50%;
+        margin-right: 8px;
+        background-color: #5865f2;
+      }
+
+      .title {
+        display: flex;
+        align-items: center;
+
+        .guild {
+          font-size: 28px;
+          font-weight: 600;
+          color: #efefef;
+        }
+
+        .vanity {
+          margin-left: 8px;
+          cursor: pointer;
+          svg {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+
+    .vi--modal-close {
+      width: 24px;
+      height: 24px;
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .vi--modal-content {
+    padding: 16px;
+    padding-top: 0px;
+    & > .channel {
+      & > .name-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgba(0, 0, 0, 0.25);
+        padding: 8px;
+        border-radius: 8px;
+
+        & > .name {
+          display: flex;
+          font-size: 20px;
+          font-weight: 400;
+          color: #efefef;
+          align-items: center;
+          svg {
+            margin-right: 8px;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+          }
+        }
+
+        & > .controls {
+          display: flex;
+
+          & > .control {
+            padding: 4px;
+            cursor: pointer;
+
+            svg {
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
+      }
+
+      & > .members-container {
+        padding: 8px;
+        padding-left: 40px;
+        & > .members {
+          display: flex;
+          flex-direction: column;
+          overflow: auto;
+          max-height: 500px;
+          height: 100%;
+
+          .member {
+            display: flex;
+            margin-bottom: 4px;
+            cursor: pointer;
+            width: min-content;
+            align-items: center;
+
+            & > .avatar {
+              width: 32px;
+              height: 32px;
+              border-radius: 50%;
+              background-position: center;
+              background-size: contain;
+              margin-right: 8px;
+              background-color: #5865f2;
+            }
+
+            & > .about {
+              border-radius: 9999px;
+              background-color: rgba(0, 0, 0, 0.2);
+              display: flex;
+              align-items: center;
+              padding: 8px;
+
+              & > .name-container {
+                display: flex;
+                align-items: center;
+                width: max-content;
+                font-size: 16px;
+                color: rgb(223, 223, 223);
+
+                .name {
+                  width: 100%;
+                }
+
+                .discriminator {
+                  opacity: 0.5;
+                }
+              }
+
+              & > .state {
+                background-color: transparent;
+                svg {
+                  width: 16px;
+                  height: 16px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+[class*="userText-"] [class*="nameTag-"], 
+[class*="topSection-"] [class*="nameTag-"] {
+  display: flex;
+  align-items: center;
+
+  * {
+    overflow: hidden;
+  }
+}
+
+[class*="vi--"] {
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+}
