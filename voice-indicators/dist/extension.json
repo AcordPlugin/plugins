@@ -1,16 +1,13 @@
 {
-  "index": "./src/index.js",
+  "hash": "351823bb9b305b19f1ecf6a1543e1d8da1e12927a9ac9b27eb46823322ac6ce4",
   "type": "plugin",
-  "out": {
-    "minify": true,
-    "directory": "./dist"
-  },
   "about": {
     "name": "Voice Indicators",
     "authors": [
       "Kıraç Armağan Önal"
     ],
     "description": "Shows voice indicators right side of the users.",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "license": "MIT"
   }
 }
