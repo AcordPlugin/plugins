@@ -24,7 +24,7 @@ export async function showModal(userId) {
     
     let members = await fetchVoiceMembers(channelId);
 
-    if (JSON.stringify(members) == JSON.stringify(container.members)) {
+    if (_.isEqual(members, container.members)) {
       rendering = false;
       return;
     }

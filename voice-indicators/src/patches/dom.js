@@ -51,7 +51,7 @@ async function patchIndicators(elm) {
     if (!state)
       return container.remove();
 
-    if (JSON.stringify(state) == JSON.stringify(container.state)) return;
+    if (_.isEqual(state, container.state)) return;
 
     let channel = ChannelStore.getChannel(state?.channel?.id);
 
