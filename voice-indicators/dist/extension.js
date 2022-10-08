@@ -3767,7 +3767,7 @@
         unpatchUpdater();
       };
       modalContainer.render();
-      let modal = modals__default["default"].show(modalContainer);
+      let modal = modals__default["default"].show(modalContainer, { size: "large" });
       closeFunc = modal.close;
     }
 

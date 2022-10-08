@@ -85,6 +85,6 @@ export async function showModal(userId) {
 
   modalContainer.render();
 
-  let modal = modals.show(modalContainer);
+  let modal = modals.show(modalContainer, { size: "large" });
   closeFunc = modal.close;
 }
