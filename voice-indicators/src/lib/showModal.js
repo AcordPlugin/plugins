@@ -19,63 +19,67 @@ export async function showModal(userId) {
 
   let rendering = false;
   modalContainer.render = async () => {
-    if (rendering) return;
-    rendering = true;
-    
-    let members = await fetchVoiceMembers(channelId);
+    try {
+      if (rendering) return;
+      rendering = true;
 
-    if (_.isEqual(members, modalContainer.members)) {
+      let members = await fetchVoiceMembers(channelId);
+
+      if (_.isEqual(members, modalContainer.members)) {
+        rendering = false;
+        return;
+      }
+
+      let channel = ChannelStore.getChannel(state.channel.id);
+      let isJoinable = !channel ? false : (channel.type == 3 ? true : (PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel)))
+
+      modalContainer.replaceChildren(dom.parseHTML(renderModal({ members, state, isJoinable, channel })));
+
+      modalContainer.querySelector(".vi--modal-close").onclick = closeFunc;
+
+      if (modalContainer.querySelector(".vi--vanity"))
+        modalContainer.querySelector(".vi--vanity").onclick = (ev) => {
+          ev.preventDefault();
+          if (!state?.guild?.vanity) return;
+          InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: state?.guild?.vanity });
+          toasts.show(`Joining to "${state.guild.name}"!`);
+          closeFunc();
+        }
+
+      if (modalContainer.querySelector(".vi--join-channel"))
+        modalContainer.querySelector(".vi--join-channel").onclick = (ev) => {
+          ev.preventDefault();
+          if (!isJoinable) return;
+          toasts.show(`Joining to "${state.channel.name}"!`);
+          selectVoiceChannel(state.channel.id);
+          closeFunc();
+        }
+
+      if (modalContainer.querySelector(".vi--view-channel"))
+        modalContainer.querySelector(".vi--view-channel").onclick = (ev) => {
+          ev.preventDefault();
+          if (!channel) return;
+          toasts.show(`Viewing "${state.channel.name}"!`);
+          transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
+          closeFunc();
+        }
+
+      modalContainer.querySelectorAll(".member").forEach((memberElm) => {
+        let tag = memberElm.getAttribute("data-tag");
+        memberElm.onclick = () => {
+          utils.copyText(tag);
+          toasts.show(`"${tag}" copied!`);
+        }
+      })
+
+      modalContainer.state = state;
+      modalContainer.members = members;
+
       rendering = false;
-      return;
+    } catch (err) {
+      console.log(err);
     }
-
-    let channel = ChannelStore.getChannel(state.channel.id);
-    let isJoinable = !channel ? false : (channel.type == 3 ? true : (PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel)))
-
-    modalContainer.replaceChildren(dom.parseHTML(renderModal({ members, state, isJoinable, channel })));
-
-    modalContainer.querySelector(".vi--modal-close").onclick = closeFunc;
-
-    if (modalContainer.querySelector(".vi--vanity"))
-      modalContainer.querySelector(".vi--vanity").onclick = (ev) => {
-        ev.preventDefault();
-        if (!state?.guild?.vanity) return;
-        InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: state?.guild?.vanity });
-        toasts.show(`Joining to "${state.guild.name}"!`);
-        closeFunc();
-      }
-
-    if (modalContainer.querySelector(".vi--join-channel"))
-      modalContainer.querySelector(".vi--join-channel").onclick = (ev) => {
-        ev.preventDefault();
-        if (!isJoinable) return;
-        toasts.show(`Joining to "${state.channel.name}"!`);
-        selectVoiceChannel(state.channel.id);
-        closeFunc();
-      }
-
-    if (modalContainer.querySelector(".vi--view-channel"))
-      modalContainer.querySelector(".vi--view-channel").onclick = (ev) => {
-        ev.preventDefault();
-        if (!channel) return;
-        toasts.show(`Viewing "${state.channel.name}"!`);
-        transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
-        closeFunc();
-      }
-      
-    modalContainer.querySelectorAll(".member").forEach((memberElm) => {
-      let tag = memberElm.getAttribute("data-tag");
-      memberElm.onclick = () => {
-        utils.copyText(tag);
-        toasts.show(`"${tag}" copied!`);
-      }
-    })
-
-    modalContainer.state = state;
-    modalContainer.members = members;
-
-    rendering = false;
-  }
+  } 
 
   let unpatchUpdater = events.on("VoiceIndicators:EverySecond", modalContainer.render);
 
