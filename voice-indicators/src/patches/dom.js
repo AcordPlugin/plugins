@@ -10,37 +10,8 @@ import { showModal } from "../lib/showModal.js";
 
 const indicatorClasses = [swc.findByProps("bot", "nameTag").nameTag, swc.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, swc.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
 
-export function patchDOM() {
-  patchContainer.add(
-    events.on("domMutation", /** @param {MutationRecord} mut */ (mut) => {   
-      mut.addedNodes.forEach((node) => {
-        if (node.nodeType === Node.TEXT_NODE) return;
-
-        node.querySelectorAll(indicatorClasses.map(i => `.${i}`).join(", ")).forEach(async (elm) => {
-          if (elm.querySelector(".vi--patched")) return;
-          patchIndicators(elm);
-        });
-      });
-
-      mut.removedNodes.forEach((node) => {
-        if (node.nodeType === Node.TEXT_NODE) return;
-
-        let elms = node.querySelectorAll(".vi--patched");
-        elms.forEach(/** @param {HTMLElement} elm */ async (elm) => {
-          if (typeof elm.unmount != "function") return;
-          elm.unmount();
-        });
-
-      })
-
-    })
-  )
-}
-
-/** @param {HTMLElement} elm */ 
-async function patchIndicators(elm) {
-  let user = utils.getReactProps(elm, i => !!i?.user)?.user;
-  if (!user) return;
+/** @param {HTMLElement} elm */
+async function patchIndicators(user, elm) {
 
   if (!await fetchUserVoiceState(user.id)) return;
 
@@ -76,10 +47,63 @@ async function patchIndicators(elm) {
   indicatorContainer.addEventListener("click", /** @param {Event} e */(e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     // transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
     showModal(user.id);
   });
 
   elm.appendChild(indicatorContainer);
 }
+
+let syncCache = {};
+
+const tht = (user, elm) => {
+  if (!(Date.now() - (syncCache[user.id] || 0) > 10)) return console.log(0);
+  console.log(1)
+  syncCache[user.id] = Date.now();
+  patchIndicators(user, elm);
+};
+
+export function patchDOM() {
+
+  patchContainer.add((() => {
+    let interval = setInterval(() => {
+      for (const key in syncCache) {
+        if (Date.now() - syncCache[key] > 1000) {
+          delete syncCache[key];
+        }
+      }
+    }, 10000);
+    return () => {
+      syncCache = {};
+      clearInterval(interval);
+    }
+  })())
+  patchContainer.add(
+    events.on("domMutation", /** @param {MutationRecord} mut */ (mut) => {   
+      mut.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) return;
+
+        node.querySelectorAll(indicatorClasses.map(i => `.${i}`).join(", ")).forEach(async (elm) => {
+          if (elm.querySelector(".vi--patched")) return;
+          let user = utils.getReactProps(elm, i => !!i?.user)?.user;
+          if (!user) return;
+          tht(user, elm);
+        });
+      });
+
+      mut.removedNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) return;
+
+        let elms = node.querySelectorAll(".vi--patched");
+        elms.forEach(/** @param {HTMLElement} elm */ async (elm) => {
+          if (typeof elm.unmount != "function") return;
+          elm.unmount();
+        });
+
+      })
+
+    })
+  )
+}
+

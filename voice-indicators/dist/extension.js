@@ -3715,18 +3715,13 @@
         if (rendering)
           return;
         rendering = true;
-        console.log(1);
         let members = await fetchVoiceMembers(channelId);
-        console.log(2);
         if (JSON.stringify(members) == JSON.stringify(modalContainer.members)) {
           rendering = false;
           return;
         }
-        console.log(3);
         let channel = ChannelStore.getChannel(state.channel.id);
-        console.log(3.5);
         let isJoinable = !channel ? false : channel.type == 3 ? true : PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel);
-        console.log(4);
         modalContainer.replaceChildren(dom__default["default"].parseHTML(renderModal({ members, state, isJoinable, channel })));
         modalContainer.querySelector(".vi--modal-close").onclick = closeFunc;
         if (modalContainer.querySelector(".vi--vanity"))
@@ -3777,35 +3772,7 @@
     }
 
     const indicatorClasses = [swc__default["default"].findByProps("bot", "nameTag").nameTag, swc__default["default"].findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, swc__default["default"].findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
-    function patchDOM() {
-      patchContainer.add(
-        events__default["default"].on("domMutation", (mut) => {
-          mut.addedNodes.forEach((node) => {
-            if (node.nodeType === Node.TEXT_NODE)
-              return;
-            node.querySelectorAll(indicatorClasses.map((i) => `.${i}`).join(", ")).forEach(async (elm) => {
-              if (elm.querySelector(".vi--patched"))
-                return;
-              patchIndicators(elm);
-            });
-          });
-          mut.removedNodes.forEach((node) => {
-            if (node.nodeType === Node.TEXT_NODE)
-              return;
-            let elms = node.querySelectorAll(".vi--patched");
-            elms.forEach(async (elm) => {
-              if (typeof elm.unmount != "function")
-                return;
-              elm.unmount();
-            });
-          });
-        })
-      );
-    }
-    async function patchIndicators(elm) {
-      let user = utils__default["default"].getReactProps(elm, (i) => !!i?.user)?.user;
-      if (!user)
-        return;
+    async function patchIndicators(user, elm) {
       if (!await fetchUserVoiceState(user.id))
         return;
       let indicatorContainer = dom__default["default"].parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
@@ -3832,6 +3799,55 @@
         showModal(user.id);
       });
       elm.appendChild(indicatorContainer);
+    }
+    let syncCache = {};
+    const tht = (user, elm) => {
+      if (!(Date.now() - (syncCache[user.id] || 0) > 10))
+        return console.log(0);
+      console.log(1);
+      syncCache[user.id] = Date.now();
+      patchIndicators(user, elm);
+    };
+    function patchDOM() {
+      patchContainer.add((() => {
+        let interval = setInterval(() => {
+          for (const key in syncCache) {
+            if (Date.now() - syncCache[key] > 1e3) {
+              delete syncCache[key];
+            }
+          }
+        }, 1e4);
+        return () => {
+          syncCache = {};
+          clearInterval(interval);
+        };
+      })());
+      patchContainer.add(
+        events__default["default"].on("domMutation", (mut) => {
+          mut.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE)
+              return;
+            node.querySelectorAll(indicatorClasses.map((i) => `.${i}`).join(", ")).forEach(async (elm) => {
+              if (elm.querySelector(".vi--patched"))
+                return;
+              let user = utils__default["default"].getReactProps(elm, (i) => !!i?.user)?.user;
+              if (!user)
+                return;
+              tht(user, elm);
+            });
+          });
+          mut.removedNodes.forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE)
+              return;
+            let elms = node.querySelectorAll(".vi--patched");
+            elms.forEach(async (elm) => {
+              if (typeof elm.unmount != "function")
+                return;
+              elm.unmount();
+            });
+          });
+        })
+      );
     }
 
     var styles = () => patcher.injectCSS(".vi--icon-container{display:flex;align-items:center;justify-content:center;background-color:#00000080;border-radius:50%;width:18px;height:18px;min-width:18px;min-height:18px;margin-left:4px;z-index:99}.vi--icon{display:flex;transition:filter .1s ease-in-out;color:#fff;width:14px;height:14px}.vi--icon:hover{filter:brightness(1.2)}.vi--red-dot{width:10px;height:10px;border-radius:50%;background-color:#ed4245;box-shadow:0 0 4px #ed4245}.vi--modal-root{display:flex;flex-direction:column}.vi--modal-root .vi--modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px}.vi--modal-root .vi--modal-header>.title-container{display:flex;align-items:center;margin-bottom:8px}.vi--modal-root .vi--modal-header>.title-container .icon{width:64px;height:64px;background-position:center;background-size:contain;border-radius:50%;margin-right:8px;background-color:#5865f2}.vi--modal-root .vi--modal-header>.title-container .title{display:flex;align-items:center}.vi--modal-root .vi--modal-header>.title-container .title .guild{font-size:28px;font-weight:600;color:#efefef}.vi--modal-root .vi--modal-header>.title-container .title .vanity{margin-left:8px;cursor:pointer}.vi--modal-root .vi--modal-header>.title-container .title .vanity svg{width:24px;height:24px}.vi--modal-root .vi--modal-header .vi--modal-close{width:24px;height:24px}.vi--modal-root .vi--modal-header .vi--modal-close svg{width:24px;height:24px}.vi--modal-root .vi--modal-content{padding:0 16px 16px}.vi--modal-root .vi--modal-content>.channel>.name-container{display:flex;align-items:center;justify-content:space-between;background-color:#00000040;padding:8px;border-radius:8px}.vi--modal-root .vi--modal-content>.channel>.name-container>.name{display:flex;font-size:20px;font-weight:400;color:#efefef;align-items:center}.vi--modal-root .vi--modal-content>.channel>.name-container>.name svg{margin-right:8px;width:24px;height:24px;pointer-events:none}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls{display:flex}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls>.control{padding:4px;cursor:pointer}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls>.control svg{width:24px;height:24px}.vi--modal-root .vi--modal-content>.channel>.members-container{padding:8px 8px 8px 40px}.vi--modal-root .vi--modal-content>.channel>.members-container>.members{display:flex;flex-direction:column;overflow:auto;max-height:500px;height:100%}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member{display:flex;margin-bottom:4px;cursor:pointer;width:min-content;align-items:center}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.avatar{width:32px;height:32px;border-radius:50%;background-position:center;background-size:contain;margin-right:8px;background-color:#5865f2}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about{border-radius:9999px;background-color:#0003;display:flex;align-items:center;padding:8px}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container{display:flex;align-items:center;width:max-content;font-size:16px;color:#dfdfdf}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container .name{width:100%}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container .discriminator{opacity:.5}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.state{background-color:transparent}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.state svg{width:16px;height:16px}[class*=userText-] [class*=nameTag-],[class*=topSection-] [class*=nameTag-]{display:flex;align-items:center}[class*=userText-] [class*=nameTag-] *,[class*=topSection-] [class*=nameTag-] *{overflow:hidden}[class*=vi--],[class*=vi--] *{box-sizing:border-box}");

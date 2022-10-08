@@ -22,25 +22,15 @@ export async function showModal(userId) {
     if (rendering) return;
     rendering = true;
 
-    console.log(1);
-
     let members = await fetchVoiceMembers(channelId);
-
-    console.log(2);
 
     if (JSON.stringify(members) == JSON.stringify(modalContainer.members)) {
       rendering = false;
       return;
     }
 
-    console.log(3);
-
     let channel = ChannelStore.getChannel(state.channel.id);
-
-    console.log(3.5);
     let isJoinable = !channel ? false : (channel.type == 3 ? true : (PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel)))
-
-    console.log(4);
 
     modalContainer.replaceChildren(dom.parseHTML(renderModal({ members, state, isJoinable, channel })));
 
