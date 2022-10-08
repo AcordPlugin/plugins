@@ -7,13 +7,13 @@ import { renderModal } from "./renderModal.js";
 import { fetchUserVoiceState, fetchVoiceMembers } from "../other/api.js";
 import { ChannelStore, InviteStore, Permissions, PermissionStore, selectVoiceChannel, transitionTo } from "../other/apis.js";
 
-export async function showModal(userId) {
+export async function showModal(user) {
   /** @type {Element} */
   const modalContainer = dom.parseHTML(`<div class="vi--patched vi--modal"></div>`)
 
   let closeFunc;
 
-  let state = await fetchUserVoiceState(userId);
+  let state = typeof user == "string" ? await fetchUserVoiceState(user) : user;
   let channelId = state.channel.id;
 
   let rendering = false;

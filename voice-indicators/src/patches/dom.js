@@ -5,7 +5,7 @@ import events from "@acord/events";
 import patchContainer from "../other/patchContainer.js";
 import { renderIcon } from "../lib/renderIcon.js";
 import { fetchUserVoiceState } from "../other/api.js";
-import { ChannelStore, transitionTo } from "../other/apis.js";
+import { ChannelStore } from "../other/apis.js";
 import { showModal } from "../lib/showModal.js";
 
 const indicatorClasses = [swc.findByProps("bot", "nameTag").nameTag, swc.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, swc.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
@@ -49,7 +49,7 @@ async function patchIndicators(user, elm) {
     e.stopPropagation();
 
     // transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
-    showModal(user.id);
+    showModal(state);
   });
 
   elm.appendChild(indicatorContainer);
