@@ -85,7 +85,7 @@ export function patchDOM() {
 
         node.querySelectorAll(indicatorClasses.map(i => `.${i}`).join(", ")).forEach(async (elm) => {
           if (elm.querySelector(".vi--patched")) return;
-          let user = utils.getReactProps(elm, i => !!i?.user)?.user;
+          let user = utils.react.getProps(elm, i => !!i?.user)?.user;
           if (!user) return;
           tht(user, elm);
         });
