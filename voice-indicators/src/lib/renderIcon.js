@@ -1,7 +1,7 @@
-import { DeafIcon } from "../components/DeafIcon.js";
-import { MuteIcon } from "../components/MuteIcon.js";
-import { VideoIcon } from "../components/VideoIcon.js";
-import { VoiceIcon } from "../components/VoiceIcon.js";
+import { DeafIcon } from "../components/dom/DeafIcon.js";
+import { MuteIcon } from "../components/dom/MuteIcon.js";
+import { VideoIcon } from "../components/dom/VideoIcon.js";
+import { VoiceIcon } from "../components/dom/VoiceIcon.js";
 import { COLORS } from "../other/constants.js";
 
 /**

@@ -1,14 +1,32 @@
-(function (swc, common, data, events, dom, utils, modals, toasts, patcher) {
+(function (swc, common, data, events, dom, utils, React$1, toasts, patcher) {
     'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+    function _interopNamespace(e) {
+        if (e && e.__esModule) return e;
+        var n = Object.create(null);
+        if (e) {
+            Object.keys(e).forEach(function (k) {
+                if (k !== 'default') {
+                    var d = Object.getOwnPropertyDescriptor(e, k);
+                    Object.defineProperty(n, k, d.get ? d : {
+                        enumerable: true,
+                        get: function () { return e[k]; }
+                    });
+                }
+            });
+        }
+        n["default"] = e;
+        return Object.freeze(n);
+    }
 
     var swc__default = /*#__PURE__*/_interopDefaultLegacy(swc);
     var common__default = /*#__PURE__*/_interopDefaultLegacy(common);
     var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
     var dom__default = /*#__PURE__*/_interopDefaultLegacy(dom);
     var utils__default = /*#__PURE__*/_interopDefaultLegacy(utils);
-    var modals__default = /*#__PURE__*/_interopDefaultLegacy(modals);
+    var React__namespace = /*#__PURE__*/_interopNamespace(React$1);
     var toasts__default = /*#__PURE__*/_interopDefaultLegacy(toasts);
 
     const PACKET_TYPES = Object.create(null); // no Map = no polyfill
@@ -3358,16 +3376,28 @@
         connect: lookup,
     });
 
-    const GuildStore = swc__default["default"].findByProps("getGuild", "getGuildCount");
-    const ChannelStore = swc__default["default"].findByProps("getDMFromUserId", "getDMUserIds", "getChannel");
-    const VoiceStateStore = swc__default["default"].findByProps("getVoiceState", "getUserVoiceChannelId");
     const transitionTo = swc__default["default"].find((_, __, i) => i == "655695");
-    const UserStore = swc__default["default"].findByProps("getUser", "getCurrentUser");
-    const PermissionStore = swc__default["default"].findByProps("getChannelPermissions");
+    const {
+      PermissionStore,
+      VoiceStateStore,
+      ChannelStore,
+      GuildStore,
+      UserStore,
+      InviteStore,
+      FluxDispatcher,
+      React,
+      modals: {
+        actions: {
+          openModal
+        },
+        ModalRoot
+      }
+    } = common__default["default"];
     const { Permissions } = common__default["default"].constants;
-    const { selectVoiceChannel } = swc__default["default"].findByProps("selectVoiceChannel", "disconnect");
-    const InviteStore = swc__default["default"].findByProps("acceptInvite", "acceptInviteAndTransitionToInviteChannel");
-    swc__default["default"].findByProps("isDispatching", "dispatch");
+    const { selectVoiceChannel } = swc__default["default"].findByProps(
+      "selectVoiceChannel",
+      "disconnect"
+    );
 
     function getVoiceChannelMembers(channelId) {
       let states = VoiceStateStore.getVoiceStatesForChannel(channelId);
@@ -3472,7 +3502,7 @@
     }
     var patchContainer = new Patches();
 
-    function DeafIcon({ color }) {
+    function DeafIcon$1({ color }) {
       return `
     <svg
         width="24"
@@ -3489,7 +3519,7 @@
   `;
     }
 
-    function MuteIcon({ color }) {
+    function MuteIcon$1({ color }) {
       return `
     <svg
       width="24"
@@ -3507,7 +3537,7 @@
   `;
     }
 
-    function VideoIcon({ color }) {
+    function VideoIcon$1({ color }) {
       return `
     <svg
         width="24"
@@ -3522,7 +3552,7 @@
   `;
     }
 
-    function VoiceIcon({ color }) {
+    function VoiceIcon$1({ color }) {
       return `
     <svg
       width="60"
@@ -3546,7 +3576,7 @@
 
     function renderIcon(state, direct = false) {
       let d = direct ? state : state.states;
-      return d.selfDeaf || d.deaf ? DeafIcon({ color: COLORS[d.deaf ? "DANGER" : "SECONDARY"] }) : d.selfMute || d.mute || d.suppress ? MuteIcon({ color: COLORS[d.mute ? "DANGER" : "SECONDARY"] }) : d.selfVideo ? VideoIcon({ color: COLORS.SECONDARY }) : d.selfStream ? '<div class="v--icon vi--red-dot" ></div>' : VoiceIcon({ color: COLORS.SECONDARY });
+      return d.selfDeaf || d.deaf ? DeafIcon$1({ color: COLORS[d.deaf ? "DANGER" : "SECONDARY"] }) : d.selfMute || d.mute || d.suppress ? MuteIcon$1({ color: COLORS[d.mute ? "DANGER" : "SECONDARY"] }) : d.selfVideo ? VideoIcon$1({ color: COLORS.SECONDARY }) : d.selfStream ? '<div class="v--icon vi--red-dot" ></div>' : VoiceIcon$1({ color: COLORS.SECONDARY });
     }
 
     const cache = /* @__PURE__ */ new Map();
@@ -3591,187 +3621,256 @@
       })());
     }
 
-    function CloseIcon({ color }) {
-      return `
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      class="vi--icon vi--close-icon"
-      style="color: ${color};"
-    >
-      <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" fill="currentColor"></path>
-    </svg>
-  `;
+    function ArrowIcon(props = {}) {
+      return /* @__PURE__ */ React__namespace.createElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        className: "vi--icon vi--arrow-icon",
+        style: { color: props.color }
+      }, /* @__PURE__ */ React__namespace.createElement("polygon", {
+        fill: "currentColor",
+        "fill-rule": "nonzero",
+        points: "13 20 11 20 11 8 5.5 13.5 4.08 12.08 12 4.16 19.92 12.08 18.5 13.5 13 8"
+      }));
     }
 
-    function JoinCallIcon({ color }) {
-      return `
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      class="vi--icon vi--join-call-icon"
-      style="color: ${color};"
-    >
-      <path
-        fill="currentColor"
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M11 5V3C16.515 3 21 7.486 21 13H19C19 8.589 15.411 5 11 5ZM17 13H15C15 10.795 13.206 9 11 9V7C14.309 7 17 9.691 17 13ZM11 11V13H13C13 11.896 12.105 11 11 11ZM14 16H18C18.553 16 19 16.447 19 17V21C19 21.553 18.553 22 18 22H13C6.925 22 2 17.075 2 11V6C2 5.447 2.448 5 3 5H7C7.553 5 8 5.447 8 6V10C8 10.553 7.553 11 7 11H6C6.063 14.938 9 18 13 18V17C13 16.447 13.447 16 14 16Z"
-      ></path>
-    </svg>
-  `;
+    function CloseIcon(props = {}) {
+      return /* @__PURE__ */ React__namespace.createElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        className: "vi--icon vi--close-icon",
+        style: { color: props.color }
+      }, /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z",
+        fill: "currentColor"
+      }));
     }
 
-    function ArrowIcon({ color }) {
-      return `
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      class="vi--icon vi--arrow-icon"
-      style="color: ${color};"
-    >
-      <polygon
-        fill="currentColor"
-        fill-rule="nonzero"
-        points="13 20 11 20 11 8 5.5 13.5 4.08 12.08 12 4.16 19.92 12.08 18.5 13.5 13 8"
-      ></polygon>
-    </svg>
-  `;
+    function DeafIcon(props = {}) {
+      return /* @__PURE__ */ React__namespace.createElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        className: "vi--icon vi--deaf-icon",
+        style: { color: props.color }
+      }, /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M6.16204 15.0065C6.10859 15.0022 6.05455 15 6 15H4V12C4 7.588 7.589 4 12 4C13.4809 4 14.8691 4.40439 16.0599 5.10859L17.5102 3.65835C15.9292 2.61064 14.0346 2 12 2C6.486 2 2 6.485 2 12V19.1685L6.16204 15.0065Z",
+        fill: "currentColor"
+      }), /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M19.725 9.91686C19.9043 10.5813 20 11.2796 20 12V15H18C16.896 15 16 15.896 16 17V20C16 21.104 16.896 22 18 22H20C21.105 22 22 21.104 22 20V12C22 10.7075 21.7536 9.47149 21.3053 8.33658L19.725 9.91686Z",
+        fill: "currentColor"
+      }), /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M3.20101 23.6243L1.7868 22.2101L21.5858 2.41113L23 3.82535L3.20101 23.6243Z",
+        fill: "currentColor"
+      }));
+    }
+
+    function JoinCallIcon(props = {}) {
+      return /* @__PURE__ */ React__namespace.createElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        className: "vi--icon vi--join-call-icon",
+        style: { color: props.color }
+      }, /* @__PURE__ */ React__namespace.createElement("path", {
+        fill: "currentColor",
+        "fill-rule": "evenodd",
+        "clip-rule": "evenodd",
+        d: "M11 5V3C16.515 3 21 7.486 21 13H19C19 8.589 15.411 5 11 5ZM17 13H15C15 10.795 13.206 9 11 9V7C14.309 7 17 9.691 17 13ZM11 11V13H13C13 11.896 12.105 11 11 11ZM14 16H18C18.553 16 19 16.447 19 17V21C19 21.553 18.553 22 18 22H13C6.925 22 2 17.075 2 11V6C2 5.447 2.448 5 3 5H7C7.553 5 8 5.447 8 6V10C8 10.553 7.553 11 7 11H6C6.063 14.938 9 18 13 18V17C13 16.447 13.447 16 14 16Z"
+      }));
+    }
+
+    function MuteIcon(props = {}) {
+      return /* @__PURE__ */ React__namespace.createElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        className: "vi--icon vi--mute-icon",
+        style: { color: props.color }
+      }, /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M6.7 11H5C5 12.19 5.34 13.3 5.9 14.28L7.13 13.05C6.86 12.43 6.7 11.74 6.7 11Z",
+        fill: "currentColor"
+      }), /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M9.01 11.085C9.015 11.1125 9.02 11.14 9.02 11.17L15 5.18V5C15 3.34 13.66 2 12 2C10.34 2 9 3.34 9 5V11C9 11.03 9.005 11.0575 9.01 11.085Z",
+        fill: "currentColor"
+      }), /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M11.7237 16.0927L10.9632 16.8531L10.2533 17.5688C10.4978 17.633 10.747 17.6839 11 17.72V22H13V17.72C16.28 17.23 19 14.41 19 11H17.3C17.3 14 14.76 16.1 12 16.1C11.9076 16.1 11.8155 16.0975 11.7237 16.0927Z",
+        fill: "currentColor"
+      }), /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M21 4.27L19.73 3L3 19.73L4.27 21L8.46 16.82L9.69 15.58L11.35 13.92L14.99 10.28L21 4.27Z",
+        fill: "currentColor"
+      }));
+    }
+
+    function VideoIcon(props = {}) {
+      return /* @__PURE__ */ React__namespace.createElement("svg", {
+        width: "24",
+        height: "24",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        className: "vi--icon vi--video-icon",
+        style: { color: props.color }
+      }, /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M21.526 8.149C21.231 7.966 20.862 7.951 20.553 8.105L18 9.382V7C18 5.897 17.103 5 16 5H4C2.897 5 2 5.897 2 7V17C2 18.104 2.897 19 4 19H16C17.103 19 18 18.104 18 17V14.618L20.553 15.894C20.694 15.965 20.847 16 21 16C21.183 16 21.365 15.949 21.526 15.851C21.82 15.668 22 15.347 22 15V9C22 8.653 21.82 8.332 21.526 8.149Z",
+        fill: "currentColor"
+      }));
+    }
+
+    function VoiceIcon(props = {}) {
+      return /* @__PURE__ */ React__namespace.createElement("svg", {
+        width: "60",
+        height: "61",
+        viewBox: "0 0 60 61",
+        fill: "none",
+        className: "vi--icon vi--voice-icon",
+        style: { color: props.color }
+      }, /* @__PURE__ */ React__namespace.createElement("path", {
+        d: "M28.4623 8.15497C27.5273 7.77127 26.4523 7.98305 25.7373 8.69565L15.0048 20.4212H7.50479C6.12979 20.4212 5.00479 21.5449 5.00479 22.9128V37.8623C5.00479 39.2327 6.12979 40.354 7.50479 40.354H15.0048L25.7373 52.0844C26.4523 52.7971 27.5273 53.0113 28.4623 52.6251C29.3973 52.2389 30.0048 51.3295 30.0048 50.3204V10.4547C30.0048 9.45061 29.3973 8.53619 28.4623 8.15497ZM35.0048 12.9461V17.9293C41.8973 17.9293 47.5048 23.5205 47.5048 30.3875C47.5048 37.2569 41.8973 42.8456 35.0048 42.8456V47.8288C44.6548 47.8288 52.5048 40.0076 52.5048 30.3875C52.5048 20.7723 44.6548 12.9461 35.0048 12.9461ZM35.0048 22.9126C39.1398 22.9126 42.5048 26.2689 42.5048 30.3875C42.5048 34.5111 39.1398 37.8623 35.0048 37.8623V32.8791C36.3823 32.8791 37.5048 31.7604 37.5048 30.3875C37.5048 29.0146 36.3823 27.8959 35.0048 27.8959V22.9126Z",
+        fill: "currentColor"
+      }));
     }
 
     const scrollClasses = swc__default["default"].findByProps("thin", "scrollerBase");
-    function renderModal({ members, state, channel, isJoinable }) {
-      return `
-    <div class="vi--modal-root">
-      <div class="vi--modal-header">
-        <div class="title-container">
-          <div class="icon" style="background-image: ${state.guild ? `url('https://cdn.discordapp.com/icons/${state.guild.id}/${state.guild.icon}.png?size=128')` : state.channel ? `url('https://cdn.discordapp.com/channel-icons/${state.channel.id}/${state.channel.icon}.png?size=128')` : null}"></div>
-          <div class="title">
-            <div class="guild">${dom__default["default"].escapeHTML(state.isPrivate ? "Private Call" : state.guild.name)}</div>
-            ${!(!state?.guild?.vanity || !!channel) ? `
-            <div class="vanity vi--vanity">
-              ${ArrowIcon({ color: COLORS.PRIMARY })}
-            </div>
-            ` : ""}
-          </div>
-        </div>
-        <div class="vi--modal-close">
-          ${CloseIcon({ color: COLORS.SECONDARY })}
-        </div>
-      </div>
-      <div class="vi--modal-content">
-        <div class="channel">
-          <div class="name-container">
-            <div class="name">
-              ${VoiceIcon({ color: "currentColor" })}
-              ${dom__default["default"].escapeHTML(state.channel?.name || "Unknown")}
-            </div>
-            <div class="controls">
-              <div class="control ${!isJoinable ? "vi--cant-click vi--cant-join" : ""} vi--join-channel" acord-tooltip-content="${!isJoinable ? "Can't " : ""}Join Channel">
-                ${JoinCallIcon({ color: COLORS.SECONDARY })}
-              </div>
-              <div class="control ${!channel ? "vi--cant-click" : ""} vi--view-channel" acord-tooltip-content="${!channel ? "Can't " : ""}View Channel">
-                ${ArrowIcon({ color: COLORS.SECONDARY })}
-              </div>
-            </div>
-          </div>
-          <div class="members-container">
-            <div class="members ${scrollClasses.thin}">
-              ${members.map((member) => `
-                <div class="member" data-tag="${dom__default["default"].escapeHTML(member.tag)}">
-                  <div class="avatar" style="background-image: ${`url('${member.avatar ? `https://cdn.discordapp.com/avatars/${member.id}/${member.avatar}.png?size=128` : `https://cdn.discordapp.com/embed/avatars/${Number(member.tag.split("#")[1]) % 5}.png`}')`}"></div>
-                  <div class="about">
-                    <div class="name-container">
-                      <div class="name">${dom__default["default"].escapeHTML(member.tag.split("#")[0])}</div>
-                      <div class="discriminator">#${member.tag.split("#")[1]}</div>
-                    </div>
-                    <div class="state vi--icon-container">
-                      ${renderIcon(member.states, true)}
-                    </div>
-                  </div>
-                </div>
-              `).join("\n")}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
+    function Modal({ e, data }) {
+      let [members, setMembers] = React.useState([]);
+      let fetching = false;
+      async function onChange() {
+        if (fetching)
+          return;
+        fetching = true;
+        let d = await fetchVoiceMembers(data.state.channel.id);
+        fetching = false;
+        setMembers(d || []);
+      }
+      React.useEffect(() => {
+        return events__default["default"].on("VoiceIndicators:EverySecond", onChange);
+      }, []);
+      return /* @__PURE__ */ React.createElement(ModalRoot, {
+        transitionState: e.transitionState,
+        size: "large",
+        className: "vi--modal-root"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "vi--modal-header"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "title-container"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "icon",
+        style: { backgroundImage: data.state.guild ? `url('https://cdn.discordapp.com/icons/${data.state.guild.id}/${data.state.guild.icon}.png?size=128')` : data.state.channel ? `url('https://cdn.discordapp.com/channel-icons/${data.state.channel.id}/${data.state.channel.icon}.png?size=128')` : null }
+      }), /* @__PURE__ */ React.createElement("div", {
+        className: "title"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "guild"
+      }, data.state.isPrivate ? "Private Call" : data.state.guild.name), !data.state?.guild?.vanity || data.inMyChannels ? null : /* @__PURE__ */ React.createElement("div", {
+        className: "vanity",
+        onClick: (ev) => {
+          ev.preventDefault();
+          if (!data.state?.guild?.vanity)
+            return;
+          InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: data.state?.guild?.vanity });
+          e.onClose();
+        }
+      }, /* @__PURE__ */ React.createElement("div", {
+        "acord-tooltip-content": "Join Guild"
+      }, /* @__PURE__ */ React.createElement(ArrowIcon, {
+        color: COLORS.PRIMARY
+      }))))), /* @__PURE__ */ React.createElement("div", {
+        onClick: e.onClose,
+        className: "vi--modal-close"
+      }, /* @__PURE__ */ React.createElement(CloseIcon, {
+        color: COLORS.SECONDARY
+      }))), /* @__PURE__ */ React.createElement("div", {
+        className: "vi--modal-content"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "channel"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "name-container"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "name"
+      }, /* @__PURE__ */ React.createElement(VoiceIcon, null), data.state.channel?.name || "Unknown"), /* @__PURE__ */ React.createElement("div", {
+        className: "controls"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: `control ${!data.isJoinable ? "vi--cant-click vi--cant-join" : ""}`,
+        onClick: (ev) => {
+          ev.preventDefault();
+          if (!data.isJoinable)
+            return;
+          toasts__default["default"].show(`Joining to "${data.state.channel.name}"!`);
+          selectVoiceChannel(data.state.channel.id);
+          e.onClose();
+        }
+      }, /* @__PURE__ */ React.createElement("div", {
+        "acord-tooltip-content": `${!data.isJoinable ? "Can't " : ""} Connect`
+      }, /* @__PURE__ */ React.createElement(JoinCallIcon, {
+        color: COLORS.SECONDARY
+      }))), /* @__PURE__ */ React.createElement("div", {
+        className: `control ${!data.inMyChannels ? "vi--cant-click" : ""}`,
+        onClick: (ev) => {
+          ev.preventDefault();
+          if (!data.inMyChannels)
+            return;
+          toasts__default["default"].show(`Viewing "${data.state.channel.name}"!`);
+          transitionTo(`/channels/${data.state.guild ? data.state.guild.id : "@me"}/${data.state.channel.id}`);
+          e.onClose();
+        }
+      }, /* @__PURE__ */ React.createElement("div", {
+        "acord-tooltip-content": `${!data.inMyChannels ? "Can't " : ""} Show Channel`
+      }, /* @__PURE__ */ React.createElement(ArrowIcon, {
+        color: COLORS.SECONDARY
+      }))))), /* @__PURE__ */ React.createElement("div", {
+        className: "members-container"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: `members ${scrollClasses.thin}`
+      }, members.map((member) => /* @__PURE__ */ React.createElement("div", {
+        className: "member",
+        onClick: async (ev) => {
+          ev.preventDefault();
+          utils__default["default"].copyText(member.tag);
+          toasts__default["default"].show(`"${member.tag}" copied!`);
+        }
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "avatar",
+        style: { backgroundImage: `url("${member.avatar ? `https://cdn.discordapp.com/avatars/${member.id}/${member.avatar}.png?size=128` : `https://cdn.discordapp.com/embed/avatars/${Number(member.tag.split("#")[1]) % 5}.png`}")` }
+      }), /* @__PURE__ */ React.createElement("div", {
+        className: "about"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "name-container"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "name"
+      }, member.tag.split("#")[0]), /* @__PURE__ */ React.createElement("div", {
+        className: "discriminator"
+      }, "#", member.tag.split("#")[1])), member?.states ? /* @__PURE__ */ React.createElement("div", {
+        className: "state vi--icon-container"
+      }, member.states.selfDeaf || member.states.deaf ? /* @__PURE__ */ React.createElement(DeafIcon, {
+        color: COLORS[member.states.deaf ? "DANGER" : "SECONDARY"]
+      }) : member.states.selfMute || member.states.mute || member.states.suppress ? /* @__PURE__ */ React.createElement(MuteIcon, {
+        color: COLORS[member.states.mute ? "DANGER" : "SECONDARY"]
+      }) : member.states.selfVideo ? /* @__PURE__ */ React.createElement(VideoIcon, {
+        color: COLORS.SECONDARY
+      }) : member.states.selfStream ? /* @__PURE__ */ React.createElement("div", {
+        className: "v--icon vi--red-dot"
+      }) : /* @__PURE__ */ React.createElement(VoiceIcon, {
+        color: COLORS.SECONDARY
+      })) : null))))))));
     }
 
-    async function showModal(user) {
-      const modalContainer = dom__default["default"].parseHTML(`<div class="vi--patched vi--modal"></div>`);
-      let closeFunc;
-      let state = typeof user == "string" ? await fetchUserVoiceState(user) : user;
-      let channelId = state.channel.id;
-      let rendering = false;
-      modalContainer.render = async (ignoreMembers) => {
-        if (rendering)
-          return;
-        rendering = true;
-        let members = ignoreMembers ? [] : await fetchVoiceMembers(channelId);
-        if (JSON.stringify(members) == JSON.stringify(modalContainer.members)) {
-          rendering = false;
-          return;
-        }
-        let channel = ChannelStore.getChannel(state.channel.id);
-        let isJoinable = !channel ? false : channel.type == 3 ? true : PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel);
-        modalContainer.replaceChildren(dom__default["default"].parseHTML(renderModal({ members, state, isJoinable, channel })));
-        modalContainer.querySelector(".vi--modal-close").onclick = closeFunc;
-        utils__default["default"].ifExists(modalContainer.querySelector(".vi--vanity"), (item) => {
-          item.onclick = (ev) => {
-            ev.preventDefault();
-            if (!state?.guild?.vanity)
-              return;
-            InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: state?.guild?.vanity });
-            toasts__default["default"].show(`Joining to "${state.guild.name}"!`);
-            closeFunc();
-          };
+    async function showModal(stateOrUserId) {
+      let state = typeof stateOrUserId == "string" ? await fetchUserVoiceState(stateOrUserId) : stateOrUserId;
+      let channel = ChannelStore.getChannel(state.channel.id);
+      let inMyChannels = !!channel;
+      let isJoinable = !inMyChannels ? false : channel.type == 3 ? true : PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel);
+      openModal((e) => {
+        return /* @__PURE__ */ React__namespace.createElement(Modal, {
+          e,
+          data: { state, inMyChannels, isJoinable }
         });
-        utils__default["default"].ifExists(modalContainer.querySelector(".vi--join-channel"), (item) => {
-          item.onclick = (ev) => {
-            ev.preventDefault();
-            if (!isJoinable)
-              return;
-            toasts__default["default"].show(`Joining to "${state.channel.name}"!`);
-            selectVoiceChannel(state.channel.id);
-            closeFunc();
-          };
-        });
-        utils__default["default"].ifExists(modalContainer.querySelector(".vi--view-channel"), (item) => {
-          item.onclick = (ev) => {
-            ev.preventDefault();
-            if (!channel)
-              return;
-            toasts__default["default"].show(`Viewing "${state.channel.name}"!`);
-            transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
-            closeFunc();
-          };
-        });
-        modalContainer.querySelectorAll(".member").forEach((memberElm) => {
-          let tag = memberElm.getAttribute("data-tag");
-          memberElm.onclick = () => {
-            utils__default["default"].copyText(tag);
-            toasts__default["default"].show(`"${tag}" copied!`);
-          };
-        });
-        modalContainer.state = state;
-        modalContainer.members = members;
-        rendering = false;
-      };
-      let unpatchUpdater = events__default["default"].on("VoiceIndicators:EverySecond", () => modalContainer.render(false));
-      modalContainer.unmount = () => {
-        unpatchUpdater();
-      };
-      modalContainer.render(true);
-      let modal = modals__default["default"].show(modalContainer, { size: "large" });
-      closeFunc = modal.close;
+      });
     }
 
     const indicatorClasses = [swc__default["default"].findByProps("bot", "nameTag").nameTag, swc__default["default"].findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, swc__default["default"].findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
@@ -3786,6 +3885,7 @@
         if (_.isEqual(state, indicatorContainer.state))
           return;
         let channel = ChannelStore.getChannel(state?.channel?.id);
+        indicatorContainer.classList[!channel ? "add" : "remove"]("vi--cant-join");
         let tooltipText = `${channel ? "\u2705" : "\u274C"} ${state.guild ? state.guild?.name || "Unknown Guild" : "Private Call"} > ${state.channel?.name || "Plugin Deprecated"}`;
         indicatorContainer.setAttribute("acord-tooltip-content", tooltipText);
         indicatorContainer.replaceChildren(dom__default["default"].parseHTML(renderIcon(state)));
@@ -3852,7 +3952,7 @@
       );
     }
 
-    var styles = () => patcher.injectCSS(".vi--icon-container{display:flex;align-items:center;justify-content:center;background-color:#00000080;border-radius:50%;width:18px;height:18px;min-width:18px;min-height:18px;margin-left:4px;z-index:99}.vi--icon{display:flex;transition:filter .1s ease-in-out;color:#fff;width:14px;height:14px}.vi--icon:hover{filter:brightness(1.2)}.vi--red-dot{width:10px;height:10px;border-radius:50%;background-color:#ed4245;box-shadow:0 0 4px #ed4245}.vi--modal-root{display:flex;flex-direction:column}.vi--modal-root .vi--modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px}.vi--modal-root .vi--modal-header>.title-container{display:flex;align-items:center;margin-bottom:8px}.vi--modal-root .vi--modal-header>.title-container .icon{width:64px;height:64px;background-position:center;background-size:contain;border-radius:50%;margin-right:8px;background-color:#5865f2}.vi--modal-root .vi--modal-header>.title-container .title{display:flex;align-items:center}.vi--modal-root .vi--modal-header>.title-container .title .guild{font-size:28px;font-weight:600;color:#efefef}.vi--modal-root .vi--modal-header>.title-container .title .vanity{margin-left:8px;cursor:pointer}.vi--modal-root .vi--modal-header>.title-container .title .vanity svg{width:24px;height:24px}.vi--modal-root .vi--modal-header .vi--modal-close{width:24px;height:24px}.vi--modal-root .vi--modal-header .vi--modal-close svg{width:24px;height:24px}.vi--modal-root .vi--modal-content{padding:0 16px 16px}.vi--modal-root .vi--modal-content>.channel>.name-container{display:flex;align-items:center;justify-content:space-between;background-color:#00000040;padding:8px;border-radius:8px}.vi--modal-root .vi--modal-content>.channel>.name-container>.name{display:flex;font-size:20px;font-weight:400;color:#efefef;align-items:center}.vi--modal-root .vi--modal-content>.channel>.name-container>.name svg{margin-right:8px;width:24px;height:24px;pointer-events:none}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls{display:flex}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls>.control{padding:4px;cursor:pointer}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls>.control svg{width:24px;height:24px}.vi--modal-root .vi--modal-content>.channel>.members-container{padding:8px 8px 8px 40px}.vi--modal-root .vi--modal-content>.channel>.members-container>.members{display:flex;flex-direction:column;overflow:auto;max-height:500px;height:100%}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member{display:flex;margin-bottom:4px;cursor:pointer;width:min-content;align-items:center}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.avatar{width:32px;height:32px;border-radius:50%;background-position:center;background-size:contain;margin-right:8px;background-color:#5865f2}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about{border-radius:9999px;background-color:#0003;display:flex;align-items:center;padding:8px}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container{display:flex;align-items:center;width:max-content;font-size:16px;color:#dfdfdf}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container .name{width:100%}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container .discriminator{opacity:.5}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.state{background-color:transparent}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.state svg{width:16px;height:16px}[class*=userText-] [class*=nameTag-],[class*=topSection-] [class*=nameTag-]{display:flex;align-items:center}[class*=userText-] [class*=nameTag-] *,[class*=topSection-] [class*=nameTag-] *{overflow:hidden}[class*=vi--],[class*=vi--] *{box-sizing:border-box}");
+    var styles = () => patcher.injectCSS(".vi--icon-container{display:flex;align-items:center;justify-content:center;background-color:#00000080;border-radius:50%;width:18px;height:18px;min-width:18px;min-height:18px;margin-left:4px;z-index:99}.vi--icon{display:flex;transition:filter .1s ease-in-out;color:#fff;width:14px;height:14px}.vi--icon:hover{filter:brightness(1.2)}.vi--red-dot{width:10px;height:10px;border-radius:50%;background-color:#ed4245;box-shadow:0 0 4px #ed4245}.vi--modal-root{display:flex;flex-direction:column}.vi--modal-root .vi--modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px}.vi--modal-root .vi--modal-header>.title-container{display:flex;align-items:center;margin-bottom:8px}.vi--modal-root .vi--modal-header>.title-container .icon{width:64px;height:64px;background-position:center;background-size:contain;border-radius:50%;margin-right:8px;background-color:#5865f2}.vi--modal-root .vi--modal-header>.title-container .title{display:flex;align-items:center}.vi--modal-root .vi--modal-header>.title-container .title .guild{font-size:28px;font-weight:600;color:#efefef}.vi--modal-root .vi--modal-header>.title-container .title .vanity{margin-left:8px;cursor:pointer}.vi--modal-root .vi--modal-header>.title-container .title .vanity svg{width:24px;height:24px}.vi--modal-root .vi--modal-header .vi--modal-close{width:24px;height:24px}.vi--modal-root .vi--modal-header .vi--modal-close svg{width:24px;height:24px}.vi--modal-root .vi--modal-content{padding:0 16px 16px}.vi--modal-root .vi--modal-content>.channel>.name-container{display:flex;align-items:center;justify-content:space-between;background-color:#00000040;padding:8px;border-radius:8px}.vi--modal-root .vi--modal-content>.channel>.name-container>.name{display:flex;font-size:20px;font-weight:400;color:#efefef;align-items:center}.vi--modal-root .vi--modal-content>.channel>.name-container>.name svg{margin-right:8px;width:24px;height:24px;pointer-events:none}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls{display:flex}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls>.control{padding:4px;cursor:pointer}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls>.control svg{width:24px;height:24px}.vi--modal-root .vi--modal-content>.channel>.members-container{padding:8px 8px 8px 40px}.vi--modal-root .vi--modal-content>.channel>.members-container>.members{display:flex;flex-direction:column;overflow:auto;max-height:500px;height:100%}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member{display:flex;margin-bottom:4px;cursor:pointer;width:min-content;align-items:center}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.avatar{width:32px;height:32px;border-radius:50%;background-position:center;background-size:contain;margin-right:8px;background-color:#5865f2}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about{border-radius:9999px;background-color:#0003;display:flex;align-items:center;padding:8px}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container{display:flex;align-items:center;width:max-content;font-size:16px;color:#dfdfdf}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container .name{width:100%}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container .discriminator{opacity:.5}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.state{background-color:transparent}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.state svg{width:16px;height:16px}[class*=userText-] [class*=nameTag-],[class*=topSection-] [class*=nameTag-]{display:flex;align-items:center}[class*=userText-] [class*=nameTag-] *,[class*=topSection-] [class*=nameTag-] *{overflow:hidden}[class*=vi--],[class*=vi--] *{box-sizing:border-box}.vi--cant-join{opacity:.75}.vi--cant-click{cursor:default!important}");
 
     function patchStyles() {
       patchContainer.add(styles());
@@ -3873,4 +3973,4 @@
 
     return index;
 
-})(acord.modules.swc, acord.modules.common, acord.data, acord.events, acord.dom, acord.utils, acord.ui.modals, acord.ui.toasts, acord.patcher);
+})(acord.modules.swc, acord.modules.common, acord.data, acord.events, acord.dom, acord.utils, acord.modules.common.React, acord.ui.toasts, acord.patcher);

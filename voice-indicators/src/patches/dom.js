@@ -6,7 +6,7 @@ import patchContainer from "../other/patchContainer.js";
 import { renderIcon } from "../lib/renderIcon.js";
 import { fetchUserVoiceState } from "../other/api.js";
 import { ChannelStore } from "../other/apis.js";
-import { showModal } from "../lib/showModal.js";
+import { showModal } from "../lib/showModal.jsx";
 
 const indicatorClasses = [swc.findByProps("bot", "nameTag").nameTag, swc.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, swc.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
 
@@ -25,6 +25,8 @@ async function patchIndicators(user, elm) {
     if (_.isEqual(state, indicatorContainer.state)) return;
 
     let channel = ChannelStore.getChannel(state?.channel?.id);
+
+    indicatorContainer.classList[!channel ? "add" : "remove"]("vi--cant-join");
 
     let tooltipText = `${channel ? "✅" : "❌"} ${state.guild ? (state.guild?.name || "Unknown Guild") : "Private Call"} > ${state.channel?.name || "Plugin Deprecated"}`;
     // if (!container.tooltip)

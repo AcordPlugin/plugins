@@ -213,3 +213,11 @@
     box-sizing: border-box;
   }
 }
+
+.vi--cant-join {
+  opacity: 0.75;
+}
+
+.vi--cant-click {
+  cursor: default !important;
+}

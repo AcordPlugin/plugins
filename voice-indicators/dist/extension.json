@@ -1,5 +1,5 @@
 {
-  "hash": "105807c98d935bfe794576f7b7a19d106477f7e0a37d7bbb912e08f32a8e2bdd",
+  "hash": "a4bfee0112aae84072647178f225ed2449f0f15d0122b322c4c7c030d47fa25f",
   "type": "plugin",
   "about": {
     "name": "Voice Indicators",
@@ -7,6 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Shows voice indicators right side of the users.",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "license": "MIT"
   }
 }

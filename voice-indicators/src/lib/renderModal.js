@@ -1,10 +1,10 @@
-import { CloseIcon } from "../components/CloseIcon.js";
+import { CloseIcon } from "../components/dom/CloseIcon.js";
 import { COLORS } from "../other/constants.js";
 import swc from "@acord/modules/swc";
 import dom from "@acord/dom";
-import { VoiceIcon } from "../components/VoiceIcon.js";
-import { JoinCallIcon } from "../components/JoinCallIcon.js";
-import { ArrowIcon } from "../components/ArrowIcon.js";
+import { VoiceIcon } from "../components/dom/VoiceIcon.js";
+import { JoinCallIcon } from "../components/dom/JoinCallIcon.js";
+import { ArrowIcon } from "../components/dom/ArrowIcon.js";
 import { renderIcon } from "./renderIcon.js";
 
 const scrollClasses = swc.findByProps("thin", "scrollerBase");
