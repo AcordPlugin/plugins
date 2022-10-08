@@ -1,4 +1,4 @@
-(function (swc, common, pluginData, events, dom, utils, modals, toasts, patcher) {
+(function (swc, common, data, events, dom, utils, modals, toasts, patcher) {
     'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -3386,7 +3386,7 @@
       return state ? makeShape(state) : null;
     }
     function makeShape(i) {
-      let channelRedacted = pluginData.persist.ghost.settings?.redacted ?? false;
+      let channelRedacted = data.persist.ghost.settings?.redacted ?? false;
       let channel = ChannelStore.getChannel(i.channelId);
       let guild = GuildStore.getGuild(channel?.guild_id);
       let user = UserStore.getUser(i.userId);
@@ -3873,4 +3873,4 @@
 
     return index;
 
-})(acord.modules.swc, acord.modules.common, acord.pluginData, acord.events, acord.dom, acord.utils, acord.ui.modals, acord.ui.toasts, acord.patcher);
+})(acord.modules.swc, acord.modules.common, acord.data, acord.events, acord.dom, acord.utils, acord.ui.modals, acord.ui.toasts, acord.patcher);

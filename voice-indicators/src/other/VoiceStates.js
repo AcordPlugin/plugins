@@ -1,5 +1,5 @@
 import { ChannelStore, GuildStore, UserStore, VoiceStateStore } from "./apis";
-import { persist } from "@acord/pluginData";
+import { persist } from "@acord/data";
 
 /**
  * @typedef {{states:{deaf:boolean,mute:boolean,selfDeaf:boolean,selfMute:boolean,selfStream:boolean,selfVideo:boolean,suppress:boolean},isPrivate:boolean,user:{id:string,tag:string,avatar:string},channel:{id:string,name:string,icon:string,redacted:boolean},guild:{id:string,name:string,icon:string}}} VoiceStateShaped
