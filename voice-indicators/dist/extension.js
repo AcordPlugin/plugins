@@ -3715,6 +3715,7 @@
         if (rendering)
           return;
         rendering = true;
+        console.log(1);
         let members = await fetchVoiceMembers(channelId);
         if (JSON.stringify(members) == JSON.stringify(modalContainer.members)) {
           rendering = false;
