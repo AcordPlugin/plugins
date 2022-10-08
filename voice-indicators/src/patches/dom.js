@@ -49,7 +49,7 @@ async function patchIndicators(user, elm) {
     e.stopPropagation();
 
     // transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
-    showModal(state);
+    showModal(indicatorContainer.state);
   });
 
   elm.appendChild(indicatorContainer);
