@@ -22,10 +22,9 @@ export async function showModal(userId) {
     if (rendering) return;
     rendering = true;
 
-    let members = [];
-    // await fetchVoiceMembers(channelId)
+    let members = await fetchVoiceMembers(channelId);
 
-    if (_.isEqual(members, modalContainer.members)) {
+    if (JSON.stringify(members) == JSON.stringify(modalContainer.members)) {
       rendering = false;
       return;
     }

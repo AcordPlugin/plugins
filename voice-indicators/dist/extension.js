@@ -3568,6 +3568,17 @@
       }
       return state;
     }
+    async function fetchVoiceMembers(channelId) {
+      let members = getVoiceChannelMembers(channelId);
+      if (!members.length) {
+        let cached = cache.get(`VoiceMembers:${channelId}`);
+        if (cached && !(Date.now() - cached.at > 1e4))
+          return cached.members;
+        members = (await awaitResponse("members", { channelId }))?.data || [];
+        cache.set(`VoiceMembers:${channelId}`, { at: Date.now(), members, ttl: 1e4 });
+      }
+      return members;
+    }
 
     function patchUpdater() {
       patchContainer.add((() => {
@@ -3698,14 +3709,14 @@
       const modalContainer = dom__default["default"].parseHTML(`<div class="vi--patched vi--modal"></div>`);
       let closeFunc;
       let state = await fetchUserVoiceState(userId);
-      state.channel.id;
+      let channelId = state.channel.id;
       let rendering = false;
       modalContainer.render = async () => {
         if (rendering)
           return;
         rendering = true;
-        let members = [];
-        if (_.isEqual(members, modalContainer.members)) {
+        let members = await fetchVoiceMembers(channelId);
+        if (JSON.stringify(members) == JSON.stringify(modalContainer.members)) {
           rendering = false;
           return;
         }
