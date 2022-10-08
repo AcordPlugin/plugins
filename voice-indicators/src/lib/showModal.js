@@ -10,7 +10,7 @@ import { ChannelStore, InviteStore, Permissions, PermissionStore, selectVoiceCha
 
 export async function showModal(userId) {
   /** @type {Element} */
-  const container = dom.parseHTML(`<div class="vi--patched vi--modal"></div>`)
+  const modalContainer = dom.parseHTML(`<div class="vi--patched vi--modal"></div>`)
 
   let closeFunc;
 
@@ -18,13 +18,13 @@ export async function showModal(userId) {
   let channelId = state.channel.id;
 
   let rendering = false;
-  container.render = async () => {
+  modalContainer.render = async () => {
     if (rendering) return;
     rendering = true;
     
     let members = await fetchVoiceMembers(channelId);
 
-    if (_.isEqual(members, container.members)) {
+    if (_.isEqual(members, modalContainer.members)) {
       rendering = false;
       return;
     }
@@ -32,12 +32,12 @@ export async function showModal(userId) {
     let channel = ChannelStore.getChannel(state.channel.id);
     let isJoinable = !channel ? false : (channel.type == 3 ? true : (PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel)))
 
-    container.replaceChildren(dom.parseHTML(renderModal({ members, state, isJoinable, channel })));
+    modalContainer.replaceChildren(dom.parseHTML(renderModal({ members, state, isJoinable, channel })));
 
-    container.querySelector(".vi--modal-close").onclick = closeFunc;
+    modalContainer.querySelector(".vi--modal-close").onclick = closeFunc;
 
-    if (container.querySelector(".vi--vanity"))
-      container.querySelector(".vi--vanity").onclick = (ev) => {
+    if (modalContainer.querySelector(".vi--vanity"))
+      modalContainer.querySelector(".vi--vanity").onclick = (ev) => {
         ev.preventDefault();
         if (!state?.guild?.vanity) return;
         InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: state?.guild?.vanity });
@@ -45,8 +45,8 @@ export async function showModal(userId) {
         closeFunc();
       }
 
-    if (container.querySelector(".vi--join-channel"))
-      container.querySelector(".vi--join-channel").onclick = (ev) => {
+    if (modalContainer.querySelector(".vi--join-channel"))
+      modalContainer.querySelector(".vi--join-channel").onclick = (ev) => {
         ev.preventDefault();
         if (!isJoinable) return;
         toasts.show(`Joining to "${state.channel.name}"!`);
@@ -54,8 +54,8 @@ export async function showModal(userId) {
         closeFunc();
       }
 
-    if (container.querySelector(".vi--view-channel"))
-      container.querySelector(".vi--view-channel").onclick = (ev) => {
+    if (modalContainer.querySelector(".vi--view-channel"))
+      modalContainer.querySelector(".vi--view-channel").onclick = (ev) => {
         ev.preventDefault();
         if (!channel) return;
         toasts.show(`Viewing "${state.channel.name}"!`);
@@ -63,7 +63,7 @@ export async function showModal(userId) {
         closeFunc();
       }
       
-    container.querySelectorAll(".member").forEach((memberElm) => {
+    modalContainer.querySelectorAll(".member").forEach((memberElm) => {
       let tag = memberElm.getAttribute("data-tag");
       memberElm.onclick = () => {
         utils.copyText(tag);
@@ -71,20 +71,20 @@ export async function showModal(userId) {
       }
     })
 
-    container.state = state;
-    container.members = members;
+    modalContainer.state = state;
+    modalContainer.members = members;
 
     rendering = false;
   }
 
-  let unpatchUpdater = events.on("VoiceIndicators:EverySecond", container.render);
+  let unpatchUpdater = events.on("VoiceIndicators:EverySecond", modalContainer.render);
 
-  container.unmount = () => {
+  modalContainer.unmount = () => {
     unpatchUpdater();
   }
 
-  container.render();
+  modalContainer.render();
 
-  let modal = modals.show(container);
+  let modal = modals.show(modalContainer);
   closeFunc = modal.close;
 }

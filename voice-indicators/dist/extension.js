@@ -3706,26 +3706,26 @@
     }
 
     async function showModal(userId) {
-      const container = dom__default["default"].parseHTML(`<div class="vi--patched vi--modal"></div>`);
+      const modalContainer = dom__default["default"].parseHTML(`<div class="vi--patched vi--modal"></div>`);
       let closeFunc;
       let state = await fetchUserVoiceState(userId);
       let channelId = state.channel.id;
       let rendering = false;
-      container.render = async () => {
+      modalContainer.render = async () => {
         if (rendering)
           return;
         rendering = true;
         let members = await fetchVoiceMembers(channelId);
-        if (_.isEqual(members, container.members)) {
+        if (_.isEqual(members, modalContainer.members)) {
           rendering = false;
           return;
         }
         let channel = ChannelStore.getChannel(state.channel.id);
         let isJoinable = !channel ? false : channel.type == 3 ? true : PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel);
-        container.replaceChildren(dom__default["default"].parseHTML(renderModal({ members, state, isJoinable, channel })));
-        container.querySelector(".vi--modal-close").onclick = closeFunc;
-        if (container.querySelector(".vi--vanity"))
-          container.querySelector(".vi--vanity").onclick = (ev) => {
+        modalContainer.replaceChildren(dom__default["default"].parseHTML(renderModal({ members, state, isJoinable, channel })));
+        modalContainer.querySelector(".vi--modal-close").onclick = closeFunc;
+        if (modalContainer.querySelector(".vi--vanity"))
+          modalContainer.querySelector(".vi--vanity").onclick = (ev) => {
             ev.preventDefault();
             if (!state?.guild?.vanity)
               return;
@@ -3733,8 +3733,8 @@
             toasts__default["default"].show(`Joining to "${state.guild.name}"!`);
             closeFunc();
           };
-        if (container.querySelector(".vi--join-channel"))
-          container.querySelector(".vi--join-channel").onclick = (ev) => {
+        if (modalContainer.querySelector(".vi--join-channel"))
+          modalContainer.querySelector(".vi--join-channel").onclick = (ev) => {
             ev.preventDefault();
             if (!isJoinable)
               return;
@@ -3742,8 +3742,8 @@
             selectVoiceChannel(state.channel.id);
             closeFunc();
           };
-        if (container.querySelector(".vi--view-channel"))
-          container.querySelector(".vi--view-channel").onclick = (ev) => {
+        if (modalContainer.querySelector(".vi--view-channel"))
+          modalContainer.querySelector(".vi--view-channel").onclick = (ev) => {
             ev.preventDefault();
             if (!channel)
               return;
@@ -3751,23 +3751,23 @@
             transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
             closeFunc();
           };
-        container.querySelectorAll(".member").forEach((memberElm) => {
+        modalContainer.querySelectorAll(".member").forEach((memberElm) => {
           let tag = memberElm.getAttribute("data-tag");
           memberElm.onclick = () => {
             utils__default["default"].copyText(tag);
             toasts__default["default"].show(`"${tag}" copied!`);
           };
         });
-        container.state = state;
-        container.members = members;
+        modalContainer.state = state;
+        modalContainer.members = members;
         rendering = false;
       };
-      let unpatchUpdater = events__default["default"].on("VoiceIndicators:EverySecond", container.render);
-      container.unmount = () => {
+      let unpatchUpdater = events__default["default"].on("VoiceIndicators:EverySecond", modalContainer.render);
+      modalContainer.unmount = () => {
         unpatchUpdater();
       };
-      container.render();
-      let modal = modals__default["default"].show(container);
+      modalContainer.render();
+      let modal = modals__default["default"].show(modalContainer);
       closeFunc = modal.close;
     }
 
@@ -3803,30 +3803,30 @@
         return;
       if (!await fetchUserVoiceState(user.id))
         return;
-      let container = dom__default["default"].parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
-      container.render = async () => {
+      let indicatorContainer = dom__default["default"].parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
+      indicatorContainer.render = async () => {
         let state = await fetchUserVoiceState(user.id);
         if (!state)
-          return container.remove();
-        if (_.isEqual(state, container.state))
+          return indicatorContainer.remove();
+        if (_.isEqual(state, indicatorContainer.state))
           return;
         let channel = ChannelStore.getChannel(state?.channel?.id);
         let tooltipText = `${channel ? "\u2705" : "\u274C"} ${state.guild ? state.guild?.name || "Unknown Guild" : "Private Call"} > ${state.channel?.name || "Plugin Deprecated"}`;
-        container.setAttribute("acord-tooltip-content", tooltipText);
-        container.replaceChildren(dom__default["default"].parseHTML(renderIcon(state)));
-        container.state = state;
+        indicatorContainer.setAttribute("acord-tooltip-content", tooltipText);
+        indicatorContainer.replaceChildren(dom__default["default"].parseHTML(renderIcon(state)));
+        indicatorContainer.state = state;
       };
-      let unpatchUpdater = events__default["default"].on("VoiceIndicators:EverySecond", container.render);
-      container.unmount = () => {
+      let unpatchUpdater = events__default["default"].on("VoiceIndicators:EverySecond", indicatorContainer.render);
+      indicatorContainer.unmount = () => {
         unpatchUpdater();
       };
-      container.render();
-      container.addEventListener("click", (e) => {
+      indicatorContainer.render();
+      indicatorContainer.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
         showModal(user.id);
       });
-      elm.appendChild(container);
+      elm.appendChild(indicatorContainer);
     }
 
     var styles = () => patcher.injectCSS(".vi--icon-container{display:flex;align-items:center;justify-content:center;background-color:#00000080;border-radius:50%;width:18px;height:18px;min-width:18px;min-height:18px;margin-left:4px;z-index:99}.vi--icon{display:flex;transition:filter .1s ease-in-out;color:#fff;width:14px;height:14px}.vi--icon:hover{filter:brightness(1.2)}.vi--red-dot{width:10px;height:10px;border-radius:50%;background-color:#ed4245;box-shadow:0 0 4px #ed4245}.vi--modal-root{display:flex;flex-direction:column}.vi--modal-root .vi--modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px}.vi--modal-root .vi--modal-header>.title-container{display:flex;align-items:center;margin-bottom:8px}.vi--modal-root .vi--modal-header>.title-container .icon{width:64px;height:64px;background-position:center;background-size:contain;border-radius:50%;margin-right:8px;background-color:#5865f2}.vi--modal-root .vi--modal-header>.title-container .title{display:flex;align-items:center}.vi--modal-root .vi--modal-header>.title-container .title .guild{font-size:28px;font-weight:600;color:#efefef}.vi--modal-root .vi--modal-header>.title-container .title .vanity{margin-left:8px;cursor:pointer}.vi--modal-root .vi--modal-header>.title-container .title .vanity svg{width:24px;height:24px}.vi--modal-root .vi--modal-header .vi--modal-close{width:24px;height:24px}.vi--modal-root .vi--modal-header .vi--modal-close svg{width:24px;height:24px}.vi--modal-root .vi--modal-content{padding:0 16px 16px}.vi--modal-root .vi--modal-content>.channel>.name-container{display:flex;align-items:center;justify-content:space-between;background-color:#00000040;padding:8px;border-radius:8px}.vi--modal-root .vi--modal-content>.channel>.name-container>.name{display:flex;font-size:20px;font-weight:400;color:#efefef;align-items:center}.vi--modal-root .vi--modal-content>.channel>.name-container>.name svg{margin-right:8px;width:24px;height:24px;pointer-events:none}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls{display:flex}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls>.control{padding:4px;cursor:pointer}.vi--modal-root .vi--modal-content>.channel>.name-container>.controls>.control svg{width:24px;height:24px}.vi--modal-root .vi--modal-content>.channel>.members-container{padding:8px 8px 8px 40px}.vi--modal-root .vi--modal-content>.channel>.members-container>.members{display:flex;flex-direction:column;overflow:auto;max-height:500px;height:100%}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member{display:flex;margin-bottom:4px;cursor:pointer;width:min-content;align-items:center}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.avatar{width:32px;height:32px;border-radius:50%;background-position:center;background-size:contain;margin-right:8px;background-color:#5865f2}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about{border-radius:9999px;background-color:#0003;display:flex;align-items:center;padding:8px}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container{display:flex;align-items:center;width:max-content;font-size:16px;color:#dfdfdf}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container .name{width:100%}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.name-container .discriminator{opacity:.5}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.state{background-color:transparent}.vi--modal-root .vi--modal-content>.channel>.members-container>.members .member>.about>.state svg{width:16px;height:16px}[class*=userText-] [class*=nameTag-],[class*=topSection-] [class*=nameTag-]{display:flex;align-items:center}[class*=userText-] [class*=nameTag-] *,[class*=topSection-] [class*=nameTag-] *{overflow:hidden}[class*=vi--],[class*=vi--] *{box-sizing:border-box}");

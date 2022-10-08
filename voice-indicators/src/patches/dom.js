@@ -44,14 +44,14 @@ async function patchIndicators(elm) {
 
   if (!await fetchUserVoiceState(user.id)) return;
 
-  let container = dom.parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
+  let indicatorContainer = dom.parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
 
-  container.render = async () => {
+  indicatorContainer.render = async () => {
     let state = await fetchUserVoiceState(user.id);
     if (!state)
-      return container.remove();
+      return indicatorContainer.remove();
 
-    if (_.isEqual(state, container.state)) return;
+    if (_.isEqual(state, indicatorContainer.state)) return;
 
     let channel = ChannelStore.getChannel(state?.channel?.id);
 
@@ -59,21 +59,21 @@ async function patchIndicators(elm) {
     // if (!container.tooltip)
     //   container.tooltip = tooltips.create(container, tooltipText);
 
-    container.setAttribute("acord-tooltip-content", tooltipText);
-    container.replaceChildren(dom.parseHTML(renderIcon(state)));
+    indicatorContainer.setAttribute("acord-tooltip-content", tooltipText);
+    indicatorContainer.replaceChildren(dom.parseHTML(renderIcon(state)));
     // container.tooltip.label = tooltipText;
-    container.state = state;
+    indicatorContainer.state = state;
   }
 
-  let unpatchUpdater = events.on("VoiceIndicators:EverySecond", container.render);
+  let unpatchUpdater = events.on("VoiceIndicators:EverySecond", indicatorContainer.render);
 
-  container.unmount = () => {
+  indicatorContainer.unmount = () => {
     unpatchUpdater();
   }
 
-  container.render();
+  indicatorContainer.render();
 
-  container.addEventListener("click", /** @param {Event} e */(e) => {
+  indicatorContainer.addEventListener("click", /** @param {Event} e */(e) => {
     e.preventDefault();
     e.stopPropagation();
     
@@ -81,5 +81,5 @@ async function patchIndicators(elm) {
     showModal(user.id);
   });
 
-  elm.appendChild(container);
+  elm.appendChild(indicatorContainer);
 }
