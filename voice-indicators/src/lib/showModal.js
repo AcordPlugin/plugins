@@ -1,4 +1,3 @@
-import swc from "@acord/modules/swc";
 import dom from "@acord/dom";
 import utils from "@acord/utils";
 import events from "@acord/events";
@@ -36,32 +35,35 @@ export async function showModal(userId) {
 
     modalContainer.querySelector(".vi--modal-close").onclick = closeFunc;
 
-    if (modalContainer.querySelector(".vi--vanity"))
-      modalContainer.querySelector(".vi--vanity").onclick = (ev) => {
+    utils.ifExists(modalContainer.querySelector(".vi--vanity"), (item) => {
+      item.onclick = (ev) => {
         ev.preventDefault();
         if (!state?.guild?.vanity) return;
         InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: state?.guild?.vanity });
         toasts.show(`Joining to "${state.guild.name}"!`);
         closeFunc();
       }
+    })
 
-    if (modalContainer.querySelector(".vi--join-channel"))
-      modalContainer.querySelector(".vi--join-channel").onclick = (ev) => {
+    utils.ifExists(modalContainer.querySelector(".vi--join-channel"), (item) => {
+      item.onclick = (ev) => {
         ev.preventDefault();
         if (!isJoinable) return;
         toasts.show(`Joining to "${state.channel.name}"!`);
         selectVoiceChannel(state.channel.id);
         closeFunc();
       }
+    });
 
-    if (modalContainer.querySelector(".vi--view-channel"))
-      modalContainer.querySelector(".vi--view-channel").onclick = (ev) => {
+    utils.ifExists(modalContainer.querySelector(".vi--view-channel"), (item) => {
+      item.onclick = (ev) => {
         ev.preventDefault();
         if (!channel) return;
         toasts.show(`Viewing "${state.channel.name}"!`);
         transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
         closeFunc();
       }
+    });
 
     modalContainer.querySelectorAll(".member").forEach((memberElm) => {
       let tag = memberElm.getAttribute("data-tag");

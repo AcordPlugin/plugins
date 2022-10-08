@@ -3724,8 +3724,8 @@
         let isJoinable = !channel ? false : channel.type == 3 ? true : PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel);
         modalContainer.replaceChildren(dom__default["default"].parseHTML(renderModal({ members, state, isJoinable, channel })));
         modalContainer.querySelector(".vi--modal-close").onclick = closeFunc;
-        if (modalContainer.querySelector(".vi--vanity"))
-          modalContainer.querySelector(".vi--vanity").onclick = (ev) => {
+        utils__default["default"].ifExists(modalContainer.querySelector(".vi--vanity"), (item) => {
+          item.onclick = (ev) => {
             ev.preventDefault();
             if (!state?.guild?.vanity)
               return;
@@ -3733,8 +3733,9 @@
             toasts__default["default"].show(`Joining to "${state.guild.name}"!`);
             closeFunc();
           };
-        if (modalContainer.querySelector(".vi--join-channel"))
-          modalContainer.querySelector(".vi--join-channel").onclick = (ev) => {
+        });
+        utils__default["default"].ifExists(modalContainer.querySelector(".vi--join-channel"), (item) => {
+          item.onclick = (ev) => {
             ev.preventDefault();
             if (!isJoinable)
               return;
@@ -3742,8 +3743,9 @@
             selectVoiceChannel(state.channel.id);
             closeFunc();
           };
-        if (modalContainer.querySelector(".vi--view-channel"))
-          modalContainer.querySelector(".vi--view-channel").onclick = (ev) => {
+        });
+        utils__default["default"].ifExists(modalContainer.querySelector(".vi--view-channel"), (item) => {
+          item.onclick = (ev) => {
             ev.preventDefault();
             if (!channel)
               return;
@@ -3751,6 +3753,7 @@
             transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
             closeFunc();
           };
+        });
         modalContainer.querySelectorAll(".member").forEach((memberElm) => {
           let tag = memberElm.getAttribute("data-tag");
           memberElm.onclick = () => {
