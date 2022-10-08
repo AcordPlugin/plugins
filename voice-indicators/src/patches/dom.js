@@ -58,7 +58,7 @@ async function patchIndicators(user, elm) {
 let syncCache = {};
 
 const tht = (user, elm) => {
-  if (!(Date.now() - (syncCache[user.id] || 0) > 10)) return;
+  if (!((Date.now() - (syncCache[user.id] || 0)) > 100)) return;
   syncCache[user.id] = Date.now();
   patchIndicators(user, elm);
 };
