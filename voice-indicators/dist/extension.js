@@ -3711,11 +3711,11 @@
       let state = await fetchUserVoiceState(userId);
       let channelId = state.channel.id;
       let rendering = false;
-      modalContainer.render = async () => {
+      modalContainer.render = async (ignoreMembers) => {
         if (rendering)
           return;
         rendering = true;
-        let members = await fetchVoiceMembers(channelId);
+        let members = ignoreMembers ? [] : await fetchVoiceMembers(channelId);
         if (JSON.stringify(members) == JSON.stringify(modalContainer.members)) {
           rendering = false;
           return;
@@ -3765,11 +3765,11 @@
         modalContainer.members = members;
         rendering = false;
       };
-      let unpatchUpdater = events__default["default"].on("VoiceIndicators:EverySecond", modalContainer.render);
+      let unpatchUpdater = events__default["default"].on("VoiceIndicators:EverySecond", () => modalContainer.render(false));
       modalContainer.unmount = () => {
         unpatchUpdater();
       };
-      modalContainer.render();
+      modalContainer.render(true);
       let modal = modals__default["default"].show(modalContainer, { size: "large" });
       closeFunc = modal.close;
     }

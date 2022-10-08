@@ -17,11 +17,11 @@ export async function showModal(userId) {
   let channelId = state.channel.id;
 
   let rendering = false;
-  modalContainer.render = async () => {
+  modalContainer.render = async (ignoreMembers) => {
     if (rendering) return;
     rendering = true;
 
-    let members = await fetchVoiceMembers(channelId);
+    let members = ignoreMembers ? [] : await fetchVoiceMembers(channelId);
 
     if (JSON.stringify(members) == JSON.stringify(modalContainer.members)) {
       rendering = false;
@@ -79,13 +79,13 @@ export async function showModal(userId) {
     rendering = false;
   } 
 
-  let unpatchUpdater = events.on("VoiceIndicators:EverySecond", modalContainer.render);
+  let unpatchUpdater = events.on("VoiceIndicators:EverySecond", () => modalContainer.render(false));
 
   modalContainer.unmount = () => {
     unpatchUpdater();
   }
 
-  modalContainer.render();
+  modalContainer.render(true);
 
   let modal = modals.show(modalContainer, { size: "large" });
   closeFunc = modal.close;
