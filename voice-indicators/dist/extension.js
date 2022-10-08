@@ -3780,16 +3780,16 @@
         return;
       let indicatorContainer = dom__default["default"].parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
       indicatorContainer.render = async () => {
-        let state2 = await fetchUserVoiceState(user.id);
-        if (!state2)
+        let state = await fetchUserVoiceState(user.id);
+        if (!state)
           return indicatorContainer.remove();
-        if (_.isEqual(state2, indicatorContainer.state))
+        if (_.isEqual(state, indicatorContainer.state))
           return;
-        let channel = ChannelStore.getChannel(state2?.channel?.id);
-        let tooltipText = `${channel ? "\u2705" : "\u274C"} ${state2.guild ? state2.guild?.name || "Unknown Guild" : "Private Call"} > ${state2.channel?.name || "Plugin Deprecated"}`;
+        let channel = ChannelStore.getChannel(state?.channel?.id);
+        let tooltipText = `${channel ? "\u2705" : "\u274C"} ${state.guild ? state.guild?.name || "Unknown Guild" : "Private Call"} > ${state.channel?.name || "Plugin Deprecated"}`;
         indicatorContainer.setAttribute("acord-tooltip-content", tooltipText);
-        indicatorContainer.replaceChildren(dom__default["default"].parseHTML(renderIcon(state2)));
-        indicatorContainer.state = state2;
+        indicatorContainer.replaceChildren(dom__default["default"].parseHTML(renderIcon(state)));
+        indicatorContainer.state = state;
       };
       let unpatchUpdater = events__default["default"].on("VoiceIndicators:EverySecond", indicatorContainer.render);
       indicatorContainer.unmount = () => {
@@ -3799,7 +3799,7 @@
       indicatorContainer.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
-        showModal(state);
+        showModal(indicatorContainer.state);
       });
       elm.appendChild(indicatorContainer);
     }
