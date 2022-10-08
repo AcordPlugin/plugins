@@ -3802,7 +3802,7 @@
     }
     let syncCache = {};
     const tht = (user, elm) => {
-      if (!(Date.now() - (syncCache[user.id] || Date.now()) > 10))
+      if (!(Date.now() - (syncCache[user.id] || 0) > 10))
         return;
       syncCache[user.id] = Date.now();
       patchIndicators(user, elm);
