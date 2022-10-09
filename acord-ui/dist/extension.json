@@ -8,7 +8,7 @@
     ],
     "description": "Acord User Interface",
     "version": "1.0.0",
-    "locked": true,
     "license": "MIT"
-  }
+  },
+  "locked": true
 }
