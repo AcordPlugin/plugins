@@ -13,7 +13,7 @@ export const {
   React,
   modals: {
     actions: {
-      openModal
+      show: openModal
     },
     ModalRoot
   }

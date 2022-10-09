@@ -1,3 +1,101 @@
 .acord {
-  
+  &--modal-root {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  &--modal-header {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &--modal-title {
+    font-size: 28px;
+    color: #efefef;
+    font-weight: 600;
+  }
+
+  &--modal-close {
+    width: 24px;
+    height: 24px;
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &--modal-body {
+    display: flex;
+    flex-direction: column;
+    max-height: 550px;
+    height: 100%;
+
+    &--plugins {
+      .import-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 16px;
+
+        .input-container {
+          width: 100%;
+        }
+      }
+
+      .extensions-container {
+        display: flex;
+        flex-direction: column;
+
+        .extension {
+          display: flex;
+          flex-direction: column;
+          background-color: rgba(0, 0, 0, 0.15);
+          margin-bottom: 8px;
+          border-radius: 8px;
+          color: whitesmoke;
+
+          & > .top {
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            & > .right {
+              display: flex;
+              flex-direction: column;
+              .title-and-version {
+                display: flex;
+                align-items: flex-end;
+                
+                .title {
+                  font-size: 18px;
+                  font-weight: 500;
+                  margin-right: 4px;
+                }
+                .version {
+                  font-size: 14px;
+                  font-weight: 200;
+                  opacity: 0.5;
+                  margin-right: 4px;
+                }
+              }
+              .authors {
+                font-size: 16px;
+                font-weight: 200;
+                opacity: 0.5;
+              }
+            }
+          }
+
+          & > .bottom {
+
+          }
+        }
+      }
+    }
+  }
 }
