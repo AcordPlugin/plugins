@@ -1,0 +1,14 @@
+{
+  "hash": "e3138214508b81a1b82bbae53b98f59922f3a40cdb0c61755e92a9035e7f5c8c",
+  "type": "plugin",
+  "about": {
+    "name": "Acord UI",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Acord User Interface",
+    "version": "1.0.0",
+    "locked": true,
+    "license": "MIT"
+  }
+}
