@@ -178,6 +178,8 @@
     grid-template-columns: max-content min-content;
     grid-template-rows: max-content;
     align-items: center;
+    cursor: pointer;
+    
     & > input {
       grid-column: 2/3;
       grid-row: 1/2;
