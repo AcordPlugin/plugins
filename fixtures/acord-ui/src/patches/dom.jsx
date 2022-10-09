@@ -14,7 +14,7 @@ import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 let optionsClasses = swc.findByProps("item", "selected", "separator");
 let anchorClasses = swc.findByProps("anchor", "anchorUnderlineOnHover");
 
-let extensionsRegex = /^https\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/([^\/]+).*\/dist\/$/;
+let extensionsRegex = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/users\/[^\/]+\/([^\/]+).*\/dist\/$/g;
 
 export function patchDOM() {
 
@@ -45,10 +45,6 @@ export function patchDOM() {
                 });
               }
             ],
-            // [
-            //   dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("ABOUT")}</div>`),
-            //   () => { }
-            // ],
             dom.parseHTML(`<div class="${optionsClasses.separator}"></div>`),
           ];
 
@@ -72,6 +68,8 @@ export function patchDOM() {
           if (!extensionsRegex.test(href)) return;
 
           let extensionName = [...(href.match(extensionsRegex) || [])]?.[1];
+
+          elm.textContent = `${elm.textContent} (${i18n.fmt("IMPORT_EXTENSION")})`;
 
           elm.addEventListener("click", async (e) => {
             e.preventDefault();

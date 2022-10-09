@@ -425,7 +425,7 @@
 
   let optionsClasses = swc__default["default"].findByProps("item", "selected", "separator");
   let anchorClasses = swc__default["default"].findByProps("anchor", "anchorUnderlineOnHover");
-  let extensionsRegex = /^https\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/([^\/]+).*\/dist\/$/;
+  let extensionsRegex = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/users\/[^\/]+\/([^\/]+).*\/dist\/$/g;
   function patchDOM() {
     patchContainer.add(
       events__default["default"].on("domMutation", (mut) => {
@@ -487,6 +487,7 @@
             if (!extensionsRegex.test(href))
               return;
             let extensionName = [...href.match(extensionsRegex) || []]?.[1];
+            elm.textContent = `${elm.textContent} (${i18n__default["default"].fmt("IMPORT_EXTENSION")})`;
             elm.addEventListener("click", async (e) => {
               e.preventDefault();
               e.stopPropagation();
