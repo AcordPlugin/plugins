@@ -19,9 +19,9 @@ export function ExtensionSettings({ url, extension }) {
     },
     checkbox: (setting) => {
       return <>
-        <div className="left">
-          <div className="top">{setting.name}</div>
-          {setting.description ? <div className="bottom">{setting.description}</div> : null}
+        <div className="left info-side">
+          <div className="name">{setting.name}</div>
+          {setting.description ? <div className="description">{setting.description}</div> : null}
         </div>
         <div className="right">
           <CheckBox
@@ -39,9 +39,10 @@ export function ExtensionSettings({ url, extension }) {
     {
       extensionSrc.settings.map(setting => {
         return (
-          <div class={`container container--${setting.type}`}>
+          (setting.condition ? (eval(`(($)=>{ return (${setting.condition}) })`))(persist.ghost.settings || {}) : true) ? <div class={`container container--${setting.type}`}>
             {types[setting.type](setting)}
           </div>
+          : null
         )
       })
     }

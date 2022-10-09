@@ -181,12 +181,67 @@
           display: flex;
           align-items: center;
           width: 100%;
+          gap: 4px;
+          font-size: 20px;
 
-          
+          .left {
+            width: 8px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 9999px;
+          }
+
+          .center {
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            opacity: 0.85;
+          }
+
+          .right {
+            width: 100%;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 9999px;
+          }
+        }
+
+        .info-side {
+          width: 80%;
+          display: flex;
+          flex-direction: column;
+
+          .name {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            opacity: 0.9;
+          }
+          .description {
+            margin-top: 4px;
+            color: white;
+            opacity: 0.85;
+          }
         }
 
         &--checkbox {
+          padding: 0px 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
 
+          & > .left {
+            width: 80%;
+
+          }
+
+          & > .right {
+            width: 20%;
+            align-items: center;
+            justify-content: flex-end;
+            display: flex;
+            font-size: 24px;
+          }
         }
       }
     }
