@@ -2,6 +2,7 @@ import swc from "@acord/modules/swc";
 import dom from "@acord/dom";
 import utils from "@acord/utils";
 import events from "@acord/events";
+import { persist } from "@acord/data";
 import patchContainer from "../other/patchContainer.js";
 import { renderIcon } from "../lib/renderIcon.js";
 import { fetchUserVoiceState } from "../other/api.js";
@@ -49,6 +50,8 @@ async function patchIndicators(user, elm) {
   indicatorContainer.addEventListener("click", /** @param {Event} e */(e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!!persist.ghost.settings?.redacted) return;
 
     // transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
     showModal(indicatorContainer.state);

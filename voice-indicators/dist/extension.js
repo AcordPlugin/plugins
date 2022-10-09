@@ -3899,6 +3899,8 @@
       indicatorContainer.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (!!data.persist.ghost.settings?.redacted)
+          return;
         showModal(indicatorContainer.state);
       });
       elm.appendChild(indicatorContainer);
