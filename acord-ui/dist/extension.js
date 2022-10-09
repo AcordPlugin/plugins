@@ -403,9 +403,9 @@
               } catch (err) {
                 let errStr = `${err}`;
                 if (errStr.includes("EXTENSION_ENABLED")) {
-                  toasts__default["default"].error(i18n__default["default"].fmt("EXTENSION_ALREADY_ENABLED", extensionName));
+                  toasts__default["default"].show.error(i18n__default["default"].fmt("EXTENSION_ALREADY_ENABLED", extensionName));
                 } else {
-                  toasts__default["default"].error(errStr);
+                  toasts__default["default"].show.error(errStr);
                 }
               }
             });

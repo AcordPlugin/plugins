@@ -86,9 +86,9 @@ export function patchDOM() {
             } catch (err) {
               let errStr = `${err}`;
               if (errStr.includes("EXTENSION_ENABLED")) {
-                toasts.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", extensionName));
+                toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", extensionName));
               } else {
-                toasts.error(errStr);
+                toasts.show.error(errStr);
               }
             }
           })
