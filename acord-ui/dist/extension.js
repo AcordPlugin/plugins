@@ -1,4 +1,4 @@
-(function (swc, dom, events, patcher) {
+(function (swc, dom, events, common, patcher) {
   'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -90,4 +90,4 @@
 
   return index;
 
-})(acord.modules.swc, acord.dom, acord.events, acord.patcher);
+})(acord.modules.swc, acord.dom, acord.events, acord.modules.common, acord.patcher);

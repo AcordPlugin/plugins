@@ -2,6 +2,7 @@ import swc from "@acord/modules/swc";
 import dom from "@acord/dom";
 import events from "@acord/events";
 import patchContainer from "../other/patchContainer.js";
+import { openModal } from "../other/apis.js";
 
 let optionsClasses = swc.findByProps("item", "selected", "separator");
 let buttonClasses = swc.findByProps("button", "colorBrand", "lookFilled");
@@ -21,7 +22,9 @@ export function patchDOM() {
             dom.parseHTML(`<div class="${optionsClasses.header}">Acord</div>`),
             [
               dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">Plugins</div>`),
-              () => { }
+              () => { 
+                
+              }
             ],
             [
               dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">Themes</div>`),
