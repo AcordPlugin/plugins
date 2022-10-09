@@ -1,6 +1,9 @@
 import { ModalRoot } from "../../other/apis.js";
 import { COLORS } from "../../other/constants.js";
 import { CloseIcon } from "../icons/CloseIcon.jsx";
+import swc from "@acord/modules/swc";
+
+const scrollClasses = swc.findByProps("thin", "scrollerBase");
 
 export function ModalBase({ e, body, name, bodyId }) {
 
@@ -16,7 +19,7 @@ export function ModalBase({ e, body, name, bodyId }) {
           <CloseIcon color={COLORS.SECONDARY} />
         </div>
       </div>
-      <div className={`acord--modal-body acord--modal-body--${bodyId}`}>
+      <div className={`acord--modal-body acord--modal-body--${bodyId} ${scrollClasses.thin}`}>
         {body}
       </div>
     </ModalRoot>

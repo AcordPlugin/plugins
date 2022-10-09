@@ -33,8 +33,9 @@
   &--modal-body {
     display: flex;
     flex-direction: column;
-    max-height: 550px;
-    height: 100%;
+    height: 550px;
+    overflow: auto;
+    contain: content;
 
     &--extensions {
       .import-container {
@@ -53,8 +54,8 @@
         flex-direction: column;
         max-height: 500px;
         height: 500px;
-        contain: content;
         overflow: auto;
+        contain: content;
 
         .extension {
           display: flex;
@@ -174,7 +175,20 @@
     }
 
     &--extension-settings {
-      
+      .container {
+        margin-bottom: 8px;
+        &--header {
+          display: flex;
+          align-items: center;
+          width: 100%;
+
+          
+        }
+
+        &--checkbox {
+
+        }
+      }
     }
   }
 

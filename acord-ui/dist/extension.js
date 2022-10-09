@@ -87,6 +87,7 @@
     }));
   }
 
+  const scrollClasses$1 = swc__default["default"].findByProps("thin", "scrollerBase");
   function ModalBase({ e, body, name, bodyId }) {
     return /* @__PURE__ */ React__namespace.createElement(ModalRoot, {
       transitionState: e.transitionState,
@@ -102,7 +103,7 @@
     }, /* @__PURE__ */ React__namespace.createElement(CloseIcon, {
       color: COLORS.SECONDARY
     }))), /* @__PURE__ */ React__namespace.createElement("div", {
-      className: `acord--modal-body acord--modal-body--${bodyId}`
+      className: `acord--modal-body acord--modal-body--${bodyId} ${scrollClasses$1.thin}`
     }, body));
   }
 
@@ -272,7 +273,42 @@
   }
 
   function ExtensionSettings({ url, extension }) {
-    return null;
+    react.useNest(extensions__default["default"].nests.enabled);
+    react.useNest(extensions__default["default"].nests.enabled.ghost[url].persist);
+    const extensionSrc = extensions__default["default"].nests.enabled.ghost[url];
+    const persist = extensionSrc.persist;
+    const types = {
+      header: (setting) => {
+        return /* @__PURE__ */ React__namespace.createElement(React__namespace.Fragment, null, /* @__PURE__ */ React__namespace.createElement("div", {
+          className: "left"
+        }), /* @__PURE__ */ React__namespace.createElement("div", {
+          className: "center"
+        }, setting.name), /* @__PURE__ */ React__namespace.createElement("div", {
+          className: "right"
+        }));
+      },
+      checkbox: (setting) => {
+        return /* @__PURE__ */ React__namespace.createElement(React__namespace.Fragment, null, /* @__PURE__ */ React__namespace.createElement("div", {
+          className: "left"
+        }, /* @__PURE__ */ React__namespace.createElement("div", {
+          className: "top"
+        }, setting.name), setting.description ? /* @__PURE__ */ React__namespace.createElement("div", {
+          className: "bottom"
+        }, setting.description) : null), /* @__PURE__ */ React__namespace.createElement("div", {
+          className: "right"
+        }, /* @__PURE__ */ React__namespace.createElement(CheckBox, {
+          checked: persist.ghost.settings?.[setting.property] ?? setting.value,
+          onChange: (e) => {
+            persist.store.settings[setting.property] = e.target.checked;
+          }
+        })));
+      }
+    };
+    return /* @__PURE__ */ React__namespace.createElement(React__namespace.Fragment, null, extensionSrc.settings.map((setting) => {
+      return /* @__PURE__ */ React__namespace.createElement("div", {
+        class: `container container--${setting.type}`
+      }, types[setting.type](setting));
+    }));
   }
 
   const scrollClasses = swc__default["default"].findByProps("thin", "scrollerBase");
@@ -354,7 +390,7 @@
           utils__default["default"].copyText(url);
           toasts__default["default"].show(i18n__default["default"].fmt("X_COPIED", url));
         }
-      }, /* @__PURE__ */ React.createElement(CopyIcon, null)), !!extensions__default["default"].nests.enabled.ghost?.[url] ? /* @__PURE__ */ React.createElement("div", {
+      }, /* @__PURE__ */ React.createElement(CopyIcon, null)), Array.isArray(extensions__default["default"].nests.enabled.ghost?.[url]?.settings) ? /* @__PURE__ */ React.createElement("div", {
         className: "control",
         "acord-tooltip-content": i18n__default["default"].fmt("OPEN_EXTENSION_SETTINGS"),
         onClick: () => {
@@ -459,7 +495,7 @@
     );
   }
 
-  var styles = () => patcher.injectCSS(".acord--modal-root{display:flex;flex-direction:column;padding:16px;transform:translate(-50%,-50%)!important}.acord--modal-header{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.acord--modal-title{font-size:28px;color:#efefef;font-weight:600}.acord--modal-close{width:24px;height:24px;cursor:pointer}.acord--modal-close svg{width:24px;height:24px}.acord--modal-body{display:flex;flex-direction:column;max-height:550px;height:100%}.acord--modal-body--extensions .import-container{display:flex;align-items:center;gap:8px;margin-bottom:16px}.acord--modal-body--extensions .import-container .input-container{width:100%}.acord--modal-body--extensions .extensions-container{display:flex;flex-direction:column;max-height:500px;height:500px;contain:content;overflow:auto}.acord--modal-body--extensions .extensions-container .extension{display:flex;flex-direction:column;background-color:#00000026;margin-bottom:8px;border-radius:8px;color:#f5f5f5;contain:content}.acord--modal-body--extensions .extensions-container .extension.locked{opacity:.75;pointer-events:none;filter:brightness(.5)}.acord--modal-body--extensions .extensions-container .extension>.top{padding:8px;display:flex;align-items:center;justify-content:space-between;background-color:#00000026}.acord--modal-body--extensions .extensions-container .extension>.top>.right{display:flex;flex-direction:column}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version{display:flex;align-items:flex-end;margin-bottom:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons{display:flex;align-items:center}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .title{font-size:18px;font-weight:500;margin-right:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons{display:flex;gap:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons .acord--icon{width:14px;height:14px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .version{margin-left:4px;font-size:14px;font-weight:200;opacity:.5;margin-right:4px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status{font-size:12px;font-weight:200;opacity:.75;display:flex}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status .authors{margin-right:4px;opacity:.75}.acord--modal-body--extensions .extensions-container .extension>.top>.left{font-size:26px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom{padding:8px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--extensions .extensions-container .extension>.bottom>.left .description{opacity:.9}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right{display:flex}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control{background-color:#00000026;padding:8px;border-radius:8px;margin-left:4px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover{background-color:#00000040}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover svg{opacity:.95}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control svg{width:18px;height:18px}.acord--checkbox-container{display:grid;gap:8px;grid-template-columns:max-content min-content;grid-template-rows:max-content;align-items:center}.acord--checkbox-container>input{grid-column:2/3;grid-row:1/2}.acord--checkbox-container>div{grid-column:2/3;grid-row:1/2}.acord--checkbox{width:100%;height:100%;appearance:none;margin:0;padding:0;cursor:pointer}.acord--checkbox:checked~.acord--checkbox-visual{background:hsl(152deg,45%,48%)}.acord--checkbox:checked~.acord--checkbox-visual>div{left:100%;transform:translate(-100%);background:white;display:grid}.acord--checkbox:checked~.acord--checkbox-visual>div:before{background-color:#43b17e;clip-path:polygon(25% 75%,33% 100%,100% 20%,80% 0%)}.acord--checkbox:checked~.acord--checkbox-visual>div:after{background-color:#43b17e;clip-path:polygon(20% 45%,0% 65%,33.33% 100%,45% 75%)}.acord--checkbox~.acord--checkbox-visual>div{position:relative;left:0;height:.8em;width:.8em;background:white;pointer-events:none;transition:inherit;border-radius:9999px;display:grid;justify-items:stretch;align-items:stretch;padding:.1em}.acord--checkbox~.acord--checkbox-visual>div:before{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(20% 0%,0% 20%,80% 100%,100% 80%)}.acord--checkbox~.acord--checkbox-visual>div:after{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(0% 80%,20% 100%,100% 20%,80% 0%)}.acord--checkbox-visual{cursor:pointer;position:relative;background:hsl(218deg,4%,46%);transition:.3s cubic-bezier(.83,0,.17,1);font-size:1em;width:2em;height:1em;padding:.1em;border-radius:9999px;pointer-events:none}");
+  var styles = () => patcher.injectCSS(".acord--modal-root{display:flex;flex-direction:column;padding:16px;transform:translate(-50%,-50%)!important}.acord--modal-header{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.acord--modal-title{font-size:28px;color:#efefef;font-weight:600}.acord--modal-close{width:24px;height:24px;cursor:pointer}.acord--modal-close svg{width:24px;height:24px}.acord--modal-body{display:flex;flex-direction:column;height:550px;overflow:auto;contain:content}.acord--modal-body--extensions .import-container{display:flex;align-items:center;gap:8px;margin-bottom:16px}.acord--modal-body--extensions .import-container .input-container{width:100%}.acord--modal-body--extensions .extensions-container{display:flex;flex-direction:column;max-height:500px;height:500px;overflow:auto;contain:content}.acord--modal-body--extensions .extensions-container .extension{display:flex;flex-direction:column;background-color:#00000026;margin-bottom:8px;border-radius:8px;color:#f5f5f5;contain:content}.acord--modal-body--extensions .extensions-container .extension.locked{opacity:.75;pointer-events:none;filter:brightness(.5)}.acord--modal-body--extensions .extensions-container .extension>.top{padding:8px;display:flex;align-items:center;justify-content:space-between;background-color:#00000026}.acord--modal-body--extensions .extensions-container .extension>.top>.right{display:flex;flex-direction:column}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version{display:flex;align-items:flex-end;margin-bottom:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons{display:flex;align-items:center}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .title{font-size:18px;font-weight:500;margin-right:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons{display:flex;gap:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons .acord--icon{width:14px;height:14px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .version{margin-left:4px;font-size:14px;font-weight:200;opacity:.5;margin-right:4px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status{font-size:12px;font-weight:200;opacity:.75;display:flex}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status .authors{margin-right:4px;opacity:.75}.acord--modal-body--extensions .extensions-container .extension>.top>.left{font-size:26px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom{padding:8px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--extensions .extensions-container .extension>.bottom>.left .description{opacity:.9}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right{display:flex}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control{background-color:#00000026;padding:8px;border-radius:8px;margin-left:4px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover{background-color:#00000040}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover svg{opacity:.95}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control svg{width:18px;height:18px}.acord--modal-body--extension-settings .container{margin-bottom:8px}.acord--modal-body--extension-settings .container--header{display:flex;align-items:center;width:100%}.acord--checkbox-container{display:grid;gap:8px;grid-template-columns:max-content min-content;grid-template-rows:max-content;align-items:center}.acord--checkbox-container>input{grid-column:2/3;grid-row:1/2}.acord--checkbox-container>div{grid-column:2/3;grid-row:1/2}.acord--checkbox{width:100%;height:100%;appearance:none;margin:0;padding:0;cursor:pointer}.acord--checkbox:checked~.acord--checkbox-visual{background:hsl(152deg,45%,48%)}.acord--checkbox:checked~.acord--checkbox-visual>div{left:100%;transform:translate(-100%);background:white;display:grid}.acord--checkbox:checked~.acord--checkbox-visual>div:before{background-color:#43b17e;clip-path:polygon(25% 75%,33% 100%,100% 20%,80% 0%)}.acord--checkbox:checked~.acord--checkbox-visual>div:after{background-color:#43b17e;clip-path:polygon(20% 45%,0% 65%,33.33% 100%,45% 75%)}.acord--checkbox~.acord--checkbox-visual>div{position:relative;left:0;height:.8em;width:.8em;background:white;pointer-events:none;transition:inherit;border-radius:9999px;display:grid;justify-items:stretch;align-items:stretch;padding:.1em}.acord--checkbox~.acord--checkbox-visual>div:before{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(20% 0%,0% 20%,80% 100%,100% 80%)}.acord--checkbox~.acord--checkbox-visual>div:after{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(0% 80%,20% 100%,100% 20%,80% 0%)}.acord--checkbox-visual{cursor:pointer;position:relative;background:hsl(218deg,4%,46%);transition:.3s cubic-bezier(.83,0,.17,1);font-size:1em;width:2em;height:1em;padding:.1em;border-radius:9999px;pointer-events:none}");
 
   function patchStyles() {
     patchContainer.add(styles());
