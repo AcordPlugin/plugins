@@ -1,9 +1,10 @@
-(function (swc, dom, events, common, patcher) {
+(function (swc, i18n, dom, events, common, patcher) {
   'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
   var swc__default = /*#__PURE__*/_interopDefaultLegacy(swc);
+  var i18n__default = /*#__PURE__*/_interopDefaultLegacy(i18n);
   var dom__default = /*#__PURE__*/_interopDefaultLegacy(dom);
   var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
 
@@ -35,7 +36,7 @@
         mut.addedNodes.forEach((node) => {
           if (node.nodeType === Node.TEXT_NODE)
             return;
-          node.querySelectorAll(`.${optionsClasses.side}`).forEach(async (elm) => {
+          node.querySelectorAll(`[aria-label="${i18n__default["default"].Messages.USER_SETTINGS}"].${optionsClasses.side}`).forEach(async (elm) => {
             if (elm.querySelector(".acord--patched"))
               return;
             elm.classList.add("acord--patched");
@@ -90,4 +91,4 @@
 
   return index;
 
-})(acord.modules.swc, acord.dom, acord.events, acord.modules.common, acord.patcher);
+})(acord.modules.swc, acord.modules.common.i18n, acord.dom, acord.events, acord.modules.common, acord.patcher);

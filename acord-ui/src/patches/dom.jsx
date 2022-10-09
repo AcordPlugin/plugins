@@ -1,4 +1,5 @@
 import swc from "@acord/modules/swc";
+import i18n from "@acord/modules/common/i18n";
 import dom from "@acord/dom";
 import events from "@acord/events";
 import patchContainer from "../other/patchContainer.js";
@@ -14,7 +15,7 @@ export function patchDOM() {
       mut.addedNodes.forEach((node) => {
         if (node.nodeType === Node.TEXT_NODE) return;
 
-        node.querySelectorAll(`.${optionsClasses.side}`).forEach(async (elm) => {
+        node.querySelectorAll(`[aria-label="${i18n.Messages.USER_SETTINGS}"].${optionsClasses.side}`).forEach(async (elm) => {
           if (elm.querySelector(".acord--patched")) return;
           elm.classList.add("acord--patched");
 
