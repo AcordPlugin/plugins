@@ -30,17 +30,21 @@ export function patchDOM() {
           let toAdd = [
             dom.parseHTML(`<div class="${optionsClasses.header}">Acord</div>`),
             [
-              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("EXTENSIONS")}</div>`),
+              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("PLUGINS")}</div>`),
               () => { 
                 showModal((e) => {
-                  return <ModalBase e={e} name={i18n.fmt("EXTENSIONS")} body={<ExtensionsModal />} bodyId="extensions" />
+                  return <ModalBase e={e} name={i18n.fmt("PLUGINS")} body={<ExtensionsModal extensionsType="plugin" />} bodyId="extensions" />
                 });
               }
             ],
-            // [
-            //   dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("THEMES")}</div>`),
-            //   () => { }
-            // ],
+            [
+              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("THEMES")}</div>`),
+              () => {
+                showModal((e) => {
+                  return <ModalBase e={e} name={i18n.fmt("THEMES")} body={<ExtensionsModal extensionsType="theme" />} bodyId="extensions" />
+                });
+              }
+            ],
             // [
             //   dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("ABOUT")}</div>`),
             //   () => { }

@@ -18,16 +18,18 @@ import { ExtensionSettings } from "./ExtensionSettings.jsx";
 
 const scrollClasses = swc.findByProps("thin", "scrollerBase");
 
-export function ExtensionsModal() {
+export function ExtensionsModal({ extensionsType }) {
   useNest(extensions.nests.loaded);
   useNest(extensions.nests.enabled);
   const [importURL, setImportURL] = React.useState("");
+
+  let extensionsTypeUpper = extensionsType.toUpperCase();
 
   return <>
     <div className="import-container">
       <div className="input-container">
         <TextInput
-          placeholder={i18n.fmt("IMPORT_PLUGIN_PLACEHOLDER")}
+          placeholder={i18n.fmt(`IMPORT_${extensionsTypeUpper}_PLACEHOLDER`)}
           value={importURL}
           onChange={(e) => {
             setImportURL(e.target.value);
@@ -51,12 +53,12 @@ export function ExtensionsModal() {
               }
             }
           }}
-        >{i18n.fmt("IMPORT_EXTENSION")}</Button>
+        >{i18n.fmt(`IMPORT_${extensionsTypeUpper}`)}</Button>
       </div>
     </div>
     <div className={`extensions-container ${scrollClasses.thin}`}>
       {
-        Object.entries(extensions.nests.loaded.ghost).filter(i=>!i[1].manifest.locked).map(([url, extension]) => {
+        Object.entries(extensions.nests.loaded.ghost).filter(i => !i[1].manifest.locked && i[1].manifest.type == extensionsType).map(([url, extension]) => {
           return <div className={`extension ${extension.manifest.locked ? "locked" : ""}`}>
             <div className="top">
               <div className="right">
@@ -97,7 +99,7 @@ export function ExtensionsModal() {
               <div className="right">
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.fmt("COPY_LINK")}
+                  acord-tooltip-content={i18n.fmt(`COPY_${extensionsTypeUpper}_LINK`)}
                   onClick={() => {
                     utils.copyText(url);
                     toasts.show(i18n.fmt("X_COPIED", url));
@@ -108,7 +110,7 @@ export function ExtensionsModal() {
                 {
                   Array.isArray(extensions.nests.enabled.ghost?.[url]?.settings) ? <div
                     className="control"
-                    acord-tooltip-content={i18n.fmt("OPEN_EXTENSION_SETTINGS")}
+                    acord-tooltip-content={i18n.fmt(`OPEN_${extensionsTypeUpper}_SETTINGS`)}
                     onClick={() => {
                       showModal((e) => {
                         return <ModalBase e={e} name={i18n.fmt("X_EXTENSION_SETTINGS", extension.manifest.about.name)} body={<ExtensionSettings extension={extension} url={url} />} bodyId="extension-settings"></ModalBase>
@@ -120,7 +122,7 @@ export function ExtensionsModal() {
                 }
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.fmt("RELOAD_EXTENSION")}
+                  acord-tooltip-content={i18n.fmt(`RELOAD_${extensionsTypeUpper}`)}
                   onClick={() => {
                     extensions.reload(url)
                   }}
@@ -129,7 +131,7 @@ export function ExtensionsModal() {
                 </div>
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.fmt("REMOVE_EXTENSION")}
+                  acord-tooltip-content={i18n.fmt(`REMOVE_${extensionsTypeUpper}`)}
                   onClick={() => {
                     extensions.remove(url)
                   }}

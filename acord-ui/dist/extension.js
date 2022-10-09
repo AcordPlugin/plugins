@@ -312,16 +312,17 @@
   }
 
   const scrollClasses = swc__default["default"].findByProps("thin", "scrollerBase");
-  function ExtensionsModal() {
+  function ExtensionsModal({ extensionsType }) {
     react.useNest(extensions__default["default"].nests.loaded);
     react.useNest(extensions__default["default"].nests.enabled);
     const [importURL, setImportURL] = React.useState("");
+    let extensionsTypeUpper = extensionsType.toUpperCase();
     return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
       className: "import-container"
     }, /* @__PURE__ */ React.createElement("div", {
       className: "input-container"
     }, /* @__PURE__ */ React.createElement(TextInput, {
-      placeholder: i18n__default["default"].fmt("IMPORT_PLUGIN_PLACEHOLDER"),
+      placeholder: i18n__default["default"].fmt(`IMPORT_${extensionsTypeUpper}_PLACEHOLDER`),
       value: importURL,
       onChange: (e) => {
         setImportURL(e.target.value);
@@ -345,9 +346,9 @@
           }
         }
       }
-    }, i18n__default["default"].fmt("IMPORT_EXTENSION")))), /* @__PURE__ */ React.createElement("div", {
+    }, i18n__default["default"].fmt(`IMPORT_${extensionsTypeUpper}`)))), /* @__PURE__ */ React.createElement("div", {
       className: `extensions-container ${scrollClasses.thin}`
-    }, Object.entries(extensions__default["default"].nests.loaded.ghost).filter((i) => !i[1].manifest.locked).map(([url, extension]) => {
+    }, Object.entries(extensions__default["default"].nests.loaded.ghost).filter((i) => !i[1].manifest.locked && i[1].manifest.type == extensionsType).map(([url, extension]) => {
       return /* @__PURE__ */ React.createElement("div", {
         className: `extension ${extension.manifest.locked ? "locked" : ""}`
       }, /* @__PURE__ */ React.createElement("div", {
@@ -385,14 +386,14 @@
         className: "right"
       }, /* @__PURE__ */ React.createElement("div", {
         className: "control",
-        "acord-tooltip-content": i18n__default["default"].fmt("COPY_LINK"),
+        "acord-tooltip-content": i18n__default["default"].fmt(`COPY_${extensionsTypeUpper}_LINK`),
         onClick: () => {
           utils__default["default"].copyText(url);
           toasts__default["default"].show(i18n__default["default"].fmt("X_COPIED", url));
         }
       }, /* @__PURE__ */ React.createElement(CopyIcon, null)), Array.isArray(extensions__default["default"].nests.enabled.ghost?.[url]?.settings) ? /* @__PURE__ */ React.createElement("div", {
         className: "control",
-        "acord-tooltip-content": i18n__default["default"].fmt("OPEN_EXTENSION_SETTINGS"),
+        "acord-tooltip-content": i18n__default["default"].fmt(`OPEN_${extensionsTypeUpper}_SETTINGS`),
         onClick: () => {
           showModal((e) => {
             return /* @__PURE__ */ React.createElement(ModalBase, {
@@ -408,13 +409,13 @@
         }
       }, /* @__PURE__ */ React.createElement(SettingsIcon, null)) : null, /* @__PURE__ */ React.createElement("div", {
         className: "control",
-        "acord-tooltip-content": i18n__default["default"].fmt("RELOAD_EXTENSION"),
+        "acord-tooltip-content": i18n__default["default"].fmt(`RELOAD_${extensionsTypeUpper}`),
         onClick: () => {
           extensions__default["default"].reload(url);
         }
       }, /* @__PURE__ */ React.createElement(RestartIcon, null)), /* @__PURE__ */ React.createElement("div", {
         className: "control",
-        "acord-tooltip-content": i18n__default["default"].fmt("REMOVE_EXTENSION"),
+        "acord-tooltip-content": i18n__default["default"].fmt(`REMOVE_${extensionsTypeUpper}`),
         onClick: () => {
           extensions__default["default"].remove(url);
         }
@@ -438,13 +439,30 @@
             let toAdd = [
               dom__default["default"].parseHTML(`<div class="${optionsClasses.header}">Acord</div>`),
               [
-                dom__default["default"].parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n__default["default"].fmt("EXTENSIONS")}</div>`),
+                dom__default["default"].parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n__default["default"].fmt("PLUGINS")}</div>`),
                 () => {
                   showModal((e) => {
                     return /* @__PURE__ */ React__namespace.createElement(ModalBase, {
                       e,
-                      name: i18n__default["default"].fmt("EXTENSIONS"),
-                      body: /* @__PURE__ */ React__namespace.createElement(ExtensionsModal, null),
+                      name: i18n__default["default"].fmt("PLUGINS"),
+                      body: /* @__PURE__ */ React__namespace.createElement(ExtensionsModal, {
+                        extensionsType: "plugin"
+                      }),
+                      bodyId: "extensions"
+                    });
+                  });
+                }
+              ],
+              [
+                dom__default["default"].parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n__default["default"].fmt("THEMES")}</div>`),
+                () => {
+                  showModal((e) => {
+                    return /* @__PURE__ */ React__namespace.createElement(ModalBase, {
+                      e,
+                      name: i18n__default["default"].fmt("THEMES"),
+                      body: /* @__PURE__ */ React__namespace.createElement(ExtensionsModal, {
+                        extensionsType: "theme"
+                      }),
                       bodyId: "extensions"
                     });
                   });
