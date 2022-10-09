@@ -1,4 +1,4 @@
-import { Button, React } from "../../other/apis.js";
+import { Button, React, showModal } from "../../other/apis.js";
 import i18n from "@acord/i18n"
 import toasts from "@acord/ui/toasts"
 import { TextInput } from "../TextInput.jsx";
@@ -12,11 +12,15 @@ import { LockIcon } from "../icons/LockIcon.jsx";
 import { VerifiedIcon } from "../icons/VerifiedIcon.jsx";
 import { CheckBox } from "../CheckBox.jsx";
 import { CopyIcon } from "../icons/CopyIcon.jsx";
+import { SettingsIcon } from "../icons/SettingsIcon.jsx";
+import { ModalBase } from "./ModalBase.jsx";
+import { ExtensionSettings } from "./ExtensionSettings.jsx";
 
 const scrollClasses = swc.findByProps("thin", "scrollerBase");
 
-export function PluginsModal() {
+export function ExtensionsModal() {
   useNest(extensions.nests.loaded);
+  useNest(extensions.nests.enabled);
   const [importURL, setImportURL] = React.useState("");
 
   return <>
@@ -33,11 +37,21 @@ export function PluginsModal() {
       <div className="button-container">
         <Button
           size={Button.Sizes.MEDIUM}
-          onClick={() => {
-            extensions.load(importURL)
+          onClick={async () => {
+            if (!importURL.trim()) return;
             setImportURL("");
+            try {
+              await extensions.load(importURL);
+            } catch (err) {
+              let errStr = `${err}`;
+              if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
+                toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", extensionName));
+              } else {
+                toasts.show.error(errStr);
+              }
+            }
           }}
-        >{i18n.fmt("IMPORT_PLUGIN")}</Button>
+        >{i18n.fmt("IMPORT_EXTENSION")}</Button>
       </div>
     </div>
     <div className={`extensions-container ${scrollClasses.thin}`}>
@@ -64,7 +78,7 @@ export function PluginsModal() {
                 </div>
                 <div className="status">
                   <div className="authors">
-                    by {extension.manifest.about.authors.join(", ")}
+                    {i18n.fmt("X_MADE_BY", extension.manifest.about.authors.join(", "))}
                   </div>
                 </div>
               </div>
@@ -91,9 +105,22 @@ export function PluginsModal() {
                 >
                   <CopyIcon />
                 </div>
+                {
+                  !!extensions.nests.enabled.ghost?.[url] ? <div
+                    className="control"
+                    acord-tooltip-content={i18n.fmt("OPEN_EXTENSION_SETTINGS")}
+                    onClick={() => {
+                      showModal((e) => {
+                        return <ModalBase e={e} name={i18n.fmt("X_EXTENSION_SETTINGS", extension.manifest.about.name)} body={<ExtensionSettings extension={extension} url={url} />} bodyId="extension-settings"></ModalBase>
+                      })
+                    }}
+                  >
+                    <SettingsIcon />
+                  </div> : null
+                }
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.fmt("RELOAD_PLUGIN")}
+                  acord-tooltip-content={i18n.fmt("RELOAD_EXTENSION")}
                   onClick={() => {
                     extensions.reload(url)
                   }}
@@ -102,7 +129,7 @@ export function PluginsModal() {
                 </div>
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.fmt("REMOVE_PLUGIN")}
+                  acord-tooltip-content={i18n.fmt("REMOVE_EXTENSION")}
                   onClick={() => {
                     extensions.remove(url)
                   }}

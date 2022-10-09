@@ -258,9 +258,27 @@
     }));
   }
 
+  function SettingsIcon(props = {}) {
+    return /* @__PURE__ */ React__namespace.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      className: "acord--icon acord--settings-icon",
+      style: { color: props.color }
+    }, /* @__PURE__ */ React__namespace.createElement("path", {
+      fill: "currentColor",
+      d: "M9.954 2.21a9.99 9.99 0 0 1 4.091-.002A3.993 3.993 0 0 0 16 5.07a3.993 3.993 0 0 0 3.457.261A9.99 9.99 0 0 1 21.5 8.876 3.993 3.993 0 0 0 20 12c0 1.264.586 2.391 1.502 3.124a10.043 10.043 0 0 1-2.046 3.543 3.993 3.993 0 0 0-3.456.261 3.993 3.993 0 0 0-1.954 2.86 9.99 9.99 0 0 1-4.091.004A3.993 3.993 0 0 0 8 18.927a3.993 3.993 0 0 0-3.457-.26A9.99 9.99 0 0 1 2.5 15.121 3.993 3.993 0 0 0 4 11.999a3.993 3.993 0 0 0-1.502-3.124 10.043 10.043 0 0 1 2.046-3.543A3.993 3.993 0 0 0 8 5.071a3.993 3.993 0 0 0 1.954-2.86zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+    }));
+  }
+
+  function ExtensionSettings({ url, extension }) {
+    return null;
+  }
+
   const scrollClasses = swc__default["default"].findByProps("thin", "scrollerBase");
-  function PluginsModal() {
+  function ExtensionsModal() {
     react.useNest(extensions__default["default"].nests.loaded);
+    react.useNest(extensions__default["default"].nests.enabled);
     const [importURL, setImportURL] = React.useState("");
     return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
       className: "import-container"
@@ -276,11 +294,22 @@
       className: "button-container"
     }, /* @__PURE__ */ React.createElement(Button, {
       size: Button.Sizes.MEDIUM,
-      onClick: () => {
-        extensions__default["default"].load(importURL);
+      onClick: async () => {
+        if (!importURL.trim())
+          return;
         setImportURL("");
+        try {
+          await extensions__default["default"].load(importURL);
+        } catch (err) {
+          let errStr = `${err}`;
+          if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
+            toasts__default["default"].show.error(i18n__default["default"].fmt("EXTENSION_ALREADY_ENABLED", extensionName));
+          } else {
+            toasts__default["default"].show.error(errStr);
+          }
+        }
       }
-    }, i18n__default["default"].fmt("IMPORT_PLUGIN")))), /* @__PURE__ */ React.createElement("div", {
+    }, i18n__default["default"].fmt("IMPORT_EXTENSION")))), /* @__PURE__ */ React.createElement("div", {
       className: `extensions-container ${scrollClasses.thin}`
     }, Object.entries(extensions__default["default"].nests.loaded.ghost).filter((i) => !i[1].manifest.locked).map(([url, extension]) => {
       return /* @__PURE__ */ React.createElement("div", {
@@ -303,7 +332,7 @@
         className: "status"
       }, /* @__PURE__ */ React.createElement("div", {
         className: "authors"
-      }, "by ", extension.manifest.about.authors.join(", ")))), /* @__PURE__ */ React.createElement("div", {
+      }, i18n__default["default"].fmt("X_MADE_BY", extension.manifest.about.authors.join(", "))))), /* @__PURE__ */ React.createElement("div", {
         className: "left"
       }, /* @__PURE__ */ React.createElement(CheckBox, {
         checked: extension.enabled,
@@ -325,15 +354,31 @@
           utils__default["default"].copyText(url);
           toasts__default["default"].show(i18n__default["default"].fmt("X_COPIED", url));
         }
-      }, /* @__PURE__ */ React.createElement(CopyIcon, null)), /* @__PURE__ */ React.createElement("div", {
+      }, /* @__PURE__ */ React.createElement(CopyIcon, null)), !!extensions__default["default"].nests.enabled.ghost?.[url] ? /* @__PURE__ */ React.createElement("div", {
         className: "control",
-        "acord-tooltip-content": i18n__default["default"].fmt("RELOAD_PLUGIN"),
+        "acord-tooltip-content": i18n__default["default"].fmt("OPEN_EXTENSION_SETTINGS"),
+        onClick: () => {
+          showModal((e) => {
+            return /* @__PURE__ */ React.createElement(ModalBase, {
+              e,
+              name: i18n__default["default"].fmt("X_EXTENSION_SETTINGS", extension.manifest.about.name),
+              body: /* @__PURE__ */ React.createElement(ExtensionSettings, {
+                extension,
+                url
+              }),
+              bodyId: "extension-settings"
+            });
+          });
+        }
+      }, /* @__PURE__ */ React.createElement(SettingsIcon, null)) : null, /* @__PURE__ */ React.createElement("div", {
+        className: "control",
+        "acord-tooltip-content": i18n__default["default"].fmt("RELOAD_EXTENSION"),
         onClick: () => {
           extensions__default["default"].reload(url);
         }
       }, /* @__PURE__ */ React.createElement(RestartIcon, null)), /* @__PURE__ */ React.createElement("div", {
         className: "control",
-        "acord-tooltip-content": i18n__default["default"].fmt("REMOVE_PLUGIN"),
+        "acord-tooltip-content": i18n__default["default"].fmt("REMOVE_EXTENSION"),
         onClick: () => {
           extensions__default["default"].remove(url);
         }
@@ -357,14 +402,14 @@
             let toAdd = [
               dom__default["default"].parseHTML(`<div class="${optionsClasses.header}">Acord</div>`),
               [
-                dom__default["default"].parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n__default["default"].fmt("PLUGINS")}</div>`),
+                dom__default["default"].parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n__default["default"].fmt("EXTENSIONS")}</div>`),
                 () => {
                   showModal((e) => {
                     return /* @__PURE__ */ React__namespace.createElement(ModalBase, {
                       e,
-                      name: i18n__default["default"].fmt("PLUGINS"),
-                      body: /* @__PURE__ */ React__namespace.createElement(PluginsModal, null),
-                      bodyId: "plugins"
+                      name: i18n__default["default"].fmt("EXTENSIONS"),
+                      body: /* @__PURE__ */ React__namespace.createElement(ExtensionsModal, null),
+                      bodyId: "extensions"
                     });
                   });
                 }
@@ -385,7 +430,6 @@
               return;
             elm.classList.add("acord--patched");
             let href = elm.href;
-            console.log(href);
             if (!extensionsRegex.test(href))
               return;
             let extensionName = [...href.match(extensionsRegex) || []]?.[1];
@@ -402,7 +446,7 @@
                 await extensions__default["default"].load(elm.href);
               } catch (err) {
                 let errStr = `${err}`;
-                if (errStr.includes("EXTENSION_ENABLED")) {
+                if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
                   toasts__default["default"].show.error(i18n__default["default"].fmt("EXTENSION_ALREADY_ENABLED", extensionName));
                 } else {
                   toasts__default["default"].show.error(errStr);
@@ -415,7 +459,7 @@
     );
   }
 
-  var styles = () => patcher.injectCSS(".acord--modal-root{display:flex;flex-direction:column;padding:16px;transform:translate(-50%,-50%)!important}.acord--modal-header{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.acord--modal-title{font-size:28px;color:#efefef;font-weight:600}.acord--modal-close{width:24px;height:24px;cursor:pointer}.acord--modal-close svg{width:24px;height:24px}.acord--modal-body{display:flex;flex-direction:column;max-height:550px;height:100%}.acord--modal-body--plugins .import-container{display:flex;align-items:center;gap:8px;margin-bottom:16px}.acord--modal-body--plugins .import-container .input-container{width:100%}.acord--modal-body--plugins .extensions-container{display:flex;flex-direction:column;max-height:500px;height:500px;contain:content;overflow:auto}.acord--modal-body--plugins .extensions-container .extension{display:flex;flex-direction:column;background-color:#00000026;margin-bottom:8px;border-radius:8px;color:#f5f5f5;contain:content}.acord--modal-body--plugins .extensions-container .extension.locked{opacity:.75;pointer-events:none;filter:brightness(.5)}.acord--modal-body--plugins .extensions-container .extension>.top{padding:8px;display:flex;align-items:center;justify-content:space-between;background-color:#00000026}.acord--modal-body--plugins .extensions-container .extension>.top>.right{display:flex;flex-direction:column}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version{display:flex;align-items:flex-end;margin-bottom:2px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title-and-icons{display:flex;align-items:center}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title-and-icons .title{font-size:18px;font-weight:500;margin-right:2px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons{display:flex;gap:2px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons .acord--icon{width:14px;height:14px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .version{margin-left:4px;font-size:14px;font-weight:200;opacity:.5;margin-right:4px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .status{font-size:12px;font-weight:200;opacity:.75;display:flex}.acord--modal-body--plugins .extensions-container .extension>.top>.right .status .authors{margin-right:4px;opacity:.75}.acord--modal-body--plugins .extensions-container .extension>.top>.left{font-size:26px;cursor:pointer}.acord--modal-body--plugins .extensions-container .extension>.bottom{padding:8px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--plugins .extensions-container .extension>.bottom>.left .description{opacity:.9}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right{display:flex}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right .control{background-color:#00000026;padding:8px;border-radius:8px;margin-left:4px;cursor:pointer}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right .control:hover{background-color:#00000040}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right .control:hover svg{opacity:.95}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right .control svg{width:18px;height:18px}.acord--checkbox-container{display:grid;gap:8px;grid-template-columns:max-content min-content;grid-template-rows:max-content;align-items:center}.acord--checkbox-container>input{grid-column:2/3;grid-row:1/2}.acord--checkbox-container>div{grid-column:2/3;grid-row:1/2}.acord--checkbox{width:100%;height:100%;appearance:none;margin:0;padding:0;cursor:pointer}.acord--checkbox:checked~.acord--checkbox-visual{background:hsl(152deg,45%,48%)}.acord--checkbox:checked~.acord--checkbox-visual>div{left:100%;transform:translate(-100%);background:white;display:grid}.acord--checkbox:checked~.acord--checkbox-visual>div:before{background-color:#43b17e;clip-path:polygon(25% 75%,33% 100%,100% 20%,80% 0%)}.acord--checkbox:checked~.acord--checkbox-visual>div:after{background-color:#43b17e;clip-path:polygon(20% 45%,0% 65%,33.33% 100%,45% 75%)}.acord--checkbox~.acord--checkbox-visual>div{position:relative;left:0;height:.8em;width:.8em;background:white;pointer-events:none;transition:inherit;border-radius:9999px;display:grid;justify-items:stretch;align-items:stretch;padding:.1em}.acord--checkbox~.acord--checkbox-visual>div:before{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(20% 0%,0% 20%,80% 100%,100% 80%)}.acord--checkbox~.acord--checkbox-visual>div:after{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(0% 80%,20% 100%,100% 20%,80% 0%)}.acord--checkbox-visual{cursor:pointer;position:relative;background:hsl(218deg,4%,46%);transition:.3s cubic-bezier(.83,0,.17,1);font-size:1em;width:2em;height:1em;padding:.1em;border-radius:9999px;pointer-events:none}");
+  var styles = () => patcher.injectCSS(".acord--modal-root{display:flex;flex-direction:column;padding:16px;transform:translate(-50%,-50%)!important}.acord--modal-header{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.acord--modal-title{font-size:28px;color:#efefef;font-weight:600}.acord--modal-close{width:24px;height:24px;cursor:pointer}.acord--modal-close svg{width:24px;height:24px}.acord--modal-body{display:flex;flex-direction:column;max-height:550px;height:100%}.acord--modal-body--extensions .import-container{display:flex;align-items:center;gap:8px;margin-bottom:16px}.acord--modal-body--extensions .import-container .input-container{width:100%}.acord--modal-body--extensions .extensions-container{display:flex;flex-direction:column;max-height:500px;height:500px;contain:content;overflow:auto}.acord--modal-body--extensions .extensions-container .extension{display:flex;flex-direction:column;background-color:#00000026;margin-bottom:8px;border-radius:8px;color:#f5f5f5;contain:content}.acord--modal-body--extensions .extensions-container .extension.locked{opacity:.75;pointer-events:none;filter:brightness(.5)}.acord--modal-body--extensions .extensions-container .extension>.top{padding:8px;display:flex;align-items:center;justify-content:space-between;background-color:#00000026}.acord--modal-body--extensions .extensions-container .extension>.top>.right{display:flex;flex-direction:column}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version{display:flex;align-items:flex-end;margin-bottom:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons{display:flex;align-items:center}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .title{font-size:18px;font-weight:500;margin-right:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons{display:flex;gap:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons .acord--icon{width:14px;height:14px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .version{margin-left:4px;font-size:14px;font-weight:200;opacity:.5;margin-right:4px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status{font-size:12px;font-weight:200;opacity:.75;display:flex}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status .authors{margin-right:4px;opacity:.75}.acord--modal-body--extensions .extensions-container .extension>.top>.left{font-size:26px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom{padding:8px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--extensions .extensions-container .extension>.bottom>.left .description{opacity:.9}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right{display:flex}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control{background-color:#00000026;padding:8px;border-radius:8px;margin-left:4px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover{background-color:#00000040}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover svg{opacity:.95}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control svg{width:18px;height:18px}.acord--checkbox-container{display:grid;gap:8px;grid-template-columns:max-content min-content;grid-template-rows:max-content;align-items:center}.acord--checkbox-container>input{grid-column:2/3;grid-row:1/2}.acord--checkbox-container>div{grid-column:2/3;grid-row:1/2}.acord--checkbox{width:100%;height:100%;appearance:none;margin:0;padding:0;cursor:pointer}.acord--checkbox:checked~.acord--checkbox-visual{background:hsl(152deg,45%,48%)}.acord--checkbox:checked~.acord--checkbox-visual>div{left:100%;transform:translate(-100%);background:white;display:grid}.acord--checkbox:checked~.acord--checkbox-visual>div:before{background-color:#43b17e;clip-path:polygon(25% 75%,33% 100%,100% 20%,80% 0%)}.acord--checkbox:checked~.acord--checkbox-visual>div:after{background-color:#43b17e;clip-path:polygon(20% 45%,0% 65%,33.33% 100%,45% 75%)}.acord--checkbox~.acord--checkbox-visual>div{position:relative;left:0;height:.8em;width:.8em;background:white;pointer-events:none;transition:inherit;border-radius:9999px;display:grid;justify-items:stretch;align-items:stretch;padding:.1em}.acord--checkbox~.acord--checkbox-visual>div:before{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(20% 0%,0% 20%,80% 100%,100% 80%)}.acord--checkbox~.acord--checkbox-visual>div:after{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(0% 80%,20% 100%,100% 20%,80% 0%)}.acord--checkbox-visual{cursor:pointer;position:relative;background:hsl(218deg,4%,46%);transition:.3s cubic-bezier(.83,0,.17,1);font-size:1em;width:2em;height:1em;padding:.1em;border-radius:9999px;pointer-events:none}");
 
   function patchStyles() {
     patchContainer.add(styles());

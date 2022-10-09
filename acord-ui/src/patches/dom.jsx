@@ -9,7 +9,7 @@ import extensions from "@acord/extensions";
 import patchContainer from "../other/patchContainer.js";
 import { showModal } from "../other/apis.js";
 import { ModalBase } from "../components/modals/ModalBase.jsx";
-import { PluginsModal } from "../components/modals/Plugins.jsx";
+import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 
 let optionsClasses = swc.findByProps("item", "selected", "separator");
 let anchorClasses = swc.findByProps("anchor", "anchorUnderlineOnHover");
@@ -30,10 +30,10 @@ export function patchDOM() {
           let toAdd = [
             dom.parseHTML(`<div class="${optionsClasses.header}">Acord</div>`),
             [
-              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("PLUGINS")}</div>`),
+              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("EXTENSIONS")}</div>`),
               () => { 
                 showModal((e) => {
-                  return <ModalBase e={e} name={i18n.fmt("PLUGINS")} body={<PluginsModal />} bodyId="plugins" />
+                  return <ModalBase e={e} name={i18n.fmt("EXTENSIONS")} body={<ExtensionsModal />} bodyId="extensions" />
                 });
               }
             ],
@@ -65,8 +65,6 @@ export function patchDOM() {
           /** @type {string} */
           let href = elm.href;
 
-          console.log(href);
-
           if (!extensionsRegex.test(href)) return;
 
           let extensionName = [...(href.match(extensionsRegex) || [])]?.[1];
@@ -85,7 +83,7 @@ export function patchDOM() {
               await extensions.load(elm.href);
             } catch (err) {
               let errStr = `${err}`;
-              if (errStr.includes("EXTENSION_ENABLED")) {
+              if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
                 toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", extensionName));
               } else {
                 toasts.show.error(errStr);

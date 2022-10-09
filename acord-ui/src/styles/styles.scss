@@ -36,7 +36,7 @@
     max-height: 550px;
     height: 100%;
 
-    &--plugins {
+    &--extensions {
       .import-container {
         display: flex;
         align-items: center;
@@ -171,6 +171,10 @@
           }
         }
       }
+    }
+
+    &--extension-settings {
+      
     }
   }
 
