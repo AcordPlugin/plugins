@@ -14,7 +14,7 @@ import { PluginsModal } from "../components/modals/Plugins.jsx";
 let optionsClasses = swc.findByProps("item", "selected", "separator");
 let anchorClasses = swc.findByProps("anchor", "anchorUnderlineOnHover");
 
-let extensionsRegex = /^https\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/([^\/]+).*\/dist\/$/g;
+let extensionsRegex = /^https\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/([^\/]+).*\/dist\/$/;
 
 export function patchDOM() {
 
@@ -77,7 +77,7 @@ export function patchDOM() {
 
             let accepted = await modals.show.confirmation(
               i18n.fmt("IMPORT_EXTENSION"),
-              i18n.fmt("IMPORT_EXTENSION_DESCRIPTION", elm.href, extensionName)
+              i18n.fmt("IMPORT_EXTENSION_DESCRIPTION", extensionName)
             )
             if (!accepted) return;
             
