@@ -1,4 +1,4 @@
-(function (React$1, swc, discordI18N, i18n, dom, events, common, toasts, require$$0, extensions, utils, patcher) {
+(function (React$1, swc, discordI18N, i18n, dom, modals, toasts, events, extensions, common, require$$0, utils, patcher) {
   'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -26,11 +26,12 @@
   var discordI18N__default = /*#__PURE__*/_interopDefaultLegacy(discordI18N);
   var i18n__default = /*#__PURE__*/_interopDefaultLegacy(i18n);
   var dom__default = /*#__PURE__*/_interopDefaultLegacy(dom);
-  var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
-  var common__default = /*#__PURE__*/_interopDefaultLegacy(common);
+  var modals__default = /*#__PURE__*/_interopDefaultLegacy(modals);
   var toasts__default = /*#__PURE__*/_interopDefaultLegacy(toasts);
-  var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
+  var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
   var extensions__default = /*#__PURE__*/_interopDefaultLegacy(extensions);
+  var common__default = /*#__PURE__*/_interopDefaultLegacy(common);
+  var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
   var utils__default = /*#__PURE__*/_interopDefaultLegacy(utils);
 
   class Patches {
@@ -341,6 +342,8 @@
   }
 
   let optionsClasses = swc__default["default"].findByProps("item", "selected", "separator");
+  let anchorClasses = swc__default["default"].findByProps("anchor", "anchorUnderlineOnHover");
+  let extensionsRegex = /^https\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/([^\/]+).*\/dist\/$/g;
   function patchDOM() {
     patchContainer.add(
       events__default["default"].on("domMutation", (mut) => {
@@ -377,6 +380,35 @@
               i[0].onclick = i[1];
             });
           });
+          node.querySelectorAll(`.${anchorClasses.anchor}.${anchorClasses.anchorUnderlineOnHover}`).forEach(async (elm) => {
+            if (elm.querySelector(".acord--patched"))
+              return;
+            elm.classList.add("acord--patched");
+            let href = elm.href;
+            console.log(href);
+            if (!extensionsRegex.test(href))
+              return;
+            let extensionName = [...href.match(extensionsRegex) || []]?.[1];
+            elm.addEventListener("click", async (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              let accepted = await modals__default["default"].show.confirmation(
+                i18n__default["default"].fmt("IMPORT_EXTENSION"),
+                i18n__default["default"].fmt("IMPORT_EXTENSION_DESCRIPTION", elm.href, extensionName)
+              );
+              if (!accepted)
+                return;
+              try {
+                await extensions__default["default"].load(elm.href);
+              } catch (err) {
+                if (err.includes("EXTENSION_ENABLED")) {
+                  toasts__default["default"].error(i18n__default["default"].fmt("EXTENSION_ALREADY_ENABLED", extensionName));
+                } else {
+                  toasts__default["default"].error(`${err}`);
+                }
+              }
+            });
+          });
         });
       })
     );
@@ -400,4 +432,4 @@
 
   return index;
 
-})(acord.modules.common.React, acord.modules.swc, acord.modules.common.i18n, acord.i18n, acord.dom, acord.events, acord.modules.common, acord.ui.toasts, acord.modules.common.React, acord.extensions, acord.utils, acord.patcher);
+})(acord.modules.common.React, acord.modules.swc, acord.modules.common.i18n, acord.i18n, acord.dom, acord.ui.modals, acord.ui.toasts, acord.events, acord.extensions, acord.modules.common, acord.modules.common.React, acord.utils, acord.patcher);
