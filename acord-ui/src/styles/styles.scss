@@ -178,8 +178,7 @@
     grid-template-columns: max-content min-content;
     grid-template-rows: max-content;
     align-items: center;
-    cursor: pointer;
-    
+
     & > input {
       grid-column: 2/3;
       grid-row: 1/2;
@@ -196,6 +195,8 @@
     appearance: none;
     margin: 0;
     padding: 0;
+    cursor: pointer;
+
     &:checked {
       & ~ {
         .acord--checkbox-visual {
@@ -217,7 +218,7 @@
         }
       }
     }
-    ~ {
+    & ~ {
       .acord--checkbox-visual {
         & > div {
           position: relative;
@@ -253,6 +254,7 @@
     }
   }
   &--checkbox-visual {
+    cursor: pointer;
     position: relative;
     background: hsl(218deg, 4%, 46%);
     transition: 0.3s cubic-bezier(0.83, 0, 0.17, 1);
