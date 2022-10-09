@@ -108,7 +108,7 @@ export function ExtensionsModal({ extensionsType }) {
                   <CopyIcon />
                 </div>
                 {
-                  Array.isArray(extensions.nests.enabled.ghost?.[url]?.settings) ? <div
+                  Array.isArray(extensions.nests.enabled.ghost?.[url]?.settings?.data) ? <div
                     className="control"
                     acord-tooltip-content={i18n.fmt(`OPEN_${extensionsTypeUpper}_SETTINGS`)}
                     onClick={() => {

@@ -9,6 +9,10 @@ export function ExtensionSettings({ url, extension }) {
   const extensionSrc = extensions.nests.enabled.ghost[url];
   const persist = extensionSrc.persist;
 
+  const callUpdate = typeof extensionSrc.settings?.update == "function"
+    ? extensionSrc.settings.update
+    : () => { };
+
   const types = {
     header: (setting) => {
       return <>
@@ -28,6 +32,7 @@ export function ExtensionSettings({ url, extension }) {
             checked={persist.ghost.settings?.[setting.property] ?? setting.value}
             onChange={(e) => {
               persist.store.settings[setting.property] = e.target.checked;
+              callUpdate(setting.property, e.target.checked);
             }}
           />
         </div>
@@ -37,7 +42,7 @@ export function ExtensionSettings({ url, extension }) {
 
   return <>
     {
-      extensionSrc.settings.map(setting => {
+      extensionSrc.settings.data.map(setting => {
         return (
           (setting.condition ? (eval(`(($)=>{ return (${setting.condition}) })`))(persist.ghost.settings || {}) : true) ? <div class={`container container--${setting.type}`}>
             {types[setting.type](setting)}
