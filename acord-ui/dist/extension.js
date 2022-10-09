@@ -401,7 +401,7 @@
               try {
                 await extensions__default["default"].load(elm.href);
               } catch (err) {
-                if (err.includes("EXTENSION_ENABLED")) {
+                if (`${err}`.includes("EXTENSION_ENABLED")) {
                   toasts__default["default"].error(i18n__default["default"].fmt("EXTENSION_ALREADY_ENABLED", extensionName));
                 } else {
                   toasts__default["default"].error(`${err}`);

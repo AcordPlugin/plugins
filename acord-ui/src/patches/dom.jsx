@@ -84,7 +84,7 @@ export function patchDOM() {
             try {
               await extensions.load(elm.href);
             } catch (err) {
-              if (err.includes("EXTENSION_ENABLED")) {
+              if (`${err}`.includes("EXTENSION_ENABLED")) {
                 toasts.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", extensionName));
               } else {
                 toasts.error(`${err}`);
