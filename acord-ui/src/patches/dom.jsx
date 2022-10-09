@@ -31,14 +31,14 @@ export function patchDOM() {
                 });
               }
             ],
-            [
-              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("THEMES")}</div>`),
-              () => { }
-            ],
-            [
-              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("ABOUT")}</div>`),
-              () => { }
-            ],
+            // [
+            //   dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("THEMES")}</div>`),
+            //   () => { }
+            // ],
+            // [
+            //   dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("ABOUT")}</div>`),
+            //   () => { }
+            // ],
             dom.parseHTML(`<div class="${optionsClasses.separator}"></div>`),
           ];
 

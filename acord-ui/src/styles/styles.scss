@@ -49,6 +49,10 @@
       .extensions-container {
         display: flex;
         flex-direction: column;
+        max-height: 500px;
+        height: 500px;
+        contain: content;
+        overflow: auto;
 
         .extension {
           display: flex;
@@ -57,12 +61,20 @@
           margin-bottom: 8px;
           border-radius: 8px;
           color: whitesmoke;
+          contain: content;
+
+          &.locked {
+            opacity: 0.75;
+            pointer-events: none;
+            filter: brightness(0.5);
+          }
 
           & > .top {
             padding: 8px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background-color: rgba(0, 0, 0, 0.15);
 
             & > .right {
               display: flex;
@@ -70,32 +82,183 @@
               .title-and-version {
                 display: flex;
                 align-items: flex-end;
-                
-                .title {
-                  font-size: 18px;
-                  font-weight: 500;
-                  margin-right: 4px;
+                margin-bottom: 2px;
+
+                .title-and-icons {
+                  display: flex;
+                  align-items: center;
+
+                  .title {
+                    font-size: 18px;
+                    font-weight: 500;
+                    margin-right: 2px;
+                  }
+
+                  .icons {
+                    display: flex;
+                    gap: 2px;
+
+                    .acord--icon {
+                      width: 14px;
+                      height: 14px;
+                    }
+                  }
                 }
+
                 .version {
+                  margin-left: 4px;
                   font-size: 14px;
                   font-weight: 200;
                   opacity: 0.5;
                   margin-right: 4px;
                 }
               }
-              .authors {
-                font-size: 16px;
+              .status {
+                font-size: 12px;
                 font-weight: 200;
-                opacity: 0.5;
+                opacity: 0.75;
+                display: flex;
+
+                .authors {
+                  margin-right: 4px;
+                  opacity: 0.75;
+                }
               }
+            }
+
+            & > .left {
+              font-size: 26px;
+              cursor: pointer;
             }
           }
 
           & > .bottom {
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            & > .left {
+              .description {
+                opacity: 0.9;
+              }
+            }
 
+            & > .right {
+              display: flex;
+              .control {
+                background-color: rgba(0, 0, 0, 0.15);
+                padding: 8px;
+                border-radius: 8px;
+                margin-left: 4px;
+                cursor: pointer;
+
+                &:hover {
+                  background-color: rgba(0, 0, 0, 0.25);
+
+                  svg {
+                    opacity: 0.95;
+                  }
+                }
+
+                svg {
+                  width: 18px;
+                  height: 18px;
+                }
+              }
+            }
           }
         }
       }
     }
+  }
+
+  &--checkbox-container {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: max-content min-content;
+    grid-template-rows: max-content;
+    align-items: center;
+    & > input {
+      grid-column: 2/3;
+      grid-row: 1/2;
+    }
+    & > div {
+      grid-column: 2/3;
+      grid-row: 1/2;
+    }
+  }
+
+  &--checkbox {
+    width: 100%;
+    height: 100%;
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    &:checked {
+      & ~ {
+        .acord--checkbox-visual {
+          background: hsl(152deg, 45%, 48%);
+          & > div {
+            left: calc(100%);
+            transform: translateX(-100%);
+            background: white;
+            display: grid;
+            &:before {
+              background-color: hsl(152deg, 45%, 48%);
+              clip-path: polygon(25% 75%, 33% 100%, 100% 20%, 80% 0%);
+            }
+            &:after {
+              background-color: hsl(152deg, 45%, 48%);
+              clip-path: polygon(20% 45%, 0% 65%, 33.33% 100%, 45% 75%);
+            }
+          }
+        }
+      }
+    }
+    ~ {
+      .acord--checkbox-visual {
+        & > div {
+          position: relative;
+          left: 0;
+          height: 0.8em;
+          width: 0.8em;
+          background: white;
+          pointer-events: none;
+          transition: inherit;
+          border-radius: 9999px;
+          display: grid;
+          justify-items: stretch;
+          align-items: stretch;
+          padding: 0.1em;
+          &:before {
+            content: "";
+            transition: inherit;
+            background-color: hsl(218deg, 4%, 46%);
+            grid-column: 1/2;
+            grid-row: 1/2;
+            clip-path: polygon(20% 0%, 0% 20%, 80% 100%, 100% 80%);
+          }
+          &:after {
+            content: "";
+            transition: inherit;
+            background-color: hsl(218deg, 4%, 46%);
+            grid-column: 1/2;
+            grid-row: 1/2;
+            clip-path: polygon(0% 80%, 20% 100%, 100% 20%, 80% 0%);
+          }
+        }
+      }
+    }
+  }
+  &--checkbox-visual {
+    position: relative;
+    background: hsl(218deg, 4%, 46%);
+    transition: 0.3s cubic-bezier(0.83, 0, 0.17, 1);
+    font-size: 1em;
+    width: 2em;
+    height: 1em;
+    padding: 0.1em;
+    border-radius: 9999px;
+    pointer-events: none;
   }
 }

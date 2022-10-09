@@ -1,4 +1,4 @@
-(function (React$1, swc, discordI18N, i18n, dom, events, common, internal, require$$0, extensions, patcher) {
+(function (React$1, swc, discordI18N, i18n, dom, events, common, toasts, require$$0, extensions, utils, patcher) {
   'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -28,8 +28,10 @@
   var dom__default = /*#__PURE__*/_interopDefaultLegacy(dom);
   var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
   var common__default = /*#__PURE__*/_interopDefaultLegacy(common);
+  var toasts__default = /*#__PURE__*/_interopDefaultLegacy(toasts);
   var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
   var extensions__default = /*#__PURE__*/_interopDefaultLegacy(extensions);
+  var utils__default = /*#__PURE__*/_interopDefaultLegacy(utils);
 
   class Patches {
     constructor() {
@@ -76,7 +78,7 @@
       height: "24",
       viewBox: "0 0 24 24",
       fill: "none",
-      className: "vi--icon vi--close-icon",
+      className: "acord--icon acord--close-icon",
       style: { color: props.color }
     }, /* @__PURE__ */ React__namespace.createElement("path", {
       d: "M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z",
@@ -178,29 +180,110 @@
   	Object.defineProperty(exports, "useNest", { enumerable: true, get: function () { return __importDefault(useNest_1).default; } });
   } (react));
 
-  const nest = internal.nests.make({ urlInput: "" });
+  function TrashIcon(props = {}) {
+    return /* @__PURE__ */ React__namespace.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      className: "acord--icon acord--trash-icon",
+      style: { color: props.color }
+    }, /* @__PURE__ */ React__namespace.createElement("path", {
+      fill: "currentColor",
+      d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+    }));
+  }
+
+  function RestartIcon(props = {}) {
+    return /* @__PURE__ */ React__namespace.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      className: "acord--icon acord--restart-icon",
+      style: { color: props.color }
+    }, /* @__PURE__ */ React__namespace.createElement("path", {
+      fill: "currentColor",
+      d: "M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm4.82-4.924a7 7 0 1 0-1.852 1.266l-.975-1.755A5 5 0 1 1 17 12h-3l2.82 5.076z"
+    }));
+  }
+
+  function LockIcon(props = {}) {
+    return /* @__PURE__ */ React__namespace.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      className: "acord--icon acord--lock-icon",
+      style: { color: props.color }
+    }, /* @__PURE__ */ React__namespace.createElement("path", {
+      fill: "currentColor",
+      d: "M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zm-7 7.732V18h2v-2.268a2 2 0 1 0-2 0zM16 8V7a4 4 0 1 0-8 0v1h8z"
+    }));
+  }
+
+  function VerifiedIcon(props = {}) {
+    return /* @__PURE__ */ React__namespace.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      className: "acord--icon acord--verified-icon",
+      style: { color: props.color }
+    }, /* @__PURE__ */ React__namespace.createElement("path", {
+      d: "M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z",
+      fill: "currentColor"
+    }));
+  }
+
+  function CheckBox(props = {}) {
+    return /* @__PURE__ */ React__namespace.createElement("div", {
+      className: "acord--checkbox-container"
+    }, /* @__PURE__ */ React__namespace.createElement("input", {
+      className: "acord--checkbox",
+      type: "checkbox",
+      ...props
+    }), /* @__PURE__ */ React__namespace.createElement("div", {
+      className: "acord--checkbox-visual"
+    }, /* @__PURE__ */ React__namespace.createElement("div", null)));
+  }
+
+  function CopyIcon(props = {}) {
+    return /* @__PURE__ */ React__namespace.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      className: "acord--icon acord--copy-icon",
+      style: { color: props.color }
+    }, /* @__PURE__ */ React__namespace.createElement("path", {
+      fill: "currentColor",
+      d: "M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zm2 0h8v10h2V4H9v2z"
+    }));
+  }
+
+  const scrollClasses = swc__default["default"].findByProps("thin", "scrollerBase");
   function PluginsModal() {
-    react.useNest(nest);
     react.useNest(extensions__default["default"].nests.loaded);
+    const [importURL, setImportURL] = React.useState("");
     return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
       className: "import-container"
     }, /* @__PURE__ */ React.createElement("div", {
       className: "input-container"
     }, /* @__PURE__ */ React.createElement(TextInput, {
       placeholder: i18n__default["default"].fmt("IMPORT_PLUGIN_PLACEHOLDER"),
-      value: nest.ghost.urlInput,
+      value: importURL,
       onChange: (e) => {
-        nest.store.urlInput = e.target.value.startWith("h") ? e.target.value : "";
+        setImportURL(e.target.value);
       }
     })), /* @__PURE__ */ React.createElement("div", {
       className: "button-container"
     }, /* @__PURE__ */ React.createElement(Button, {
-      size: Button.Sizes.MEDIUM
+      size: Button.Sizes.MEDIUM,
+      onClick: () => {
+        extensions__default["default"].load(importURL);
+        setImportURL("");
+      }
     }, i18n__default["default"].fmt("IMPORT_PLUGIN")))), /* @__PURE__ */ React.createElement("div", {
-      className: "extensions-container"
-    }, Object.entries(extensions__default["default"].nests.loaded.ghost).map(([url, extension]) => {
+      className: `extensions-container ${scrollClasses.thin}`
+    }, Object.entries(extensions__default["default"].nests.loaded.ghost).filter((i) => !i[1].manifest.locked).map(([url, extension]) => {
       return /* @__PURE__ */ React.createElement("div", {
-        className: "extension"
+        className: `extension ${extension.manifest.locked ? "locked" : ""}`
       }, /* @__PURE__ */ React.createElement("div", {
         className: "top"
       }, /* @__PURE__ */ React.createElement("div", {
@@ -208,16 +291,52 @@
       }, /* @__PURE__ */ React.createElement("div", {
         className: "title-and-version"
       }, /* @__PURE__ */ React.createElement("div", {
+        className: "title-and-icons"
+      }, /* @__PURE__ */ React.createElement("div", {
         class: "title"
-      }, extension.manifest.about.name), /* @__PURE__ */ React.createElement("div", {
+      }, extension.manifest.about.name), extension.manifest.locked || extension.verified ? /* @__PURE__ */ React.createElement("div", {
+        className: "icons"
+      }, extension.verified ? /* @__PURE__ */ React.createElement(VerifiedIcon, null) : null, extension.manifest.locked ? /* @__PURE__ */ React.createElement(LockIcon, null) : null) : null), /* @__PURE__ */ React.createElement("div", {
         className: "version"
       }, "v", extension.manifest.about.version)), /* @__PURE__ */ React.createElement("div", {
+        className: "status"
+      }, /* @__PURE__ */ React.createElement("div", {
         className: "authors"
-      }, "by ", extension.manifest.about.authors.join(", "))), /* @__PURE__ */ React.createElement("div", {
+      }, "by ", extension.manifest.about.authors.join(", ")))), /* @__PURE__ */ React.createElement("div", {
         className: "left"
-      })), /* @__PURE__ */ React.createElement("div", {
+      }, /* @__PURE__ */ React.createElement(CheckBox, {
+        checked: extension.enabled,
+        onClick: () => {
+          extensions__default["default"].toggle(url);
+        }
+      }))), /* @__PURE__ */ React.createElement("div", {
         className: "bottom"
-      }));
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "left"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "description"
+      }, extension.manifest.about.description)), /* @__PURE__ */ React.createElement("div", {
+        className: "right"
+      }, /* @__PURE__ */ React.createElement("div", {
+        className: "control",
+        "acord-tooltip-content": i18n__default["default"].fmt("COPY_LINK"),
+        onClick: () => {
+          utils__default["default"].copyText(url);
+          toasts__default["default"].show(i18n__default["default"].fmt("X_COPIED", url));
+        }
+      }, /* @__PURE__ */ React.createElement(CopyIcon, null)), /* @__PURE__ */ React.createElement("div", {
+        className: "control",
+        "acord-tooltip-content": i18n__default["default"].fmt("RELOAD_PLUGIN"),
+        onClick: () => {
+          extensions__default["default"].reload(url);
+        }
+      }, /* @__PURE__ */ React.createElement(RestartIcon, null)), /* @__PURE__ */ React.createElement("div", {
+        className: "control",
+        "acord-tooltip-content": i18n__default["default"].fmt("REMOVE_PLUGIN"),
+        onClick: () => {
+          extensions__default["default"].remove(url);
+        }
+      }, /* @__PURE__ */ React.createElement(TrashIcon, null)))));
     })));
   }
 
@@ -247,16 +366,6 @@
                   });
                 }
               ],
-              [
-                dom__default["default"].parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n__default["default"].fmt("THEMES")}</div>`),
-                () => {
-                }
-              ],
-              [
-                dom__default["default"].parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n__default["default"].fmt("ABOUT")}</div>`),
-                () => {
-                }
-              ],
               dom__default["default"].parseHTML(`<div class="${optionsClasses.separator}"></div>`)
             ];
             toAdd.forEach((i) => {
@@ -273,7 +382,7 @@
     );
   }
 
-  var styles = () => patcher.injectCSS(".acord--modal-root{display:flex;flex-direction:column;padding:16px;transform:translate(-50%,-50%)!important}.acord--modal-header{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.acord--modal-title{font-size:28px;color:#efefef;font-weight:600}.acord--modal-close{width:24px;height:24px}.acord--modal-close svg{width:24px;height:24px}.acord--modal-body{display:flex;flex-direction:column;max-height:550px;height:100%}.acord--modal-body--plugins .import-container{display:flex;align-items:center;gap:8px;margin-bottom:16px}.acord--modal-body--plugins .import-container .input-container{width:100%}.acord--modal-body--plugins .extensions-container{display:flex;flex-direction:column}.acord--modal-body--plugins .extensions-container .extension{display:flex;flex-direction:column;background-color:#00000026;margin-bottom:8px;border-radius:8px;color:#f5f5f5}.acord--modal-body--plugins .extensions-container .extension>.top{padding:8px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--plugins .extensions-container .extension>.top>.right{display:flex;flex-direction:column}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version{display:flex;align-items:flex-end}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title{font-size:18px;font-weight:500;margin-right:4px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .version{font-size:14px;font-weight:200;opacity:.5;margin-right:4px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .authors{font-size:16px;font-weight:200;opacity:.5}");
+  var styles = () => patcher.injectCSS(".acord--modal-root{display:flex;flex-direction:column;padding:16px;transform:translate(-50%,-50%)!important}.acord--modal-header{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.acord--modal-title{font-size:28px;color:#efefef;font-weight:600}.acord--modal-close{width:24px;height:24px}.acord--modal-close svg{width:24px;height:24px}.acord--modal-body{display:flex;flex-direction:column;max-height:550px;height:100%}.acord--modal-body--plugins .import-container{display:flex;align-items:center;gap:8px;margin-bottom:16px}.acord--modal-body--plugins .import-container .input-container{width:100%}.acord--modal-body--plugins .extensions-container{display:flex;flex-direction:column;max-height:500px;height:500px;contain:content;overflow:auto}.acord--modal-body--plugins .extensions-container .extension{display:flex;flex-direction:column;background-color:#00000026;margin-bottom:8px;border-radius:8px;color:#f5f5f5;contain:content}.acord--modal-body--plugins .extensions-container .extension.locked{opacity:.75;pointer-events:none;filter:brightness(.5)}.acord--modal-body--plugins .extensions-container .extension>.top{padding:8px;display:flex;align-items:center;justify-content:space-between;background-color:#00000026}.acord--modal-body--plugins .extensions-container .extension>.top>.right{display:flex;flex-direction:column}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version{display:flex;align-items:flex-end;margin-bottom:2px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title-and-icons{display:flex;align-items:center}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title-and-icons .title{font-size:18px;font-weight:500;margin-right:2px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons{display:flex;gap:2px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons .acord--icon{width:14px;height:14px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .title-and-version .version{margin-left:4px;font-size:14px;font-weight:200;opacity:.5;margin-right:4px}.acord--modal-body--plugins .extensions-container .extension>.top>.right .status{font-size:12px;font-weight:200;opacity:.75;display:flex}.acord--modal-body--plugins .extensions-container .extension>.top>.right .status .authors{margin-right:4px;opacity:.75}.acord--modal-body--plugins .extensions-container .extension>.top>.left{font-size:26px;cursor:pointer}.acord--modal-body--plugins .extensions-container .extension>.bottom{padding:8px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--plugins .extensions-container .extension>.bottom>.left .description{opacity:.9}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right{display:flex}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right .control{background-color:#00000026;padding:8px;border-radius:8px;margin-left:4px;cursor:pointer}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right .control:hover{background-color:#00000040}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right .control:hover svg{opacity:.95}.acord--modal-body--plugins .extensions-container .extension>.bottom>.right .control svg{width:18px;height:18px}.acord--checkbox-container{display:grid;gap:8px;grid-template-columns:max-content min-content;grid-template-rows:max-content;align-items:center}.acord--checkbox-container>input{grid-column:2/3;grid-row:1/2}.acord--checkbox-container>div{grid-column:2/3;grid-row:1/2}.acord--checkbox{width:100%;height:100%;appearance:none;margin:0;padding:0}.acord--checkbox:checked~.acord--checkbox-visual{background:hsl(152deg,45%,48%)}.acord--checkbox:checked~.acord--checkbox-visual>div{left:100%;transform:translate(-100%);background:white;display:grid}.acord--checkbox:checked~.acord--checkbox-visual>div:before{background-color:#43b17e;clip-path:polygon(25% 75%,33% 100%,100% 20%,80% 0%)}.acord--checkbox:checked~.acord--checkbox-visual>div:after{background-color:#43b17e;clip-path:polygon(20% 45%,0% 65%,33.33% 100%,45% 75%)}.acord--checkbox~.acord--checkbox-visual>div{position:relative;left:0;height:.8em;width:.8em;background:white;pointer-events:none;transition:inherit;border-radius:9999px;display:grid;justify-items:stretch;align-items:stretch;padding:.1em}.acord--checkbox~.acord--checkbox-visual>div:before{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(20% 0%,0% 20%,80% 100%,100% 80%)}.acord--checkbox~.acord--checkbox-visual>div:after{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(0% 80%,20% 100%,100% 20%,80% 0%)}.acord--checkbox-visual{position:relative;background:hsl(218deg,4%,46%);transition:.3s cubic-bezier(.83,0,.17,1);font-size:1em;width:2em;height:1em;padding:.1em;border-radius:9999px;pointer-events:none}");
 
   function patchStyles() {
     patchContainer.add(styles());
@@ -291,4 +400,4 @@
 
   return index;
 
-})(acord.modules.common.React, acord.modules.swc, acord.modules.common.i18n, acord.i18n, acord.dom, acord.events, acord.modules.common, acord.internal, acord.modules.common.React, acord.extensions, acord.patcher);
+})(acord.modules.common.React, acord.modules.swc, acord.modules.common.i18n, acord.i18n, acord.dom, acord.events, acord.modules.common, acord.ui.toasts, acord.modules.common.React, acord.extensions, acord.utils, acord.patcher);
