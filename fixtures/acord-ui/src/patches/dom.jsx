@@ -2,6 +2,7 @@ import swc from "@acord/modules/swc";
 import discordI18N from "@acord/modules/common/i18n";
 import i18n from "@acord/i18n";
 import dom from "@acord/dom";
+import utils from "@acord/utils";
 import modals from "@acord/ui/modals";
 import toasts from "@acord/ui/toasts";
 import events from "@acord/events";
@@ -10,11 +11,13 @@ import patchContainer from "../other/patchContainer.js";
 import { showModal } from "../other/apis.js";
 import { ModalBase } from "../components/modals/ModalBase.jsx";
 import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
+import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
 
 let optionsClasses = swc.findByProps("item", "selected", "separator");
 let anchorClasses = swc.findByProps("anchor", "anchorUnderlineOnHover");
+let messageClasses = swc.findByProps("message", "cozyMessage", "mentioned");
 
-let extensionsRegex = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/users\/[^\/]+\/([^\/]+).*\/dist\/$/g;
+let extensionsRegex = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(plugins|themes)\/main\/users\/[^\/]+\/([^\/]+).*\/dist\/?$/;
 
 export function patchDOM() {
 
@@ -66,21 +69,29 @@ export function patchDOM() {
           let href = elm.href;
 
           if (!extensionsRegex.test(href)) return;
+          if (!href.endsWith("/")) href = `${href}/`;
 
-          let extensionName = [...(href.match(extensionsRegex) || [])]?.[1];
+          let [, extensionType, extensionName] = [...(href.match(extensionsRegex) || [])];
+          if (extensionType.endsWith("s")) extensionType = extensionType.slice(0, -1);
+          let extensionTypeUpper = extensionType.toUpperCase();
 
-          elm.textContent = `${elm.textContent} (${i18n.fmt("IMPORT_EXTENSION")})`;
+          let manifest;
 
-          elm.addEventListener("click", async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+          try {
+            manifest = await (await fetch(`${href}extension.json`)).json();
+          } catch { };
+          
+          if (!manifest) return;
 
-            let accepted = await modals.show.confirmation(
-              i18n.fmt("IMPORT_EXTENSION"),
-              i18n.fmt("IMPORT_EXTENSION_DESCRIPTION", extensionName)
-            )
-            if (!accepted) return;
-            
+          async function importExtension(ask=false) {
+            if (ask) {
+              let accepted = await modals.show.confirmation(
+                manifest.about.name,
+                i18n.fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, extensionName)
+              )
+              if (!accepted) return;
+            }
+
             try {
               await extensions.load(elm.href);
             } catch (err) {
@@ -91,7 +102,38 @@ export function patchDOM() {
                 toasts.show.error(errStr);
               }
             }
-          })
+          }
+
+          elm.addEventListener("click", async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            importExtension(true);
+          });
+
+          /** @type {Element} */
+          let messageElm = dom.parents(elm, `.${messageClasses.message}`)?.[0];
+          if (!messageElm) return;
+
+          /** @type {Element} */
+          let cardElm = dom.parseHTML(
+            DOMGiftCard({
+              title: manifest.about.name,
+              description: manifest.about.description ? `${manifest.about.description}<br/>(v${manifest.about.version}, ${i18n.fmt("X_MADE_BY", manifest.about.authors.join(", "))})` : i18n.fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`),
+              buttonContents: i18n.fmt(`IMPORT_${extensionTypeUpper}`),
+              buttonClassName: "import-plugin",
+              image: `https://github.com/AcordPlugin/assets/raw/main/${extensionType}s.png`
+            })
+          );
+
+          utils.ifExists(cardElm.querySelector(".import-plugin"), (item) => {
+            item.onclick = () => {
+              importExtension(false);
+            }
+          });
+
+          messageElm.appendChild(
+            cardElm
+          )
         });
       });
 

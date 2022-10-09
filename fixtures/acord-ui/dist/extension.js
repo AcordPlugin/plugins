@@ -1,4 +1,4 @@
-(function (React$1, swc, discordI18N, i18n, dom, modals, toasts, events, extensions, common, require$$0, utils, patcher) {
+(function (React$1, swc, discordI18N, i18n, dom, utils, modals, toasts, events, extensions, common, require$$0, patcher) {
   'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -26,13 +26,13 @@
   var discordI18N__default = /*#__PURE__*/_interopDefaultLegacy(discordI18N);
   var i18n__default = /*#__PURE__*/_interopDefaultLegacy(i18n);
   var dom__default = /*#__PURE__*/_interopDefaultLegacy(dom);
+  var utils__default = /*#__PURE__*/_interopDefaultLegacy(utils);
   var modals__default = /*#__PURE__*/_interopDefaultLegacy(modals);
   var toasts__default = /*#__PURE__*/_interopDefaultLegacy(toasts);
   var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
   var extensions__default = /*#__PURE__*/_interopDefaultLegacy(extensions);
   var common__default = /*#__PURE__*/_interopDefaultLegacy(common);
   var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
-  var utils__default = /*#__PURE__*/_interopDefaultLegacy(utils);
 
   class Patches {
     constructor() {
@@ -423,9 +423,41 @@
     })));
   }
 
+  const buttonClasses = swc__default["default"].findByProps("button", "lookFilled", "colorBrand");
+  function DOMButton({ contents = "", className = "" } = {}) {
+    return `
+    <button class="${buttonClasses.button} ${buttonClasses.lookFilled} ${buttonClasses.colorBrand} ${buttonClasses.sizeSmall} ${buttonClasses.grow} ${className}">
+      <div class="${buttonClasses.contents}">${contents}</div>
+    </button>
+  `;
+  }
+
+  const giftCodeClasses = swc__default["default"].findByProps("giftCodeContainer");
+  const tileClasses = swc__default["default"].findByProps("tile", "tileHorizontal");
+  const embedClasses = swc__default["default"].findByProps("embedHorizontal", "embedVertical");
+  function DOMGiftCard({ title, description = "", image = "", buttonContents, buttonClassName = "", className = "" }) {
+    return `
+    <div class="${giftCodeClasses.container}">
+      <div class="${giftCodeClasses.giftCodeContainer} ${className}">
+        <div class="${tileClasses.tile} ${tileClasses.tileHorizontal} ${embedClasses.embedHorizontal}">
+          <div class="${tileClasses.media} ${tileClasses.mediaHorizontal} acord--gift-card-image" style="background-image: url('${dom__default["default"].escapeHTML(image)}');"></div>
+          <div class="${tileClasses.description}">
+            <div class="${tileClasses.title}">${title}</div>
+            <div class="${tileClasses.tagline}">${description}</div>
+            <div class="${tileClasses.actions}">
+              ${DOMButton({ contents: buttonContents, className: buttonClassName })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  }
+
   let optionsClasses = swc__default["default"].findByProps("item", "selected", "separator");
   let anchorClasses = swc__default["default"].findByProps("anchor", "anchorUnderlineOnHover");
-  let extensionsRegex = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(?:plugins|themes)\/main\/users\/[^\/]+\/([^\/]+).*\/dist\/$/g;
+  let messageClasses = swc__default["default"].findByProps("message", "cozyMessage", "mentioned");
+  let extensionsRegex = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(plugins|themes)\/main\/users\/[^\/]+\/([^\/]+).*\/dist\/?$/;
   function patchDOM() {
     patchContainer.add(
       events__default["default"].on("domMutation", (mut) => {
@@ -486,17 +518,28 @@
             let href = elm.href;
             if (!extensionsRegex.test(href))
               return;
-            let extensionName = [...href.match(extensionsRegex) || []]?.[1];
-            elm.textContent = `${elm.textContent} (${i18n__default["default"].fmt("IMPORT_EXTENSION")})`;
-            elm.addEventListener("click", async (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              let accepted = await modals__default["default"].show.confirmation(
-                i18n__default["default"].fmt("IMPORT_EXTENSION"),
-                i18n__default["default"].fmt("IMPORT_EXTENSION_DESCRIPTION", extensionName)
-              );
-              if (!accepted)
-                return;
+            if (!href.endsWith("/"))
+              href = `${href}/`;
+            let [, extensionType, extensionName] = [...href.match(extensionsRegex) || []];
+            if (extensionType.endsWith("s"))
+              extensionType = extensionType.slice(0, -1);
+            let extensionTypeUpper = extensionType.toUpperCase();
+            let manifest;
+            try {
+              manifest = await (await fetch(`${href}extension.json`)).json();
+            } catch {
+            }
+            if (!manifest)
+              return;
+            async function importExtension(ask = false) {
+              if (ask) {
+                let accepted = await modals__default["default"].show.confirmation(
+                  manifest.about.name,
+                  i18n__default["default"].fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, extensionName)
+                );
+                if (!accepted)
+                  return;
+              }
               try {
                 await extensions__default["default"].load(elm.href);
               } catch (err) {
@@ -507,14 +550,39 @@
                   toasts__default["default"].show.error(errStr);
                 }
               }
+            }
+            elm.addEventListener("click", async (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              importExtension(true);
             });
+            let messageElm = dom__default["default"].parents(elm, `.${messageClasses.message}`)?.[0];
+            if (!messageElm)
+              return;
+            let cardElm = dom__default["default"].parseHTML(
+              DOMGiftCard({
+                title: manifest.about.name,
+                description: manifest.about.description ? `${manifest.about.description}<br/>(v${manifest.about.version}, ${i18n__default["default"].fmt("X_MADE_BY", manifest.about.authors.join(", "))})` : i18n__default["default"].fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`),
+                buttonContents: i18n__default["default"].fmt(`IMPORT_${extensionTypeUpper}`),
+                buttonClassName: "import-plugin",
+                image: `https://github.com/AcordPlugin/assets/raw/main/${extensionType}s.png`
+              })
+            );
+            utils__default["default"].ifExists(cardElm.querySelector(".import-plugin"), (item) => {
+              item.onclick = () => {
+                importExtension(false);
+              };
+            });
+            messageElm.appendChild(
+              cardElm
+            );
           });
         });
       })
     );
   }
 
-  var styles = () => patcher.injectCSS(".acord--modal-root{display:flex;flex-direction:column;padding:16px;transform:translate(-50%,-50%)!important}.acord--modal-header{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.acord--modal-title{font-size:28px;color:#efefef;font-weight:600}.acord--modal-close{width:24px;height:24px;cursor:pointer}.acord--modal-close svg{width:24px;height:24px}.acord--modal-body{display:flex;flex-direction:column;height:550px;overflow:auto;contain:content}.acord--modal-body--extensions .import-container{display:flex;align-items:center;gap:8px;margin-bottom:16px}.acord--modal-body--extensions .import-container .input-container{width:100%}.acord--modal-body--extensions .extensions-container{display:flex;flex-direction:column;max-height:500px;height:500px;overflow:auto;contain:content}.acord--modal-body--extensions .extensions-container .extension{display:flex;flex-direction:column;background-color:#00000026;margin-bottom:8px;border-radius:8px;color:#f5f5f5;contain:content}.acord--modal-body--extensions .extensions-container .extension.locked{opacity:.75;pointer-events:none;filter:brightness(.5)}.acord--modal-body--extensions .extensions-container .extension>.top{padding:8px;display:flex;align-items:center;justify-content:space-between;background-color:#00000026}.acord--modal-body--extensions .extensions-container .extension>.top>.right{display:flex;flex-direction:column}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version{display:flex;align-items:flex-end;margin-bottom:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons{display:flex;align-items:center}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .title{font-size:18px;font-weight:500;margin-right:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons{display:flex;gap:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons .acord--icon{width:14px;height:14px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .version{margin-left:4px;font-size:14px;font-weight:200;opacity:.5;margin-right:4px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status{font-size:12px;font-weight:200;opacity:.75;display:flex}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status .authors{margin-right:4px;opacity:.75}.acord--modal-body--extensions .extensions-container .extension>.top>.left{font-size:26px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom{padding:8px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--extensions .extensions-container .extension>.bottom>.left .description{opacity:.9}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right{display:flex}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control{background-color:#00000026;padding:8px;border-radius:8px;margin-left:4px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover{background-color:#00000040}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover svg{opacity:.95}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control svg{width:18px;height:18px}.acord--modal-body--extension-settings .container{margin-bottom:8px}.acord--modal-body--extension-settings .container--header{display:flex;align-items:center;width:100%;gap:4px;font-size:20px}.acord--modal-body--extension-settings .container--header .left{width:8px;height:2px;background-color:#ffffff40;border-radius:9999px}.acord--modal-body--extension-settings .container--header .center{color:#fff;font-weight:600;text-transform:uppercase;opacity:.85}.acord--modal-body--extension-settings .container--header .right{width:100%;height:2px;background-color:#ffffff40;border-radius:9999px}.acord--modal-body--extension-settings .container .info-side{width:80%;display:flex;flex-direction:column}.acord--modal-body--extension-settings .container .info-side .name{font-size:18px;font-weight:600;color:#fff;opacity:.9}.acord--modal-body--extension-settings .container .info-side .description{margin-top:4px;color:#fff;opacity:.85}.acord--modal-body--extension-settings .container--checkbox{padding:0 10px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--extension-settings .container--checkbox>.left{width:80%}.acord--modal-body--extension-settings .container--checkbox>.right{width:20%;align-items:center;justify-content:flex-end;display:flex;font-size:24px}.acord--checkbox-container{display:grid;gap:8px;grid-template-columns:max-content min-content;grid-template-rows:max-content;align-items:center}.acord--checkbox-container>input{grid-column:2/3;grid-row:1/2}.acord--checkbox-container>div{grid-column:2/3;grid-row:1/2}.acord--checkbox{width:100%;height:100%;appearance:none;margin:0;padding:0;cursor:pointer}.acord--checkbox:checked~.acord--checkbox-visual{background:hsl(152deg,45%,48%)}.acord--checkbox:checked~.acord--checkbox-visual>div{left:100%;transform:translate(-100%);background:white;display:grid}.acord--checkbox:checked~.acord--checkbox-visual>div:before{background-color:#43b17e;clip-path:polygon(25% 75%,33% 100%,100% 20%,80% 0%)}.acord--checkbox:checked~.acord--checkbox-visual>div:after{background-color:#43b17e;clip-path:polygon(20% 45%,0% 65%,33.33% 100%,45% 75%)}.acord--checkbox~.acord--checkbox-visual>div{position:relative;left:0;height:.8em;width:.8em;background:white;pointer-events:none;transition:inherit;border-radius:9999px;display:grid;justify-items:stretch;align-items:stretch;padding:.1em}.acord--checkbox~.acord--checkbox-visual>div:before{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(20% 0%,0% 20%,80% 100%,100% 80%)}.acord--checkbox~.acord--checkbox-visual>div:after{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(0% 80%,20% 100%,100% 20%,80% 0%)}.acord--checkbox-visual{cursor:pointer;position:relative;background:hsl(218deg,4%,46%);transition:.3s cubic-bezier(.83,0,.17,1);font-size:1em;width:2em;height:1em;padding:.1em;border-radius:9999px;pointer-events:none}");
+  var styles = () => patcher.injectCSS(".acord--modal-root{display:flex;flex-direction:column;padding:16px;transform:translate(-50%,-50%)!important}.acord--modal-header{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.acord--modal-title{font-size:28px;color:#efefef;font-weight:600}.acord--modal-close{width:24px;height:24px;cursor:pointer}.acord--modal-close svg{width:24px;height:24px}.acord--modal-body{display:flex;flex-direction:column;height:550px;overflow:auto;contain:content}.acord--modal-body--extensions .import-container{display:flex;align-items:center;gap:8px;margin-bottom:16px}.acord--modal-body--extensions .import-container .input-container{width:100%}.acord--modal-body--extensions .extensions-container{display:flex;flex-direction:column;max-height:500px;height:500px;overflow:auto;contain:content}.acord--modal-body--extensions .extensions-container .extension{display:flex;flex-direction:column;background-color:#00000026;margin-bottom:8px;border-radius:8px;color:#f5f5f5;contain:content}.acord--modal-body--extensions .extensions-container .extension.locked{opacity:.75;pointer-events:none;filter:brightness(.5)}.acord--modal-body--extensions .extensions-container .extension>.top{padding:8px;display:flex;align-items:center;justify-content:space-between;background-color:#00000026}.acord--modal-body--extensions .extensions-container .extension>.top>.right{display:flex;flex-direction:column}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version{display:flex;align-items:flex-end;margin-bottom:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons{display:flex;align-items:center}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .title{font-size:18px;font-weight:500;margin-right:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons{display:flex;gap:2px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .title-and-icons .icons .acord--icon{width:14px;height:14px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .title-and-version .version{margin-left:4px;font-size:14px;font-weight:200;opacity:.5;margin-right:4px}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status{font-size:12px;font-weight:200;opacity:.75;display:flex}.acord--modal-body--extensions .extensions-container .extension>.top>.right .status .authors{margin-right:4px;opacity:.75}.acord--modal-body--extensions .extensions-container .extension>.top>.left{font-size:26px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom{padding:8px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--extensions .extensions-container .extension>.bottom>.left .description{opacity:.9}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right{display:flex}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control{background-color:#00000026;padding:8px;border-radius:8px;margin-left:4px;cursor:pointer}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover{background-color:#00000040}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control:hover svg{opacity:.95}.acord--modal-body--extensions .extensions-container .extension>.bottom>.right .control svg{width:18px;height:18px}.acord--modal-body--extension-settings .container{margin-bottom:8px}.acord--modal-body--extension-settings .container--header{display:flex;align-items:center;width:100%;gap:4px;font-size:20px}.acord--modal-body--extension-settings .container--header .left{width:8px;height:2px;background-color:#ffffff40;border-radius:9999px}.acord--modal-body--extension-settings .container--header .center{color:#fff;font-weight:600;text-transform:uppercase;opacity:.85}.acord--modal-body--extension-settings .container--header .right{width:100%;height:2px;background-color:#ffffff40;border-radius:9999px}.acord--modal-body--extension-settings .container .info-side{width:80%;display:flex;flex-direction:column}.acord--modal-body--extension-settings .container .info-side .name{font-size:18px;font-weight:600;color:#fff;opacity:.9}.acord--modal-body--extension-settings .container .info-side .description{margin-top:4px;color:#fff;opacity:.85}.acord--modal-body--extension-settings .container--checkbox{padding:0 10px;display:flex;align-items:center;justify-content:space-between}.acord--modal-body--extension-settings .container--checkbox>.left{width:80%}.acord--modal-body--extension-settings .container--checkbox>.right{width:20%;align-items:center;justify-content:flex-end;display:flex;font-size:24px}.acord--gift-card-image{background-size:contain;background-color:#00000040;background-position:center;width:100%;height:100%}.acord--checkbox-container{display:grid;gap:8px;grid-template-columns:max-content min-content;grid-template-rows:max-content;align-items:center}.acord--checkbox-container>input{grid-column:2/3;grid-row:1/2}.acord--checkbox-container>div{grid-column:2/3;grid-row:1/2}.acord--checkbox{width:100%;height:100%;appearance:none;margin:0;padding:0;cursor:pointer}.acord--checkbox:checked~.acord--checkbox-visual{background:hsl(152deg,45%,48%)}.acord--checkbox:checked~.acord--checkbox-visual>div{left:100%;transform:translate(-100%);background:white;display:grid}.acord--checkbox:checked~.acord--checkbox-visual>div:before{background-color:#43b17e;clip-path:polygon(25% 75%,33% 100%,100% 20%,80% 0%)}.acord--checkbox:checked~.acord--checkbox-visual>div:after{background-color:#43b17e;clip-path:polygon(20% 45%,0% 65%,33.33% 100%,45% 75%)}.acord--checkbox~.acord--checkbox-visual>div{position:relative;left:0;height:.8em;width:.8em;background:white;pointer-events:none;transition:inherit;border-radius:9999px;display:grid;justify-items:stretch;align-items:stretch;padding:.1em}.acord--checkbox~.acord--checkbox-visual>div:before{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(20% 0%,0% 20%,80% 100%,100% 80%)}.acord--checkbox~.acord--checkbox-visual>div:after{content:\"\";transition:inherit;background-color:#71747a;grid-column:1/2;grid-row:1/2;clip-path:polygon(0% 80%,20% 100%,100% 20%,80% 0%)}.acord--checkbox-visual{cursor:pointer;position:relative;background:hsl(218deg,4%,46%);transition:.3s cubic-bezier(.83,0,.17,1);font-size:1em;width:2em;height:1em;padding:.1em;border-radius:9999px;pointer-events:none}");
 
   function patchStyles() {
     patchContainer.add(styles());
@@ -532,4 +600,4 @@
 
   return index;
 
-})(acord.modules.common.React, acord.modules.swc, acord.modules.common.i18n, acord.i18n, acord.dom, acord.ui.modals, acord.ui.toasts, acord.events, acord.extensions, acord.modules.common, acord.modules.common.React, acord.utils, acord.patcher);
+})(acord.modules.common.React, acord.modules.swc, acord.modules.common.i18n, acord.i18n, acord.dom, acord.utils, acord.ui.modals, acord.ui.toasts, acord.events, acord.extensions, acord.modules.common, acord.modules.common.React, acord.patcher);
