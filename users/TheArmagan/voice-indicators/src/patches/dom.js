@@ -62,7 +62,7 @@ async function patchIndicators(user, elm) {
 
 let syncCache = {};
 
-const tht = (user, elm) => {
+const fixDuplicate = (user, elm) => {
   if (!((Date.now() - (syncCache[user.id] || 0)) > 100)) return;
   syncCache[user.id] = Date.now();
   patchIndicators(user, elm);
@@ -82,7 +82,8 @@ export function patchDOM() {
       syncCache = {};
       clearInterval(interval);
     }
-  })())
+  })());
+  
   patchContainer.add(
     events.on("domMutation", /** @param {MutationRecord} mut */ (mut) => {   
       mut.addedNodes.forEach((node) => {
@@ -92,7 +93,7 @@ export function patchDOM() {
           if (elm.querySelector(".vi--patched")) return;
           let user = utils.react.getProps(elm, i => !!i?.user)?.user;
           if (!user) return;
-          tht(user, elm);
+          fixDuplicate(user, elm);
         });
       });
 
