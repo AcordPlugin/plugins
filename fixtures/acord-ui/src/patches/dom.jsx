@@ -101,7 +101,7 @@ export function patchDOM() {
             } catch (err) {
               let errStr = `${err}`;
               if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
-                toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", extensionName));
+                toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", manifest.about.name));
                 extensions.reload(href);
               } else {
                 toasts.show.error(errStr);
