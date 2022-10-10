@@ -85,7 +85,7 @@ export function patchDOM() {
           } catch { };
           
           if (!manifest) return;
-          elm.remove();
+          elm.textContent = `${manifest.about.name} (v${manifest.about.version}, ${i18n.fmt("X_MADE_BY", manifest.about.authors.join(", "))})`;
 
           async function importExtension(ask=false) {
             if (ask) {
@@ -108,6 +108,11 @@ export function patchDOM() {
               }
             }
           }
+
+          elm.addEventListener("click", (e) => {
+            e.preventDefault();
+            importExtension(true);
+          });
 
           /** @type {Element} */
           let cardElm = dom.parseHTML(
