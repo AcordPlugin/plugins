@@ -85,7 +85,7 @@ export function patchDOM() {
           } catch { };
           
           if (!manifest) return;
-          elm.textContent = `${manifest.about.name} (v${manifest.about.version}, ${i18n.fmt("X_MADE_BY", manifest.about.authors.join(", "))})`;
+          elm.textContent = manifest.about.name;
 
           async function importExtension(ask=false) {
             if (ask) {
