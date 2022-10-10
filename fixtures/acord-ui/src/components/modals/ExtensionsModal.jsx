@@ -44,13 +44,14 @@ export function ExtensionsModal({ extensionsType }) {
           onClick={async () => {
             if (!importURL.trim()) return;
             setImportURL("");
+            let href = importURL;
             if (extensionsRegex.test(importURL)) {
               let [, extensionType, extensionPath] = importURL.match(extensionsRegex);
-              importURL = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
+              href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
             }
 
             try {
-              await extensions.load(importURL);
+              await extensions.load(href);
             } catch (err) {
               let errStr = `${err}`;
               if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
