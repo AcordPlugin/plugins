@@ -48,6 +48,10 @@ async function patchIndicators(user, elm) {
 
     if (!userActivity) return;
 
+    if (_.isEqual(userActivity, indicatorContainer.state)) return;
+
+    indicatorContainer.state = userActivity;
+
     /** @type {Element[]} */
     const htmls = Object.entries(userActivity).map(x => {
       const indicator = dom.parseHTML(`<div class="pi--icon">${elements[x[0]](x[1])}</div>`);
