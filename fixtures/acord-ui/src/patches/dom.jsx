@@ -91,7 +91,7 @@ export function patchDOM() {
             if (ask) {
               let accepted = await modals.show.confirmation(
                 manifest.about.name,
-                i18n.fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, extensionName)
+                i18n.fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, manifest.about.name)
               )
               if (!accepted) return;
             }
