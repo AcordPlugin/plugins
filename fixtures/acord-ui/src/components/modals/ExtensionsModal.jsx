@@ -45,7 +45,7 @@ export function ExtensionsModal({ extensionsType }) {
             if (!importURL.trim()) return;
             setImportURL("");
             let href = importURL;
-            if (extensionsRegex.test(importURL)) {
+            if (extensionsRegex.test(href)) {
               let [, extensionType, extensionPath] = importURL.match(extensionsRegex);
               href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
             }
