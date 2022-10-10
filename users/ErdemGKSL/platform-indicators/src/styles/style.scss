@@ -1,0 +1,13 @@
+.pi {
+    &--icon-container {
+        display: flex;
+        gap: 4px;
+        margin-left: 4px;
+
+        svg {
+            color: whitesmoke;
+            width: 18px;
+            height: 18px;
+        }
+    }
+}

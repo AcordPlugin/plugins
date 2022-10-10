@@ -1,0 +1,13 @@
+{
+  "hash": "c8a2b7bb702c330ce40df81c16fc61025511e9a1cd3453b057eb82327a63e7f1",
+  "type": "plugin",
+  "about": {
+    "name": "Platform Indicators",
+    "authors": [
+      "ErdemGKSL"
+    ],
+    "description": "Shows user's platform next to their username.",
+    "version": "0.0.1",
+    "license": "MIT"
+  }
+}
