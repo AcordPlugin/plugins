@@ -69,16 +69,10 @@ export function patchDOM() {
           let originalHref = elm.href;
           if (!originalHref.endsWith("/")) originalHref += "/";
           if (!extensionsRegex.test(originalHref)) return;
-
-          /** @type {Element} */
-          let messageElm = dom.parents(elm, `.${messageClasses.message}`)?.[0];
-          if (!messageElm) return;
           
           let [, extensionType, extensionPath] = originalHref.match(extensionsRegex);
           let extensionTypeUpper = extensionType.toUpperCase();
           let href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
-
-          if (messageElm.querySelector(`[acord-href="${href}"]`)) return;
 
           let manifest;
 
@@ -115,6 +109,12 @@ export function patchDOM() {
             e.preventDefault();
             importExtension(true);
           });
+
+          /** @type {Element} */
+          let messageElm = dom.parents(elm, `.${messageClasses.message}`)?.[0];
+          if (!messageElm) return;
+
+          if (messageElm.querySelector(`[acord-href="${href}"]`)) return;
 
           /** @type {Element} */
           let cardElm = dom.parseHTML(
