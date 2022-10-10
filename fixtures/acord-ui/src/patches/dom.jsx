@@ -17,7 +17,7 @@ let optionsClasses = swc.findByProps("item", "selected", "separator");
 let anchorClasses = swc.findByProps("anchor", "anchorUnderlineOnHover");
 let messageClasses = swc.findByProps("message", "cozyMessage", "mentioned");
 
-let extensionsRegex = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(plugins|themes)\/main\/users\/[^\/]+\/([^\/]+).*\/dist\/?$/;
+let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)\/(.*)$/;
 
 export function patchDOM() {
 
@@ -65,15 +65,16 @@ export function patchDOM() {
           if (elm.querySelector(".acord--patched")) return;
           elm.classList.add("acord--patched");
 
-          /** @type {string} */
-          let href = elm.href;
+          if (!extensionsRegex.test(elm.href)) return;
 
-          if (!extensionsRegex.test(href)) return;
-          if (!href.endsWith("/")) href = `${href}/`;
-
-          let [, extensionType, extensionName] = [...(href.match(extensionsRegex) || [])];
-          if (extensionType.endsWith("s")) extensionType = extensionType.slice(0, -1);
+          /** @type {Element} */
+          let messageElm = dom.parents(elm, `.${messageClasses.message}`)?.[0];
+          if (!messageElm) return;
+          elm.remove();
+          
+          let [, extensionType, extensionPath] = elm.href.match(extensionsRegex);
           let extensionTypeUpper = extensionType.toUpperCase();
+          let href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
 
           let manifest;
 
@@ -104,16 +105,6 @@ export function patchDOM() {
             }
           }
 
-          elm.addEventListener("click", async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            importExtension(true);
-          });
-
-          /** @type {Element} */
-          let messageElm = dom.parents(elm, `.${messageClasses.message}`)?.[0];
-          if (!messageElm) return;
-
           /** @type {Element} */
           let cardElm = dom.parseHTML(
             DOMGiftCard({
@@ -126,6 +117,7 @@ export function patchDOM() {
           );
 
           utils.ifExists(cardElm.querySelector(".import-plugin"), (item) => {
+            item.disabled = !!extensions.nests.loaded.ghost[href];
             item.onclick = () => {
               importExtension(false);
             }
@@ -133,7 +125,7 @@ export function patchDOM() {
 
           messageElm.appendChild(
             cardElm
-          )
+          );
         });
       });
 

@@ -1,10 +1,13 @@
 import { useNest } from "nests/react";
 import extensions from "@acord/extensions";
 import { CheckBox } from "../CheckBox.jsx";
+import { React } from "../../other/apis.js";
 
 export function ExtensionSettings({ url, extension }) {
   useNest(extensions.nests.enabled);
   useNest(extensions.nests.enabled.ghost[url].persist);
+  const [updater, setUpdater] = React.useState("");
+
 
   const extensionSrc = extensions.nests.enabled.ghost[url];
   const persist = extensionSrc.persist;
@@ -33,6 +36,7 @@ export function ExtensionSettings({ url, extension }) {
             onChange={(e) => {
               persist.store.settings[setting.property] = e.target.checked;
               callUpdate(setting.property, e.target.checked);
+              setUpdater(Math.random().toString(36));
             }}
           />
         </div>
@@ -44,7 +48,7 @@ export function ExtensionSettings({ url, extension }) {
     {
       extensionSrc.settings.data.map(setting => {
         return (
-          (setting.condition ? (eval(`(($)=>{ return (${setting.condition}) })`))(persist.ghost.settings || {}) : true) ? <div class={`container container--${setting.type}`}>
+          (setting.condition ? (eval(`(($)=>{ return !!(${setting.condition}) })`))(persist.ghost.settings || {}) : true) ? <div class={`container container--${setting.type}`}>
             {types[setting.type](setting)}
           </div>
           : null
