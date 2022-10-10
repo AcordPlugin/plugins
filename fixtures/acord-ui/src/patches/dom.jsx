@@ -78,6 +78,8 @@ export function patchDOM() {
           let extensionTypeUpper = extensionType.toUpperCase();
           let href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
 
+          if (messageElm.querySelector(`[acord-href="${href}"]`)) return;
+
           let manifest;
 
           try {
@@ -134,6 +136,8 @@ export function patchDOM() {
               image: `https://github.com/AcordPlugin/assets/raw/main/${extensionType}s.png`
             })
           );
+
+          cardElm.setAttribute("acord-href", href);
 
           utils.ifExists(cardElm.querySelector(".import-extension"), (item) => {
             item.disabled = !!extensions.nests.loaded.ghost[href];
