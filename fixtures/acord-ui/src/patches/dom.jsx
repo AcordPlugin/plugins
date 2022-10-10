@@ -12,6 +12,7 @@ import { showModal } from "../other/apis.js";
 import { ModalBase } from "../components/modals/ModalBase.jsx";
 import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
+import { DOMCopyIcon } from "../components/dom/DOMCopyIcon.js";
 
 let optionsClasses = swc.findByProps("item", "selected", "separator");
 let anchorClasses = swc.findByProps("anchor", "anchorUnderlineOnHover");
@@ -65,14 +66,15 @@ export function patchDOM() {
           if (elm.querySelector(".acord--patched")) return;
           elm.classList.add("acord--patched");
 
-          if (!extensionsRegex.test(elm.href)) return;
+          let originalHref = elm.href;
+          if (!originalHref.endsWith("/")) originalHref += "/";
+          if (!extensionsRegex.test(originalHref)) return;
 
           /** @type {Element} */
           let messageElm = dom.parents(elm, `.${messageClasses.message}`)?.[0];
           if (!messageElm) return;
-          elm.remove();
           
-          let [, extensionType, extensionPath] = elm.href.match(extensionsRegex);
+          let [, extensionType, extensionPath] = originalHref.match(extensionsRegex);
           let extensionTypeUpper = extensionType.toUpperCase();
           let href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
 
@@ -83,6 +85,7 @@ export function patchDOM() {
           } catch { };
           
           if (!manifest) return;
+          elm.remove();
 
           async function importExtension(ask=false) {
             if (ask) {
@@ -94,11 +97,12 @@ export function patchDOM() {
             }
 
             try {
-              await extensions.load(elm.href);
+              await extensions.load(href);
             } catch (err) {
               let errStr = `${err}`;
               if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
                 toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", extensionName));
+                extensions.reload(href);
               } else {
                 toasts.show.error(errStr);
               }
@@ -110,16 +114,33 @@ export function patchDOM() {
             DOMGiftCard({
               title: manifest.about.name,
               description: manifest.about.description ? `${manifest.about.description}<br/>(v${manifest.about.version}, ${i18n.fmt("X_MADE_BY", manifest.about.authors.join(", "))})` : i18n.fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`),
-              buttonContents: i18n.fmt(`IMPORT_${extensionTypeUpper}`),
-              buttonClassName: "import-plugin",
+              buttons: [
+                {
+                  contents: i18n.fmt(`IMPORT_${extensionTypeUpper}`),
+                  className: "import-extension",
+                  color: "colorBrand"
+                },
+                {
+                  contents: DOMCopyIcon(),
+                  className: "copy-extension-link",
+                  color: "colorTransparent"
+                }
+              ],
               image: `https://github.com/AcordPlugin/assets/raw/main/${extensionType}s.png`
             })
           );
 
-          utils.ifExists(cardElm.querySelector(".import-plugin"), (item) => {
+          utils.ifExists(cardElm.querySelector(".import-extension"), (item) => {
             item.disabled = !!extensions.nests.loaded.ghost[href];
             item.onclick = () => {
               importExtension(false);
+            }
+          });
+
+          utils.ifExists(cardElm.querySelector(".copy-extension-link"), (item) => {
+            item.onclick = () => {
+              utils.copyText(originalHref);
+              toasts.show(i18n.fmt("X_COPIED", originalHref));
             }
           });
 

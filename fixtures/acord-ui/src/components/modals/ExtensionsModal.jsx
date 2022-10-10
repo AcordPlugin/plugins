@@ -18,6 +18,8 @@ import { ExtensionSettings } from "./ExtensionSettings.jsx";
 
 const scrollClasses = swc.findByProps("thin", "scrollerBase");
 
+let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)\/(.*)$/;
+
 export function ExtensionsModal({ extensionsType }) {
   useNest(extensions.nests.loaded);
   useNest(extensions.nests.enabled);
@@ -42,6 +44,11 @@ export function ExtensionsModal({ extensionsType }) {
           onClick={async () => {
             if (!importURL.trim()) return;
             setImportURL("");
+            if (extensionsRegex.test(importURL)) {
+              let [, extensionType, extensionPath] = importURL.match(extensionsRegex);
+              importURL = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
+            }
+
             try {
               await extensions.load(importURL);
             } catch (err) {
