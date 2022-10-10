@@ -81,7 +81,6 @@ export function patchDOM() {
           } catch { };
           
           if (!manifest) return;
-          elm.textContent = manifest.about.name;
 
           async function importExtension(ask=false) {
             if (ask) {

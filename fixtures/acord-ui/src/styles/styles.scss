@@ -176,7 +176,13 @@
 
     &--extension-settings {
       .container {
-        margin-bottom: 8px;
+        margin-bottom: 4px;
+        border-radius: 8px;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.15);
+        }
+
         &--header {
           display: flex;
           align-items: center;
@@ -225,14 +231,13 @@
         }
 
         &--checkbox {
-          padding: 0px 10px;
+          padding: 8px 10px;
           display: flex;
           align-items: center;
           justify-content: space-between;
 
           & > .left {
             width: 80%;
-
           }
 
           & > .right {
