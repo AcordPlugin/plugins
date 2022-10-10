@@ -190,6 +190,10 @@
           gap: 4px;
           font-size: 20px;
 
+          &:hover {
+            background-color: transparent;
+          }
+
           .left {
             width: 8px;
             height: 2px;
