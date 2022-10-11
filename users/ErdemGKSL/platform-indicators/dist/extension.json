@@ -1,5 +1,9 @@
 {
+<<<<<<< Updated upstream
   "hash": "cde86b6d0457cb28c85be3bd82e437239d42ceb918d58b60c3e55e28a2dfd499",
+=======
+  "hash": "368defda6712b2cc415fb8160cdefee2625fc26ff332ae5cb545e44052f5c077",
+>>>>>>> Stashed changes
   "type": "plugin",
   "about": {
     "name": "Platform Indicators",
