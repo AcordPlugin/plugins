@@ -1,5 +1,6 @@
 import swc from "@acord/modules/swc";
 import discordI18N from "@acord/modules/common/i18n";
+import { InviteStore } from "@acord/modules/common";
 import i18n from "@acord/i18n";
 import dom from "@acord/dom";
 import utils from "@acord/utils";
@@ -47,6 +48,12 @@ export function patchDOM() {
                 showModal((e) => {
                   return <ModalBase e={e} name={i18n.fmt("THEMES")} body={<ExtensionsModal extensionsType="theme" />} bodyId="extensions" />
                 });
+              }
+            ],
+            [
+              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("HELP_SERVER")}</div>`),
+              () => {
+                InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: "acord" });
               }
             ],
             dom.parseHTML(`<div class="${optionsClasses.separator}"></div>`),
