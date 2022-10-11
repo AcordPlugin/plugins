@@ -1,6 +1,6 @@
 import swc from "@acord/modules/swc"
 import dom from "@acord/dom";
-import { persist } from "@acord/data";
+import { persist } from "@acord/extension";
 import utils from "@acord/utils";
 import patchContainer from "../other/patchContainer";
 import events from "@acord/events";

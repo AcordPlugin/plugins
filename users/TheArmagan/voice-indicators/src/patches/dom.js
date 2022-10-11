@@ -2,7 +2,7 @@ import swc from "@acord/modules/swc";
 import dom from "@acord/dom";
 import utils from "@acord/utils";
 import events from "@acord/events";
-import { persist } from "@acord/data";
+import { persist } from "@acord/extension";
 import patchContainer from "../other/patchContainer.js";
 import { renderIcon } from "../lib/renderIcon.js";
 import { fetchUserVoiceState } from "../other/api.js";
