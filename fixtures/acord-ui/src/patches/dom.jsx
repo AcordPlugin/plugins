@@ -53,6 +53,7 @@ export function patchDOM() {
             [
               dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("HELP_SERVER")}</div>`),
               () => {
+                document.querySelector(`.${swc.findByProps("closeButton", "closeButtonBold", "container").closeButton}`)?.click?.();
                 InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: "acord" });
               }
             ],
