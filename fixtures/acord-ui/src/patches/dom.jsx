@@ -18,7 +18,7 @@ let optionsClasses = swc.findByProps("item", "selected", "separator");
 let anchorClasses = swc.findByProps("anchor", "anchorUnderlineOnHover");
 let messageClasses = swc.findByProps("message", "cozyMessage", "mentioned");
 
-let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)\/(.*)$/;
+let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
 export function patchDOM() {
 
@@ -71,6 +71,7 @@ export function patchDOM() {
           if (!extensionsRegex.test(originalHref)) return;
           
           let [, extensionType, extensionPath] = originalHref.match(extensionsRegex);
+          if (extensionType.endsWith("s")) extensionType = extensionType.slice(0, -1);
           let extensionTypeUpper = extensionType.toUpperCase();
           let href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
 
@@ -88,7 +89,7 @@ export function patchDOM() {
                 manifest.about.name,
                 i18n.fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, manifest.about.name)
               )
-              if (!accepted) return;
+              if (!accepted) return false;
             }
 
             try {
@@ -102,6 +103,7 @@ export function patchDOM() {
                 toasts.show.error(errStr);
               }
             }
+            return true;
           }
 
           elm.addEventListener("click", (e) => {
@@ -140,8 +142,9 @@ export function patchDOM() {
 
           utils.ifExists(cardElm.querySelector(".import-extension"), (item) => {
             item.disabled = !!extensions.nests.loaded.ghost[href];
-            item.onclick = () => {
-              importExtension(false);
+            item.onclick = async () => {
+              let success = await importExtension(false);
+              item.disabled = success;
             }
           });
 

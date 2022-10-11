@@ -18,7 +18,8 @@ import { ExtensionSettings } from "./ExtensionSettings.jsx";
 
 const scrollClasses = swc.findByProps("thin", "scrollerBase");
 
-let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)\/(.*)$/;
+let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
+let extensionsRegex2 = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(plugins|themes)\/main\/users\/(.+)\/dist\/$/;
 
 export function ExtensionsModal({ extensionsType }) {
   useNest(extensions.nests.loaded);
@@ -47,6 +48,7 @@ export function ExtensionsModal({ extensionsType }) {
             let href = importURL;
             if (extensionsRegex.test(href)) {
               let [, extensionType, extensionPath] = importURL.match(extensionsRegex);
+              if (extensionType.endsWith("s")) extensionType = extensionType.slice(0, -1);
               href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
             }
 
@@ -55,7 +57,7 @@ export function ExtensionsModal({ extensionsType }) {
             } catch (err) {
               let errStr = `${err}`;
               if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
-                toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", extensionName));
+                toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", "Unknown"));
               } else {
                 toasts.show.error(errStr);
               }
@@ -109,8 +111,13 @@ export function ExtensionsModal({ extensionsType }) {
                   className="control"
                   acord-tooltip-content={i18n.fmt(`COPY_${extensionsTypeUpper}_LINK`)}
                   onClick={() => {
-                    utils.copyText(url);
-                    toasts.show(i18n.fmt("X_COPIED", url));
+                    let href = url;
+                    if (extensionsRegex2.test(href)) {
+                      let [, extensionType, extensionPath] = href.match(extensionsRegex2);
+                      href = `https://acord.app/${extensionType}/${extensionPath}/`;
+                    }
+                    utils.copyText(href);
+                    toasts.show(i18n.fmt("X_COPIED", href));
                   }}
                 >
                   <CopyIcon />
