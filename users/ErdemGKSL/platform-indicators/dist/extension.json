@@ -1,5 +1,5 @@
 {
-  "hash": "c98457c80c601bc4100c50ef6ec7f181ed3fcbcc7e709f69a1dbaa1b39b95020",
+  "hash": "f14f292a57802d578a854e85a85af82ce40ee9eb9c0470f548d20c0f17d73390",
   "type": "plugin",
   "about": {
     "name": "Platform Indicators",
@@ -7,7 +7,7 @@
       "ErdemGKSL"
     ],
     "description": "Shows user's platform next to their username.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "license": "MIT"
   }
 }
