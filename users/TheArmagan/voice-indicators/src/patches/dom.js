@@ -1,4 +1,4 @@
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 import dom from "@acord/dom";
 import utils from "@acord/utils";
 import events from "@acord/events";
@@ -9,7 +9,7 @@ import { fetchUserVoiceState } from "../other/api.js";
 import { ChannelStore } from "../other/apis.js";
 import { showModal } from "../lib/showModal.jsx";
 
-const indicatorClasses = [swc.findByProps("bot", "nameTag").nameTag, swc.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, swc.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
+const indicatorClasses = [webpack.findByProps("bot", "nameTag").nameTag, webpack.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, webpack.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
 
 /** @param {HTMLElement} elm */
 async function patchIndicators(user, elm) {

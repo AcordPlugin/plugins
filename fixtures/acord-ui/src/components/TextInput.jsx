@@ -1,7 +1,7 @@
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 
-let inputClasses = swc.findByProps("inputDefault", "copyInput");
-let inputClasses2 = swc.findByProps("input", "editable", "disabled", "inputWrapper");
+let inputClasses = webpack.findByProps("inputDefault", "copyInput");
+let inputClasses2 = webpack.findByProps("input", "editable", "disabled", "inputWrapper");
 
 export function TextInput(props = {}) {
   return (

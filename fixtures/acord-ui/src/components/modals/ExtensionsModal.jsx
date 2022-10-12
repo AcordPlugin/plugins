@@ -4,7 +4,7 @@ import toasts from "@acord/ui/toasts"
 import { TextInput } from "../TextInput.jsx";
 import { useNest } from "nests/react";
 import extensions from "@acord/extensions";
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 import utils from "@acord/utils";
 import { TrashIcon } from "../icons/TrashIcon.jsx";
 import { RestartIcon } from "../icons/RestartIcon.jsx";
@@ -16,7 +16,7 @@ import { SettingsIcon } from "../icons/SettingsIcon.jsx";
 import { ModalBase } from "./ModalBase.jsx";
 import { ExtensionSettings } from "./ExtensionSettings.jsx";
 
-const scrollClasses = swc.findByProps("thin", "scrollerBase");
+const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
 let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 let extensionsRegex2 = /^https?\:\/\/raw\.githubusercontent\.com\/AcordPlugin\/(plugins|themes)\/main\/users\/(.+)\/dist\/$/;

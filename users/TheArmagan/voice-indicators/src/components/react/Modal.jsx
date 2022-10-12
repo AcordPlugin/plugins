@@ -1,4 +1,4 @@
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 import utils from "@acord/utils";
 import toasts from "@acord/ui/toasts";
 import { fetchVoiceMembers } from "../../other/api";
@@ -13,7 +13,7 @@ import { VideoIcon } from "./VideoIcon";
 import { VoiceIcon } from "./VoiceIcon";
 import events from "@acord/events";
 
-const scrollClasses = swc.findByProps("thin", "scrollerBase");
+const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
 export function Modal({ e, data }) {
   let [members, setMembers] = React.useState([]);

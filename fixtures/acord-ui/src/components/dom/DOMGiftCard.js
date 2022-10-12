@@ -1,10 +1,10 @@
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 import dom from "@acord/dom";
 import { DOMButton } from "./DOMButton.js";
 
-const giftCodeClasses = swc.findByProps("giftCodeContainer");
-const tileClasses = swc.findByProps("tile", "tileHorizontal");
-const embedClasses = swc.findByProps("embedHorizontal", "embedVertical");
+const giftCodeClasses = webpack.findByProps("giftCodeContainer");
+const tileClasses = webpack.findByProps("tile", "tileHorizontal");
+const embedClasses = webpack.findByProps("embedHorizontal", "embedVertical");
 
 export function DOMGiftCard({ title, description="", image="", buttons=[], className="" }) {
   return `

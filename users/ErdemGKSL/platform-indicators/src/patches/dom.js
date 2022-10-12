@@ -1,4 +1,4 @@
-import swc from "@acord/modules/swc"
+import webpack from "@acord/modules/webpack"
 import dom from "@acord/dom";
 import { persist } from "@acord/extension";
 import utils from "@acord/utils";
@@ -12,9 +12,9 @@ import { Web } from "../icons/Web";
 import { Embedded } from "../icons/Embedded";
 
 const indicatorClasses = [
-  swc.findByProps("bot", "nameTag").nameTag,
-  swc.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators,
-  swc.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators
+  webpack.findByProps("bot", "nameTag").nameTag,
+  webpack.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators,
+  webpack.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators
 ];
 
 const colors = {

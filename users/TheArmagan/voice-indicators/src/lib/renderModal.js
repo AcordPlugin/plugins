@@ -1,13 +1,13 @@
 import { CloseIcon } from "../components/dom/CloseIcon.js";
 import { COLORS } from "../other/constants.js";
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 import dom from "@acord/dom";
 import { VoiceIcon } from "../components/dom/VoiceIcon.js";
 import { JoinCallIcon } from "../components/dom/JoinCallIcon.js";
 import { ArrowIcon } from "../components/dom/ArrowIcon.js";
 import { renderIcon } from "./renderIcon.js";
 
-const scrollClasses = swc.findByProps("thin", "scrollerBase");
+const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
 export function renderModal({ members, state, channel, isJoinable }) {
   return `

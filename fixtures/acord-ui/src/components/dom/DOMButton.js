@@ -1,6 +1,6 @@
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 
-const buttonClasses = swc.findByProps("button", "lookFilled", "colorBrand");
+const buttonClasses = webpack.findByProps("button", "lookFilled", "colorBrand");
 
 export function DOMButton({ contents = "", className = "", color="colorBrand" } = {}) {
   return `

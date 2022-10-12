@@ -1,7 +1,7 @@
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 import common from "@acord/modules/common";
 
-export const transitionTo = swc.find((_, __, i) => i == "655695");
+export const transitionTo = webpack.find((_, __, i) => i == "655695");
 export const {
   PermissionStore,
   VoiceStateStore,
@@ -19,7 +19,7 @@ export const {
   }
 } = common;
 export const { Permissions } = common.constants;
-export const { selectVoiceChannel } = swc.findByProps(
+export const { selectVoiceChannel } = webpack.findByProps(
   "selectVoiceChannel",
   "disconnect"
 );

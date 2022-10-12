@@ -1,4 +1,4 @@
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 import discordI18N from "@acord/modules/common/i18n";
 import { InviteStore } from "@acord/modules/common";
 import i18n from "@acord/i18n";
@@ -15,9 +15,9 @@ import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
 import { DOMCopyIcon } from "../components/dom/DOMCopyIcon.js";
 
-let optionsClasses = swc.findByProps("item", "selected", "separator");
-let anchorClasses = swc.findByProps("anchor", "anchorUnderlineOnHover");
-let messageClasses = swc.findByProps("message", "cozyMessage", "mentioned");
+let optionsClasses = webpack.findByProps("item", "selected", "separator");
+let anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
+let messageClasses = webpack.findByProps("message", "cozyMessage", "mentioned");
 
 let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
@@ -53,7 +53,7 @@ export function patchDOM() {
             [
               dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("HELP_SERVER")}</div>`),
               () => {
-                document.querySelector(`.${swc.findByProps("closeButton", "closeButtonBold", "container").closeButton}`)?.click?.();
+                document.querySelector(`.${webpack.findByProps("closeButton", "closeButtonBold", "container").closeButton}`)?.click?.();
                 InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: "acord" });
               }
             ],

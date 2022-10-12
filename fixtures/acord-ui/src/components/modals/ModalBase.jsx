@@ -1,9 +1,9 @@
 import { ModalRoot } from "../../other/apis.js";
 import { COLORS } from "../../other/constants.js";
 import { CloseIcon } from "../icons/CloseIcon.jsx";
-import swc from "@acord/modules/swc";
+import webpack from "@acord/modules/webpack";
 
-const scrollClasses = swc.findByProps("thin", "scrollerBase");
+const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
 export function ModalBase({ e, body, name, bodyId }) {
 
