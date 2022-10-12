@@ -5,12 +5,12 @@ import { React } from "../../other/apis.js";
 
 export function ExtensionSettings({ url, extension }) {
   useNest(extensions.nests.enabled);
-  useNest(extensions.nests.enabled.ghost[url].persist);
+  useNest(extensions.nests.enabled.ghost[url].api.persist);
   const [updater, setUpdater] = React.useState("");
 
 
   const extensionSrc = extensions.nests.enabled.ghost[url];
-  const persist = extensionSrc.persist;
+  const persist = extensionSrc.api.persist;
 
   const callUpdate = typeof extensionSrc.settings?.update == "function"
     ? extensionSrc.settings.update
