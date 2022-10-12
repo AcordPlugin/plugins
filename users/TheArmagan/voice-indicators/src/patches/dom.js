@@ -15,7 +15,7 @@ const indicatorClasses = [webpack.findByProps("bot", "nameTag").nameTag, webpack
 async function patchIndicators(user, elm) {
 
   /** @type {Element} */
-  let indicatorContainer = dom.parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
+  let indicatorContainer = dom.parseHTML(`<span class="vi--patched vi--icon-container vi--hidden"></span>`);
 
   indicatorContainer.render = async () => {
     let state = await fetchUserVoiceState(user.id);
