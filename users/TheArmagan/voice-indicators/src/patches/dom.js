@@ -25,12 +25,12 @@ async function patchIndicators(user, elm) {
       indicatorContainer.classList.add("vi--hidden");
       return;
     }
-    indicatorContainer.classList.remove("vi--hidden");
-
+    
     if (_.isEqual(state, indicatorContainer.state)) return;
-
+    
     let channel = ChannelStore.getChannel(state?.channel?.id);
-
+    
+    indicatorContainer.classList.remove("vi--hidden");
     indicatorContainer.classList[!channel ? "add" : "remove"]("vi--cant-join");
 
     let tooltipText = `${channel ? "✅" : "❌"} ${state.guild ? (state.guild?.name || "Unknown Guild") : "Private Call"} > ${state.channel?.name || "Plugin Deprecated"}`;
