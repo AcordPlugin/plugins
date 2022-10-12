@@ -16,12 +16,16 @@ async function patchIndicators(user, elm) {
 
   if (!await fetchUserVoiceState(user.id)) return;
 
+  /** @type {Element} */
   let indicatorContainer = dom.parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
 
   indicatorContainer.render = async () => {
     let state = await fetchUserVoiceState(user.id);
-    if (!state)
-      return indicatorContainer.remove();
+    if (!state) {
+      indicatorContainer.innerHTML = "";
+      indicatorContainer.state = null;
+      return
+    }
 
     if (_.isEqual(state, indicatorContainer.state)) return;
 
@@ -30,12 +34,9 @@ async function patchIndicators(user, elm) {
     indicatorContainer.classList[!channel ? "add" : "remove"]("vi--cant-join");
 
     let tooltipText = `${channel ? "✅" : "❌"} ${state.guild ? (state.guild?.name || "Unknown Guild") : "Private Call"} > ${state.channel?.name || "Plugin Deprecated"}`;
-    // if (!container.tooltip)
-    //   container.tooltip = tooltips.create(container, tooltipText);
 
-    indicatorContainer.setAttribute("acord-tooltip-content", tooltipText);
+    indicatorContainer.setAttribute("acord--tooltip-content", tooltipText);
     indicatorContainer.replaceChildren(dom.parseHTML(renderIcon(state)));
-    // container.tooltip.label = tooltipText;
     indicatorContainer.state = state;
   }
 

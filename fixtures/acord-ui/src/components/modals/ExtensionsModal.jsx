@@ -109,7 +109,7 @@ export function ExtensionsModal({ extensionsType }) {
               <div className="right">
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.format(`COPY_${extensionsTypeUpper}_LINK`)}
+                  acord--tooltip-content={i18n.format(`COPY_${extensionsTypeUpper}_LINK`)}
                   onClick={() => {
                     let href = url;
                     if (extensionsRegex2.test(href)) {
@@ -125,7 +125,7 @@ export function ExtensionsModal({ extensionsType }) {
                 {
                   Array.isArray(extensions.nests.enabled.ghost?.[url]?.settings?.data) ? <div
                     className="control"
-                    acord-tooltip-content={i18n.format(`OPEN_${extensionsTypeUpper}_SETTINGS`)}
+                    acord--tooltip-content={i18n.format(`OPEN_${extensionsTypeUpper}_SETTINGS`)}
                     onClick={() => {
                       showModal((e) => {
                         return <ModalBase e={e} name={i18n.format("X_EXTENSION_SETTINGS", extension.manifest.about.name)} body={<ExtensionSettings extension={extension} url={url} />} bodyId="extension-settings"></ModalBase>
@@ -137,7 +137,7 @@ export function ExtensionsModal({ extensionsType }) {
                 }
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.format(`RELOAD_${extensionsTypeUpper}`)}
+                  acord--tooltip-content={i18n.format(`RELOAD_${extensionsTypeUpper}`)}
                   onClick={() => {
                     extensions.reload(url)
                   }}
@@ -146,7 +146,7 @@ export function ExtensionsModal({ extensionsType }) {
                 </div>
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.format(`REMOVE_${extensionsTypeUpper}`)}
+                  acord--tooltip-content={i18n.format(`REMOVE_${extensionsTypeUpper}`)}
                   onClick={() => {
                     extensions.remove(url)
                   }}

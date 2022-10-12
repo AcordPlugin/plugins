@@ -53,7 +53,7 @@ export function Modal({ e, data }) {
                   e.onClose();
                 }}
               >
-                <div acord-tooltip-content="Join Guild">
+                <div acord--tooltip-content="Join Guild">
                   <ArrowIcon color={COLORS.PRIMARY} />
                 </div>
               </div>
@@ -83,7 +83,7 @@ export function Modal({ e, data }) {
                   e.onClose();
                 }}
               >
-                <div acord-tooltip-content={`${!data.isJoinable ? "Can't " : ""} Connect`}>
+                <div acord--tooltip-content={`${!data.isJoinable ? "Can't " : ""} Connect`}>
                   <JoinCallIcon color={COLORS.SECONDARY} />
                 </div>
               </div>
@@ -97,7 +97,7 @@ export function Modal({ e, data }) {
                   e.onClose();
                 }}
               >
-                <div acord-tooltip-content={`${!data.inMyChannels ? "Can't " : ""} Show Channel`}>
+                <div acord--tooltip-content={`${!data.inMyChannels ? "Can't " : ""} Show Channel`}>
                   <ArrowIcon color={COLORS.SECONDARY} />
                 </div>
               </div>

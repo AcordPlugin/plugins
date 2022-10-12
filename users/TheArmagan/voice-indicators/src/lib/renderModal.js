@@ -36,10 +36,10 @@ export function renderModal({ members, state, channel, isJoinable }) {
               ${dom.escapeHTML(state.channel?.name || "Unknown")}
             </div>
             <div class="controls">
-              <div class="control ${!isJoinable ? "vi--cant-click vi--cant-join" : ""} vi--join-channel" acord-tooltip-content="${!isJoinable ? "Can't " : ""}Join Channel">
+              <div class="control ${!isJoinable ? "vi--cant-click vi--cant-join" : ""} vi--join-channel" acord--tooltip-content="${!isJoinable ? "Can't " : ""}Join Channel">
                 ${JoinCallIcon({ color: COLORS.SECONDARY })}
               </div>
-              <div class="control ${!channel ? "vi--cant-click" : ""} vi--view-channel" acord-tooltip-content="${!channel ? "Can't " : ""}View Channel">
+              <div class="control ${!channel ? "vi--cant-click" : ""} vi--view-channel" acord--tooltip-content="${!channel ? "Can't " : ""}View Channel">
                 ${ArrowIcon({ color: COLORS.SECONDARY })}
               </div>
             </div>
