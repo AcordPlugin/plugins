@@ -57,7 +57,7 @@ async function patchIndicators(user, elm) {
       const indicator = dom.parseHTML(`<div class="pi--icon">${elements[x[0]](x[1])}</div>`);
       indicator.setAttribute(
         "acord-tooltip-content", 
-        `${x[0][0].toUpperCase() + x[0].slice(1).toLowerCase()}: ${i18n.fmt(`STATUS_${x[1] == "embedded" ? "UNKNOWN" : x[1].toUpperCase()}`)}`
+        `${x[0][0].toUpperCase() + x[0].slice(1).toLowerCase()}: ${i18n.format(`STATUS_${x[1] == "embedded" ? "UNKNOWN" : x[1].toUpperCase()}`)}`
       );
       return indicator;
     });

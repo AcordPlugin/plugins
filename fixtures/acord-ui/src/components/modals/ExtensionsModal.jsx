@@ -32,7 +32,7 @@ export function ExtensionsModal({ extensionsType }) {
     <div className="import-container">
       <div className="input-container">
         <TextInput
-          placeholder={i18n.fmt(`IMPORT_${extensionsTypeUpper}_PLACEHOLDER`)}
+          placeholder={i18n.format(`IMPORT_${extensionsTypeUpper}_PLACEHOLDER`)}
           value={importURL}
           onChange={(e) => {
             setImportURL(e.target.value);
@@ -57,13 +57,13 @@ export function ExtensionsModal({ extensionsType }) {
             } catch (err) {
               let errStr = `${err}`;
               if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
-                toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", "Unknown"));
+                toasts.show.error(i18n.format("EXTENSION_ALREADY_ENABLED", "Unknown"));
               } else {
                 toasts.show.error(errStr);
               }
             }
           }}
-        >{i18n.fmt(`IMPORT_${extensionsTypeUpper}`)}</Button>
+        >{i18n.format(`IMPORT_${extensionsTypeUpper}`)}</Button>
       </div>
     </div>
     <div className={`extensions-container ${scrollClasses.thin}`}>
@@ -90,7 +90,7 @@ export function ExtensionsModal({ extensionsType }) {
                 </div>
                 <div className="status">
                   <div className="authors">
-                    {i18n.fmt("X_MADE_BY", extension.manifest.about.authors.join(", "))}
+                    {i18n.format("X_MADE_BY", extension.manifest.about.authors.join(", "))}
                   </div>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export function ExtensionsModal({ extensionsType }) {
               <div className="right">
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.fmt(`COPY_${extensionsTypeUpper}_LINK`)}
+                  acord-tooltip-content={i18n.format(`COPY_${extensionsTypeUpper}_LINK`)}
                   onClick={() => {
                     let href = url;
                     if (extensionsRegex2.test(href)) {
@@ -117,7 +117,7 @@ export function ExtensionsModal({ extensionsType }) {
                       href = `https://acord.app/${extensionType}/${extensionPath}/`;
                     }
                     utils.copyText(href);
-                    toasts.show(i18n.fmt("X_COPIED", href));
+                    toasts.show(i18n.format("X_COPIED", href));
                   }}
                 >
                   <CopyIcon />
@@ -125,10 +125,10 @@ export function ExtensionsModal({ extensionsType }) {
                 {
                   Array.isArray(extensions.nests.enabled.ghost?.[url]?.settings?.data) ? <div
                     className="control"
-                    acord-tooltip-content={i18n.fmt(`OPEN_${extensionsTypeUpper}_SETTINGS`)}
+                    acord-tooltip-content={i18n.format(`OPEN_${extensionsTypeUpper}_SETTINGS`)}
                     onClick={() => {
                       showModal((e) => {
-                        return <ModalBase e={e} name={i18n.fmt("X_EXTENSION_SETTINGS", extension.manifest.about.name)} body={<ExtensionSettings extension={extension} url={url} />} bodyId="extension-settings"></ModalBase>
+                        return <ModalBase e={e} name={i18n.format("X_EXTENSION_SETTINGS", extension.manifest.about.name)} body={<ExtensionSettings extension={extension} url={url} />} bodyId="extension-settings"></ModalBase>
                       })
                     }}
                   >
@@ -137,7 +137,7 @@ export function ExtensionsModal({ extensionsType }) {
                 }
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.fmt(`RELOAD_${extensionsTypeUpper}`)}
+                  acord-tooltip-content={i18n.format(`RELOAD_${extensionsTypeUpper}`)}
                   onClick={() => {
                     extensions.reload(url)
                   }}
@@ -146,7 +146,7 @@ export function ExtensionsModal({ extensionsType }) {
                 </div>
                 <div
                   className="control"
-                  acord-tooltip-content={i18n.fmt(`REMOVE_${extensionsTypeUpper}`)}
+                  acord-tooltip-content={i18n.format(`REMOVE_${extensionsTypeUpper}`)}
                   onClick={() => {
                     extensions.remove(url)
                   }}

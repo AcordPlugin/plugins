@@ -35,23 +35,23 @@ export function patchDOM() {
           let toAdd = [
             dom.parseHTML(`<div class="${optionsClasses.header}">Acord</div>`),
             [
-              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("PLUGINS")}</div>`),
+              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.format("PLUGINS")}</div>`),
               () => { 
                 showModal((e) => {
-                  return <ModalBase e={e} name={i18n.fmt("PLUGINS")} body={<ExtensionsModal extensionsType="plugin" />} bodyId="extensions" />
+                  return <ModalBase e={e} name={i18n.format("PLUGINS")} body={<ExtensionsModal extensionsType="plugin" />} bodyId="extensions" />
                 });
               }
             ],
             [
-              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("THEMES")}</div>`),
+              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.format("THEMES")}</div>`),
               () => {
                 showModal((e) => {
-                  return <ModalBase e={e} name={i18n.fmt("THEMES")} body={<ExtensionsModal extensionsType="theme" />} bodyId="extensions" />
+                  return <ModalBase e={e} name={i18n.format("THEMES")} body={<ExtensionsModal extensionsType="theme" />} bodyId="extensions" />
                 });
               }
             ],
             [
-              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.fmt("HELP_SERVER")}</div>`),
+              dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.format("HELP_SERVER")}</div>`),
               () => {
                 document.querySelector(`.${webpack.findByProps("closeButton", "closeButtonBold", "container").closeButton}`)?.click?.();
                 InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: "acord" });
@@ -95,7 +95,7 @@ export function patchDOM() {
             if (ask) {
               let accepted = await modals.show.confirmation(
                 manifest.about.name,
-                i18n.fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, manifest.about.name)
+                i18n.format(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, manifest.about.name)
               )
               if (!accepted) return false;
             }
@@ -105,7 +105,7 @@ export function patchDOM() {
             } catch (err) {
               let errStr = `${err}`;
               if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
-                toasts.show.error(i18n.fmt("EXTENSION_ALREADY_ENABLED", manifest.about.name));
+                toasts.show.error(i18n.format("EXTENSION_ALREADY_ENABLED", manifest.about.name));
                 extensions.reload(href);
               } else {
                 toasts.show.error(errStr);
@@ -129,10 +129,10 @@ export function patchDOM() {
           let cardElm = dom.parseHTML(
             DOMGiftCard({
               title: manifest.about.name,
-              description: manifest.about.description ? `${manifest.about.description}<br/>(v${manifest.about.version}, ${i18n.fmt("X_MADE_BY", manifest.about.authors.join(", "))})` : i18n.fmt(`IMPORT_${extensionTypeUpper}_DESCRIPTION`),
+              description: manifest.about.description ? `${manifest.about.description}<br/>(v${manifest.about.version}, ${i18n.format("X_MADE_BY", manifest.about.authors.join(", "))})` : i18n.format(`IMPORT_${extensionTypeUpper}_DESCRIPTION`),
               buttons: [
                 {
-                  contents: i18n.fmt(`IMPORT_${extensionTypeUpper}`),
+                  contents: i18n.format(`IMPORT_${extensionTypeUpper}`),
                   className: "import-extension",
                   color: "colorBrand"
                 },
@@ -159,7 +159,7 @@ export function patchDOM() {
           utils.ifExists(cardElm.querySelector(".copy-extension-link"), (item) => {
             item.onclick = () => {
               utils.copyText(originalHref);
-              toasts.show(i18n.fmt("X_COPIED", originalHref));
+              toasts.show(i18n.format("X_COPIED", originalHref));
             }
           });
 
