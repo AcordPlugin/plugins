@@ -14,8 +14,6 @@ const indicatorClasses = [webpack.findByProps("bot", "nameTag").nameTag, webpack
 /** @param {HTMLElement} elm */
 async function patchIndicators(user, elm) {
 
-  if (!await fetchUserVoiceState(user.id)) return;
-
   /** @type {Element} */
   let indicatorContainer = dom.parseHTML(`<span class="vi--patched vi--icon-container"></span>`);
 
@@ -24,8 +22,10 @@ async function patchIndicators(user, elm) {
     if (!state) {
       indicatorContainer.innerHTML = "";
       indicatorContainer.state = null;
-      return
+      indicatorContainer.classList.add("vi--hidden");
+      return;
     }
+    indicatorContainer.classList.remove("vi--hidden");
 
     if (_.isEqual(state, indicatorContainer.state)) return;
 

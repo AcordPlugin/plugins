@@ -33,6 +33,10 @@
     background-color: #ed4245;
     box-shadow: 0px 0px 4px #ed4245;
   }
+
+  &--hidden {
+    display: none !important;
+  }
 }
 
 .vi--modal-root {
