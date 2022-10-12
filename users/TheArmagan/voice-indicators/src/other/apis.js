@@ -1,7 +1,6 @@
 import webpack from "@acord/modules/webpack";
 import common from "@acord/modules/common";
 
-export const transitionTo = webpack.find((_, __, i) => i == "655695");
 export const {
   PermissionStore,
   VoiceStateStore,
@@ -10,6 +9,9 @@ export const {
   UserStore,
   InviteStore,
   FluxDispatcher,
+  Router: {
+    transitionTo
+  },
   React,
   modals: {
     actions: {
