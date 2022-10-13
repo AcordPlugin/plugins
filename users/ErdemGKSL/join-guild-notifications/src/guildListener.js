@@ -5,7 +5,6 @@ const GuildNotifyStore = webpack.findByProperties("updateGuildNotificationSettin
 export const currentGuildIds = new Set();
 
 export const listener = () => {
-  console.log(0);
   const guildAddListener = async () => {
     const nIds = new Set();
     await wait(10);
