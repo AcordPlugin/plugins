@@ -1,13 +1,14 @@
 import { GuildStore } from "@acord/modules/common";
 import { persist } from "@acord/extension";
 import { webpack } from "@acord/modules";
+import { sleep } from "@acord/utils";
 const GuildNotifyStore = webpack.findByProperties("updateGuildNotificationSettings", "updateGuildAndChannelNotificationSettings");
 export const currentGuildIds = new Set();
 
 export const listener = () => {
   const guildAddListener = async () => {
     const nIds = new Set();
-    await wait(10);
+    await sleep(10);
     for (let id in GuildStore.getGuilds()) nIds.add(id);
     const guildIds = [...nIds].filter(id => !currentGuildIds.has(id));
     if (!guildIds?.length) {
