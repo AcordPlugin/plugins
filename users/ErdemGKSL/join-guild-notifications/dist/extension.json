@@ -1,5 +1,5 @@
 {
-  "hash": "788194800d0a8469c09eb0ee52454301f09471bd1181c01f9ea9719c67e9d745",
+  "hash": "b9ab63483ea9bc01358f40ea87f1520df3f2639ef245b7b694c16cb618e8cd98",
   "type": "plugin",
   "about": {
     "name": "Join Guild Notifications",
@@ -7,7 +7,7 @@
       "ErdemGKSL"
     ],
     "description": "Sets the notification settings when joining a guild.",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "license": "MIT"
   }
 }
