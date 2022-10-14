@@ -142,7 +142,7 @@ export function patchDOM() {
                   color: "colorTransparent"
                 }
               ],
-              image: `https://github.com/AcordPlugin/assets/raw/main/${extensionType}s.png`
+              image: manifest?.about?.preview ?? `https://github.com/AcordPlugin/assets/raw/main/${extensionType}s.png`
             })
           );
 
