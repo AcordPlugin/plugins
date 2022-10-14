@@ -54,15 +54,10 @@ export function patchAll() {
     let unpatchInterval = utils.interval(container.render, 1000);
     container.render();
 
-    let unmountCall = () => container.unmount();
-
     container.unmount = () => {
-      patchContainer.remove(unmountCall);
       container.remove();
       unpatchInterval();
     }
-
-    patchContainer.add(unmountCall);
 
     div.appendChild(container);
   }
