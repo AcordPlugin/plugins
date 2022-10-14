@@ -86,7 +86,7 @@ export function patchDOM() {
           let manifest;
 
           try {
-            manifest = await (await fetch(`${href}extension.json`)).json();
+            manifest = await (await fetch(`${href}extension.json`, { cache: "no-store" })).json();
           } catch { };
           
           if (!manifest) return;
