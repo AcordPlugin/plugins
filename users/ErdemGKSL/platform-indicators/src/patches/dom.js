@@ -46,7 +46,10 @@ async function patchIndicators(user, elm) {
     /** @type {{desktop?: "online" | "dnd" | "idle", web?: "online" | "dnd" | "idle", mobile?: "online" | "dnd" | "idle"} as const} */
     const userActivity = ActivityStore?.getState()?.clientStatuses?.[user?.id];
 
-    if (!userActivity) return;
+    if (!userActivity) {
+      indicatorContainer.innerHTML = "";
+      return;
+    }
 
     if (_.isEqual(userActivity, indicatorContainer.state)) return;
 
@@ -65,10 +68,10 @@ async function patchIndicators(user, elm) {
     indicatorContainer.replaceChildren(...htmls);
   }
 
-  const updateUnpatcher = events.on("PlatformIndicators:EverySecond", indicatorContainer.render);
+  const updateUnPatcher = events.on("PlatformIndicators:EverySecond", indicatorContainer.render);
 
   indicatorContainer.unmount = () => {
-    updateUnpatcher();
+    updateUnPatcher();
   };
 
   indicatorContainer.render();
