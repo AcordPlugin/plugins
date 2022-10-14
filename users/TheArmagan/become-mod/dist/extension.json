@@ -1,0 +1,21 @@
+{
+  "hash": "1d28d76ae58155f492e3334ca5a4e16d96a49a0b34e36b5204f50e61cd483b27",
+  "type": "plugin",
+  "about": {
+    "name": "Become Mod",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Become mod permissions on any server. (Client Sided)",
+    "version": "1.0.0",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "BECOME_MOD": "Become Mod"
+    },
+    "tr": {
+      "BECOME_MOD": "Yetkili Ol"
+    }
+  }
+}
