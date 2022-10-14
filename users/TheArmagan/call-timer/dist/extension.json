@@ -1,0 +1,21 @@
+{
+  "hash": "b90de999856427d33e08f547e1bffbf827545cca74924a338bc94353047b8361",
+  "type": "plugin",
+  "about": {
+    "name": "Call Timer",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Shows call timer.",
+    "version": "1.0.0",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "TIME_ELAPSED": "Time Elapsed: {0}"
+    },
+    "tr": {
+      "TIME_ELAPSED": "Geçen Süre: {0}"
+    }
+  }
+}
