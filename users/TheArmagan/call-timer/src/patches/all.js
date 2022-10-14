@@ -55,7 +55,6 @@ export function patchAll() {
     container.render();
 
     container.unmount = () => {
-      container.remove();
       unpatchInterval();
     }
 
