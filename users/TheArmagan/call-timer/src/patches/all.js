@@ -38,7 +38,7 @@ export function patchAll() {
 
     let div = dom.parents(elm, `[class*="inner-"] > div`)?.[0];
 
-    let container = dom.parseHTML(`<div class="${subtextClasses.subtext} ct--container"></div>`)
+    let container = dom.parseHTML(`<div class="${subtextClasses.subtext} ct--container ct--patched"></div>`)
 
     state.startTime = Date.now();
     state.render = true;
