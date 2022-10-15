@@ -16,7 +16,7 @@ export async function fetchUserVoiceState(userId) {
   let state = getUserVoiceStateShaped(userId);
   if (!state) {
     let cached = cache.get(`Users:${userId}`);
-    if (cached && !(Date.now() - cached.at > 1000)) return cached.state;
+    if (cached) return cached.state;
 
     state = (await awaitResponse("state", { userId }))?.data;
     cache.set(`Users:${userId}`, { at: Date.now(), state, ttl: 1000 });
@@ -28,10 +28,10 @@ export async function fetchVoiceMembers(channelId) {
   let members = getVoiceChannelMembers(channelId);
   if (!members.length) {
     let cached = cache.get(`VoiceMembers:${channelId}`);
-    if (cached && !(Date.now() - cached.at > 10000)) return cached.members;
+    if (cached) return cached.members;
 
     members = (await awaitResponse("members", { channelId }))?.data || [];
-    cache.set(`VoiceMembers:${channelId}`, { at: Date.now(), members, ttl: 10000 });
+    cache.set(`VoiceMembers:${channelId}`, { at: Date.now(), members, ttl: 5000 });
   }
   return members;
 }
