@@ -31,7 +31,7 @@ export async function fetchVoiceMembers(channelId) {
     if (cached) return cached.members;
 
     members = (await awaitResponse("members", { channelId }))?.data || [];
-    cache.set(`VoiceMembers:${channelId}`, { at: Date.now(), members, ttl: 5000 });
+    cache.set(`VoiceMembers:${channelId}`, { at: Date.now(), members, ttl: 10000 });
   }
   return members;
 }
