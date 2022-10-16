@@ -33,10 +33,11 @@ export function patchAll() {
   })());
 
   function tryPatch(elm) {
-    if (elm.querySelector("ct--patched")) return;
-    elm.classList.add("ct--patched");
-
     let div = dom.parents(elm, `[class*="inner-"] > div`)?.[0];
+
+    if (!div) return;
+    if (div.querySelector("ct--patched")) return;
+    div.classList.add("ct--patched");
 
     let container = dom.parseHTML(`<div class="${subtextClasses.subtext} ct--container ct--patched"></div>`)
 
