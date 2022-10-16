@@ -1,0 +1,23 @@
+{
+  "hash": "0606d1421c76972e9657577174040c698ea097ef1c86fcdd417fd571409efdf8",
+  "type": "plugin",
+  "about": {
+    "name": "Copy Image URL",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Esily copy user's banner and avatars!",
+    "version": "0.0.1",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "COPY_AVATAR_URL": "Copy Avatar URL",
+      "COPY_BANNER_URL": "Copy Banner URL"
+    },
+    "tr": {
+      "COPY_AVATAR_URL": "Profil Resmi URL'sini Kopyala",
+      "COPY_BANNER_URL": "Afiş URL'sini Kopyala"
+    }
+  }
+}
