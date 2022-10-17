@@ -8,6 +8,7 @@
     ],
     "description": "Shows user's platform next to their username.",
     "version": "1.1.0",
-    "license": "MIT"
+    "license": "MIT",
+    "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1031687430279012352/unknown.png"
   }
 }
