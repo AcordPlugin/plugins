@@ -91,7 +91,7 @@ export function patchDOM() {
           
           if (!manifest) return;
 
-          async function importExtension(ask=false) {
+          async function toggleExtension(ask=false) {
             if (ask) {
               let accepted = await modals.show.confirmation(
                 manifest.about.name,
@@ -105,8 +105,8 @@ export function patchDOM() {
             } catch (err) {
               let errStr = `${err}`;
               if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
-                toasts.show.error(i18n.format("EXTENSION_ALREADY_ENABLED", manifest.about.name));
-                extensions.reload(href);
+                // toasts.show.error(i18n.format("EXTENSION_ALREADY_ENABLED", manifest.about.name));
+                await extensions.unload(href);
               } else {
                 toasts.show.error(errStr);
               }
@@ -116,7 +116,7 @@ export function patchDOM() {
 
           elm.addEventListener("click", (e) => {
             e.preventDefault();
-            importExtension(true);
+            toggleExtension(true);
           });
 
           /** @type {Element} */
@@ -132,7 +132,7 @@ export function patchDOM() {
               description: manifest.about.description ? `${manifest.about.description}<br/>(v${manifest.about.version}, ${i18n.format("X_MADE_BY", manifest.about.authors.join(", "))})` : i18n.format(`IMPORT_${extensionTypeUpper}_DESCRIPTION`),
               buttons: [
                 {
-                  contents: i18n.format(`IMPORT_${extensionTypeUpper}`),
+                  contents: !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`),
                   className: "import-extension",
                   color: "colorBrand"
                 },
@@ -149,10 +149,12 @@ export function patchDOM() {
           cardElm.setAttribute("acord-href", href);
 
           utils.ifExists(cardElm.querySelector(".import-extension"), (item) => {
-            item.disabled = !!extensions.nests.loaded.ghost[href];
+            // item.disabled = !!extensions.nests.loaded.ghost[href];
             item.onclick = async () => {
-              let success = await importExtension(false);
-              item.disabled = success;
+              item.disabled = true;
+              await toggleExtension(false);
+              item.disabled = false;
+              item.content = !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`);
             }
           });
 
