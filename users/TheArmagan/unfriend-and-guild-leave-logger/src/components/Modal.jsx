@@ -20,7 +20,7 @@ export function Modal({ e }) {
         </div>
       </div>
       <div className={`uagll--modal-body ${scrollClasses.thin}`}>
-        {body}
+        
       </div>
     </ModalRoot>
   )
