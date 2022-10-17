@@ -36,8 +36,7 @@ export function patchAll() {
     let div = dom.parents(elm, `[class*="inner-"] > div`)?.[0];
 
     if (!div) return;
-    if (div.querySelector("ct--patched")) return;
-    div.classList.add("ct--patched");
+    if (div.querySelector(".ct--patched")) return;
 
     let container = dom.parseHTML(`<div class="${subtextClasses.subtext} ct--container ct--patched"></div>`)
 

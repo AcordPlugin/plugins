@@ -1,0 +1,42 @@
+.uagll {
+  &--modal-root {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  &--modal-header {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &--modal-title {
+    font-size: 28px;
+    color: #efefef;
+    font-weight: 600;
+  }
+
+  &--modal-close {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &--modal-body {
+    display: flex;
+    flex-direction: column;
+    height: 550px;
+    overflow: auto;
+    contain: content;
+
+  }
+
+}

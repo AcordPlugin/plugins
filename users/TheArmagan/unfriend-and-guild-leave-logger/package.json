@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "npx acord-cli@latest build",
+    "dev": "npx acord-cli@latest dev"
+  },
+  "dependencies": {
+    "chillout": "^5.0.0"
+  }
+}

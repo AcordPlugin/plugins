@@ -1,0 +1,13 @@
+{
+  "hash": "1d6b63a8757dc697fc3569703ad061420680794d0bea08ae0e9dadcc77c71516",
+  "type": "plugin",
+  "about": {
+    "name": "Unfriend and Guild Leave Logger",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Logs when some one removes you from friends or kicks you from a server.",
+    "version": "1.0.0",
+    "license": "MIT"
+  }
+}
