@@ -1,4 +1,4 @@
-import { ModalRoot } from "../other/apis.js";
+import { Button, ModalRoot } from "../other/apis.js";
 import { COLORS } from "../other/constants.js";
 import { CloseIcon } from "./CloseIcon.jsx";
 import webpack from "@acord/modules/webpack";
@@ -20,7 +20,7 @@ export function Modal({ e }) {
         </div>
       </div>
       <div className={`uagll--modal-body ${scrollClasses.thin}`}>
-        
+        <Button color={Button.Colors.TRANSPARENT} borderColor={Button.BorderColors.RED} />
       </div>
     </ModalRoot>
   )
