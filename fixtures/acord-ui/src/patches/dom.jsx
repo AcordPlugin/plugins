@@ -15,9 +15,10 @@ import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
 import { DOMCopyIcon } from "../components/dom/DOMCopyIcon.js";
 
-let optionsClasses = webpack.findByProps("item", "selected", "separator");
-let anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
-let messageClasses = webpack.findByProps("message", "cozyMessage", "mentioned");
+const optionsClasses = webpack.findByProps("item", "selected", "separator");
+const anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
+const messageClasses = webpack.findByProps("message", "cozyMessage", "mentioned");
+const buttonClasses = webpack.findByProps("button", "lookFilled", "colorBrand");
 
 let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
@@ -129,7 +130,7 @@ export function patchDOM() {
                 {
                   contents: !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`),
                   className: "toggle-extension",
-                  color: "colorBrand"
+                  color: !extensions.nests.loaded.ghost[href] ? "colorBrand" : "colorRed"
                 },
                 {
                   contents: DOMCopyIcon(),
@@ -149,6 +150,8 @@ export function patchDOM() {
               item.disabled = true;
               await toggleExtension(false);
               item.disabled = false;
+              item.classList.remove(buttonClasses.colorBrand, buttonClasses.colorRed);
+              item.classList.add(!extensions.nests.loaded.ghost[href] ? buttonClasses.colorBrand : buttonClasses.colorRed);
               item.firstElementChild.textContent = !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`);
             }
           });
