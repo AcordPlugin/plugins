@@ -24,7 +24,7 @@ let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 export function patchDOM() {
 
   patchContainer.add(
-    events.on("domMutation", /** @param {MutationRecord} mut */ (mut) => {   
+    events.on("domMutation", /** @param {MutationRecord} mut */(mut) => {
       mut.addedNodes.forEach((node) => {
         if (node.nodeType === Node.TEXT_NODE) return;
 
@@ -36,7 +36,7 @@ export function patchDOM() {
             dom.parseHTML(`<div class="${optionsClasses.header}">Acord</div>`),
             [
               dom.parseHTML(`<div class="${optionsClasses.item} ${optionsClasses.themed}">${i18n.format("PLUGINS")}</div>`),
-              () => { 
+              () => {
                 showModal((e) => {
                   return <ModalBase e={e} name={i18n.format("PLUGINS")} body={<ExtensionsModal extensionsType="plugin" />} bodyId="extensions" />
                 });
@@ -64,7 +64,7 @@ export function patchDOM() {
             if (!Array.isArray(i)) {
               elm.insertBefore(i, elm.children[elm.children.length - 7]);
               return;
-            } 
+            }
             elm.insertBefore(i[0], elm.children[elm.children.length - 7]);
             i[0].onclick = i[1];
           });
@@ -77,7 +77,7 @@ export function patchDOM() {
           let originalHref = elm.href;
           if (!originalHref.endsWith("/")) originalHref += "/";
           if (!extensionsRegex.test(originalHref)) return;
-          
+
           let [, extensionType, extensionPath] = originalHref.match(extensionsRegex);
           if (extensionType.endsWith("s")) extensionType = extensionType.slice(0, -1);
           let extensionTypeUpper = extensionType.toUpperCase();
@@ -88,10 +88,10 @@ export function patchDOM() {
           try {
             manifest = await (await fetch(`${href}extension.json`, { cache: "no-store" })).json();
           } catch { };
-          
+
           if (!manifest) return;
 
-          async function toggleExtension(ask=false) {
+          async function toggleExtension(ask = false) {
             if (ask) {
               let accepted = await modals.show.confirmation(
                 manifest.about.name,
@@ -101,15 +101,10 @@ export function patchDOM() {
             }
 
             try {
-              await extensions.load(href);
+              !extensions.nests.loaded.ghost[href] ? await extensions.load(href) : await extensions.remove(href);
             } catch (err) {
               let errStr = `${err}`;
-              if (errStr.includes("EXTENSION_ALREADY_ENABLED")) {
-                // toasts.show.error(i18n.format("EXTENSION_ALREADY_ENABLED", manifest.about.name));
-                await extensions.unload(href);
-              } else {
-                toasts.show.error(errStr);
-              }
+              toasts.show.error(errStr);
             }
             return true;
           }
@@ -133,7 +128,7 @@ export function patchDOM() {
               buttons: [
                 {
                   contents: !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`),
-                  className: "import-extension",
+                  className: "toggle-extension",
                   color: "colorBrand"
                 },
                 {
@@ -148,13 +143,13 @@ export function patchDOM() {
 
           cardElm.setAttribute("acord-href", href);
 
-          utils.ifExists(cardElm.querySelector(".import-extension"), (item) => {
+          utils.ifExists(cardElm.querySelector(".toggle-extension"), /** @param {Element} item */(item) => {
             // item.disabled = !!extensions.nests.loaded.ghost[href];
             item.onclick = async () => {
               item.disabled = true;
               await toggleExtension(false);
               item.disabled = false;
-              item.content = !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`);
+              item.firstElementChild.textContent = !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`);
             }
           });
 
