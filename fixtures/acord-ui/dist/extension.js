@@ -1,4 +1,4 @@
-(function (React$1, webpack, discordI18N, common, i18n, dom, utils, modals, toasts, events, extensions, react, patcher) {
+(function (React$1, webpack, discordI18N, common, i18n, dom, utils, modals, toasts, events, extensions, require$$0, patcher) {
   'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -32,6 +32,7 @@
   var toasts__default = /*#__PURE__*/_interopDefaultLegacy(toasts);
   var events__default = /*#__PURE__*/_interopDefaultLegacy(events);
   var extensions__default = /*#__PURE__*/_interopDefaultLegacy(extensions);
+  var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
 
   class Patches {
     constructor() {
@@ -119,6 +120,67 @@
       ...props
     })));
   }
+
+  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+  var react = {};
+
+  var useNest$1 = {};
+
+  var Events = {};
+
+  Object.defineProperty(Events, "__esModule", { value: true });
+  Events.default = Object.freeze({
+      GET: "GET",
+      SET: "SET",
+      DELETE: "DELETE",
+      UPDATE: "UPDATE",
+  });
+
+  var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+      return (mod && mod.__esModule) ? mod : { "default": mod };
+  };
+  Object.defineProperty(useNest$1, "__esModule", { value: true });
+  // Import default from React or CRA fails.
+  // Why isn't CRA being updated to modern technologies if it's recommended officially.
+  const react_1 = require$$0__default["default"];
+  const Events_1 = __importDefault(Events);
+  function useNest(nest, transient = false, filter = () => true) {
+      // Keep this here for React devtools.
+      // @ts-ignore
+      (0, react_1.useRef)(nest.ghost);
+      const [, forceUpdate] = (0, react_1.useReducer)((n) => ~n, 0);
+      (0, react_1.useEffect)(() => {
+          function listener(event, data) {
+              if (filter(event, data))
+                  forceUpdate();
+          }
+          nest.on(Events_1.default.UPDATE, listener);
+          if (!transient) {
+              nest.on(Events_1.default.SET, listener);
+              nest.on(Events_1.default.DELETE, listener);
+          }
+          return () => {
+              nest.off(Events_1.default.UPDATE, listener);
+              if (!transient) {
+                  nest.off(Events_1.default.SET, listener);
+                  nest.off(Events_1.default.DELETE, listener);
+              }
+          };
+      }, []);
+      return nest.ghost;
+  }
+  useNest$1.default = useNest;
+
+  (function (exports) {
+  	var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+  	    return (mod && mod.__esModule) ? mod : { "default": mod };
+  	};
+  	Object.defineProperty(exports, "__esModule", { value: true });
+  	exports.useNest = void 0;
+  	var useNest_1 = useNest$1;
+  	Object.defineProperty(exports, "useNest", { enumerable: true, get: function () { return __importDefault(useNest_1).default; } });
+  } (react));
 
   function TrashIcon(props = {}) {
     return /* @__PURE__ */ React__namespace.createElement("svg", {
@@ -597,4 +659,4 @@
 
   return index;
 
-})(acord.modules.common.React, acord.modules.webpack, acord.modules.common.i18n, acord.modules.common, acord.i18n, acord.dom, acord.utils, acord.ui.modals, acord.ui.toasts, acord.events, acord.extensions, react, acord.patcher);
+})(acord.modules.common.React, acord.modules.webpack, acord.modules.common.i18n, acord.modules.common, acord.i18n, acord.dom, acord.utils, acord.ui.modals, acord.ui.toasts, acord.events, acord.extensions, acord.modules.common.React, acord.patcher);
