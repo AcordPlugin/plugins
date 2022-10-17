@@ -1,5 +1,5 @@
 {
-  "hash": "b0609989d034b4b6706001d14f15a1eca16b1846cf73f663723910b6fa16c58f",
+  "hash": "8619ddb488c34567800d0d492ef9fe8cc208a762634adbbab484b95a7fe490c0",
   "type": "plugin",
   "about": {
     "name": "Voice Indicators",
@@ -8,6 +8,7 @@
     ],
     "description": "Shows voice indicators right side of the users.",
     "version": "1.0.0",
+    "preview": "https://i.imgur.com/vEuqPmL.png",
     "license": "MIT"
   }
 }
