@@ -51,7 +51,7 @@ async function patchIndicators(user, elm) {
       return;
     }
 
-    if (_.isEqual(userActivity, indicatorContainer.state)) return;
+    if (_.isEqual(userActivity, indicatorContainer.state) && _.isEqual(indicatorContainer.state, userActivity)) return;
 
     indicatorContainer.state = userActivity;
 
@@ -59,12 +59,12 @@ async function patchIndicators(user, elm) {
     const htmls = Object.entries(userActivity).map(x => {
       const indicator = dom.parseHTML(`<div class="pi--icon">${elements[x[0]](x[1])}</div>`);
       indicator.setAttribute(
-        "acord--tooltip-content", 
+        "acord--tooltip-content",
         `${x[0][0].toUpperCase() + x[0].slice(1).toLowerCase()}: ${i18n.format(`STATUS_${x[1] == "embedded" ? "UNKNOWN" : x[1].toUpperCase()}`)}`
       );
       return indicator;
     });
-    
+
     indicatorContainer.replaceChildren(...htmls);
   }
 

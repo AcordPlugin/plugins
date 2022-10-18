@@ -1,5 +1,5 @@
 {
-  "hash": "35ed2b5a1d2b7c9b17fdf9b4e147a7508d1663adb1c21d03b9dab141074b1adc",
+  "hash": "466d5bd4e92e266c76a2fb994d719d231d06169510be588b047cdccc53d3878d",
   "type": "plugin",
   "about": {
     "name": "Platform Indicators",
@@ -8,7 +8,7 @@
     ],
     "description": "Shows user's platform next to their username.",
     "version": "1.1.0",
-    "license": "MIT",
-    "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1031687430279012352/unknown.png"
+    "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1031687430279012352/unknown.png",
+    "license": "MIT"
   }
 }
