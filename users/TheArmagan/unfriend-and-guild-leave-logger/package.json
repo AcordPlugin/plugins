@@ -4,6 +4,7 @@
     "dev": "npx acord-cli@latest dev"
   },
   "dependencies": {
-    "chillout": "^5.0.0"
+    "chillout": "^5.0.0",
+    "nests": "^2.3.1"
   }
 }
