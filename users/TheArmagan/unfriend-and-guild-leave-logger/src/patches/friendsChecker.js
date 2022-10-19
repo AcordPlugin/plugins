@@ -9,9 +9,12 @@ export function patchFriendsChecker() {
   if (!Array.isArray(persist.ghost.unfriends))
     persist.store.unfriends = [];
 
+  if (!Array.isArray(persist.ghost.lastFriends))
+    persist.store.lastFriends = [];
+
   patchContainer.add((() => {
     let STOP = 0;
-    let friendIdCache = new Set(RelationshipStore.getFriendIDs());
+    let friendIdCache = new Set(persist.store.lastFriends.length ? persist.store.lastFriends : RelationshipStore.getFriendIDs());
 
     async function check() {
       if (STOP) return;
@@ -21,6 +24,7 @@ export function patchFriendsChecker() {
       await chillout.forEach([...friendIdCache.values()], (friendId) => {
         if (newFriendIds.has(friendId)) return;
         let user = UserStore.getUser(friendId);
+        if (!user) return;
         persist.store.unfriends.unshift({
           at: Date.now(),
           tag: user.tag,
@@ -31,6 +35,7 @@ export function patchFriendsChecker() {
       });
 
       friendIdCache = newFriendIds;
+      persist.store.lastFriends = [...newFriendIds.values()];
 
       await sleep(10000);
       check();

@@ -48,6 +48,67 @@
       margin-bottom: 8px;
     }
 
+    .section-content {
+      .item {
+        display: flex;
+        gap: 8px;
+        padding: 8px;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        margin-bottom: 8px;
+
+        & > .left {
+          height: 48px;
+          width: 48px;
+          border-radius: 4px;
+          background-position: center;
+          background-size: cover;
+        }
+
+        & > .right {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+
+          & > .top {
+            display: flex;
+            justify-content: space-between;
+
+            & > .left {
+              display: flex;
+              color: rgb(250, 250, 250);
+              font-size: 28px;
+              font-weight: 500;
+              align-items: flex-end;
+              user-select: text;
+
+              .discriminator {
+                font-size: 20px;
+                opacity: 0.5;
+              }
+            }
+
+            & > .right {
+              cursor: pointer;
+
+              svg {
+                width: 16px;
+                height: 16px;
+              }
+            }
+          }
+
+          & > .bottom {
+            color: #efefef;
+            opacity: 0.75;
+            font-size: 10px;
+            margin-top: 2px;
+            user-select: text;
+          }
+        }
+      }
+    }
+
     .header {
       font-size: 22px;
       font-weight: 600;
