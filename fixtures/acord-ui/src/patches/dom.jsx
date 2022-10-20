@@ -29,6 +29,7 @@ const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 const ACORD_ADMINS = ["707309693449535599", "319862027571036161"];
 const ACORD_HELPERS = ["377839917738360834", "869163375236620288"];
 const ACORD_EARLY_MEMBERS = ["267066635842486273", "311571540401455105", "761247209773203468", "408525958782517248", "851920176575152129"];
+const ACORD_BANNED = ["435026627907420161", "377135247004794880"];
 
 function createBadge(src, sizes) {
   const badge = dom.parseHTML(`
@@ -238,6 +239,15 @@ export function patchDOM() {
         
         let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordEarlyMember.svg", sizes);
         badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_EARLY_MEMBER"));
+        
+        elm.appendChild(badge);
+      })();
+
+      (async ()=>{
+        if (!ACORD_BANNED.includes(user.id)) return;
+        
+        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordBanned.svg", sizes);
+        badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_BANNED"));
         
         elm.appendChild(badge);
       })();
