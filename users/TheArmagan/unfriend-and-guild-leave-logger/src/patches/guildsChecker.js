@@ -29,7 +29,8 @@ export function patchGuildsChecker() {
           at: Date.now(),
           name: guild.name,
           id: guild.id,
-          icon: guild.icon
+          icon: guild.icon,
+          _id: Math.random().toString(36).replace(".", "")
         });
         toasts.show.info(`You are laved from "${guild.name}"!`);
       });
