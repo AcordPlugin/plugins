@@ -52,10 +52,15 @@ export function ExtensionSettings({ url, extension }) {
         <div className="right">
           <TextInput
             value={persist.ghost.settings?.[setting.property] ?? setting.value}
+            placeholder={setting.placeholder || ""}
             type={setting.altType || "text"}
+            min={setting.min}
+            max={setting.max}
+            minlength={setting.minLength}
+            maxlength={setting.maxLength}
             onChange={(e) => {
-              persist.store.settings[setting.property] = e.target.value;
-              callUpdate(setting.property, e.target.value);
+              persist.store.settings[setting.property] = setting.altType == "number" ? Number(e.target.value) : e.target.value;
+              callUpdate(setting.property, setting.altType == "number" ? Number(e.target.value) : e.target.value);
               setUpdater(Math.random().toString(36));
             }}
           />

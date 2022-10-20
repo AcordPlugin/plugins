@@ -178,6 +178,7 @@
       .container {
         margin-bottom: 4px;
         border-radius: 8px;
+        gap: 8px;
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.15);
@@ -216,32 +217,22 @@
           }
         }
 
-        .info-side {
+        &--input {
+          padding: 8px 10px;
           display: flex;
-          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
 
-          &.size-small {
-            width: 85%;
+          & > .left {
+            width: 80%;
           }
 
-          &.size-medium {
-            width: 70%;
-          }
-
-          &.size-large {
-            width: 55%;
-          }
-
-          .name {
-            font-size: 18px;
-            font-weight: 600;
-            color: white;
-            opacity: 0.9;
-          }
-          .description {
-            margin-top: 4px;
-            color: white;
-            opacity: 0.85;
+          & > .right {
+            width: 100%;
+            align-items: center;
+            justify-content: flex-end;
+            display: flex;
+            font-size: 24px;
           }
         }
 
@@ -261,6 +252,38 @@
             justify-content: flex-end;
             display: flex;
             font-size: 24px;
+          }
+        }
+
+        .info-side {
+          display: flex;
+          flex-direction: column;
+
+          &.size-small {
+            width: 85%;
+            min-width: 85%;
+          }
+
+          &.size-medium {
+            width: 70%;
+            min-width: 70%;
+          }
+
+          &.size-large {
+            width: 55%;
+            min-width: 55%;
+          }
+
+          .name {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            opacity: 0.9;
+          }
+          .description {
+            margin-top: 4px;
+            color: white;
+            opacity: 0.85;
           }
         }
       }
