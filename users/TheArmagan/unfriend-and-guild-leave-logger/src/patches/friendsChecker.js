@@ -29,7 +29,8 @@ export function patchFriendsChecker() {
           at: Date.now(),
           tag: user.tag,
           id: user.id,
-          avatar: user.avatar
+          avatar: user.avatar,
+          _id: Math.random().toString(36).replace(".", "")
         });
         toasts.show.info(`You are no longer friends with "${user.tag}"!`);
       });

@@ -99,6 +99,8 @@
           }
 
           & > .bottom {
+            display: flex;
+            flex-direction: column;
             color: #efefef;
             opacity: 0.75;
             font-size: 10px;

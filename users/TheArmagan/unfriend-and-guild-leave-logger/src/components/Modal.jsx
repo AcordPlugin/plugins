@@ -50,12 +50,19 @@ export function Modal({ e }) {
                       </span>
                     </div>
                     <div className="right" onClick={() => {
-                      persist.store.unfriends.splice(index, 1);
+                      persist.store.unfriends.splice(persist.store.unfriends.findIndex(j=>j._id == i._id), 1);
                     }}>
                       <CloseIcon color={COLORS.SECONDARY} />
                     </div>
                   </div>
-                  <div className="bottom">{i.id}</div>
+                  <div className="bottom">
+                    <div className="left">
+                      {i.id}
+                    </div>
+                    <div className="right">
+                      {new Date(i.at).toLocaleDateString()} {new Date(i.at).toLocaleTimeString()}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -82,12 +89,19 @@ export function Modal({ e }) {
                       {i.name}
                     </div>
                     <div className="right" onClick={() => {
-                      persist.store.leavedGuilds.splice(index, 1);
+                      persist.store.leavedGuilds.splice(persist.store.leavedGuilds.findIndex(j=>j._id == i._id), 1);
                     }}>
                       <CloseIcon color={COLORS.SECONDARY} />
                     </div>
                   </div>
-                  <div className="bottom">{i.id}</div>
+                  <div className="bottom">
+                    <div className="left">
+                      {i.id}
+                    </div>
+                    <div className="right">
+                      {new Date(i.at).toLocaleDateString()} {new Date(i.at).toLocaleTimeString()}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
