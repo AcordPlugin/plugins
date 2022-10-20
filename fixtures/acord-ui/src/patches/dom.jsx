@@ -21,15 +21,30 @@ const anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
 const messageClasses = webpack.findByProps("message", "cozyMessage", "mentioned");
 const buttonClasses = webpack.findByProps("button", "lookFilled", "colorBrand");
 
-const badgeClasses1 = webpack.findByProps("badgeList", "details");
-const badgeClasses2 = webpack.findByProps("profileBadges", "avatarPositionPanel");
+const badgeClassesSmall = webpack.findByProps("profileBadges", "avatarPositionPanel");
 
 const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
-const ACORD_ADMINS = ["707309693449535599", "319862027571036161"];
-const ACORD_HELPERS = ["377839917738360834", "869163375236620288"];
-const ACORD_EARLY_MEMBERS = ["267066635842486273", "311571540401455105", "761247209773203468", "408525958782517248", "851920176575152129"];
-const ACORD_BANNED = ["435026627907420161", "377135247004794880"];
+const BADGE_USERS = {
+  "AcordAdmin": [
+    ()=>i18n.format("ACORD_ADMIN"),
+    ["707309693449535599", "319862027571036161"]
+  ],
+  "AcordHelper": [
+    ()=>i18n.format("ACORD_HELPER"),
+    ["377839917738360834", "869163375236620288"]
+  ],
+  "AcordEarlyMember": [
+    ()=>i18n.format("ACORD_EARLY_MEMBER"),
+    ["267066635842486273", "311571540401455105", "761247209773203468", "408525958782517248", "851920176575152129", "932321435744096326"]
+  ],
+  "AcordBanned": [
+    ()=>i18n.format("ACORD_BANNED"),
+    ["435026627907420161", "377135247004794880"]
+  ]
+};
+
+const BADGE_USERS_ENTRIES = Object.entries(BADGE_USERS);
 
 function createBadge(src, sizes) {
   const badge = dom.parseHTML(`
@@ -198,7 +213,7 @@ export function patchDOM() {
       let user = utils.react.getProps(elm, i=>i?.user)?.user;
       if (!user) return;
 
-      let sizes = elm.classList.contains(badgeClasses2.profileBadges) ? [22, 14] : [24, 16];
+      let sizes = elm.classList.contains(badgeClassesSmall.profileBadges) ? [22, 14] : [24, 16];
 
       (async () => {
 
@@ -216,42 +231,14 @@ export function patchDOM() {
         elm.appendChild(badge);
       })();
 
-      (async ()=>{
-        if (!ACORD_ADMINS.includes(user.id)) return;
+      BADGE_USERS_ENTRIES.forEach(([badgeName, [nameFunc, users]])=>{
+        if (!users.includes(user.id)) return;
         
-        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordAdmin.svg", sizes);
-        badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_ADMIN"));
-        
-        elm.appendChild(badge);
-      })();
-
-      (async ()=>{
-        if (!ACORD_HELPERS.includes(user.id)) return;
-        
-        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordHelper.svg", sizes);
-        badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_HELPER"));
+        let badge = createBadge(`https://raw.githubusercontent.com/AcordPlugin/assets/main/${badgeName}.svg`, sizes);
+        badge.setAttribute("acord--tooltip-content", nameFunc());
         
         elm.appendChild(badge);
-      })();
-
-      (async ()=>{
-        if (!ACORD_EARLY_MEMBERS.includes(user.id)) return;
-        
-        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordEarlyMember.svg", sizes);
-        badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_EARLY_MEMBER"));
-        
-        elm.appendChild(badge);
-      })();
-
-      (async ()=>{
-        if (!ACORD_BANNED.includes(user.id)) return;
-        
-        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordBanned.svg", sizes);
-        badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_BANNED"));
-        
-        elm.appendChild(badge);
-      })();
-
+      });
     })
   )
 }
