@@ -27,6 +27,8 @@ const badgeClasses2 = webpack.findByProps("profileBadges", "avatarPositionPanel"
 const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
 const ACORD_ADMINS = ["707309693449535599", "319862027571036161"];
+const ACORD_HELPERS = ["377839917738360834"];
+const ACORD_EARLY_MEMBERS = ["267066635842486273"];
 
 function createBadge(src, sizes) {
   const badge = dom.parseHTML(`
@@ -218,6 +220,24 @@ export function patchDOM() {
         
         let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordAdmin.svg", sizes);
         badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_ADMIN"));
+        
+        elm.appendChild(badge);
+      })();
+
+      (async ()=>{
+        if (!ACORD_HELPERS.includes(user.id)) return;
+        
+        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordHelper.svg", sizes);
+        badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_HELPER"));
+        
+        elm.appendChild(badge);
+      })();
+
+      (async ()=>{
+        if (!ACORD_EARLY_MEMBERS.includes(user.id)) return;
+        
+        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordEarlyMember.svg", sizes);
+        badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_EARLY_MEMBER"));
         
         elm.appendChild(badge);
       })();
