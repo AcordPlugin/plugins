@@ -198,7 +198,10 @@ export function patchDOM() {
       let sizes = elm.classList.contains(badgeClasses2.profileBadges) ? [22, 14] : [24, 16];
 
       (async ()=>{
-        if (typeof (await internal.other?.isActiveAcordUser?.(user.id)) != "number") return;
+        if (
+          internal.other?.isActiveAcordUser 
+          && await internal.other.isActiveAcordUser(user.id)
+        ) return;
         
         let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/Acord.svg", sizes);
         badge.setAttribute("acord--tooltip-content", i18n.format("ACTIVE_USER"));
