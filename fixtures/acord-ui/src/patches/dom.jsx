@@ -190,7 +190,7 @@ export function patchDOM() {
   )
 
   patchContainer.add(
-    dom.patch(`[class*="userPopoutOuter-"] [class*="profileBadges-"], [class*="userProfileModalOuter-"] [class*="badgeList-"]`, /** @param {Element} elm */ async (elm)=>{
+    dom.patch(`[class*="profileBadges-"], [class*="badgeList-"]`, /** @param {Element} elm */ async (elm)=>{
 
       let user = utils.react.getProps(elm, i=>i?.user)?.user;
       if (!user) return;
