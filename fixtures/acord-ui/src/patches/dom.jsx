@@ -24,7 +24,21 @@ const buttonClasses = webpack.findByProps("button", "lookFilled", "colorBrand");
 const badgeClasses1 = webpack.findByProps("badgeList", "headerTop", "relationshipButtons");
 const badgeClasses2 = webpack.findByProps("profileBadges", "avatarPositionPanel", "betaTagVisible");
 
-let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
+const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
+
+const ACORD_ADMINS = ["707309693449535599", "319862027571036161"];
+
+function createBadge(src, sizes) {
+  const badge = dom.parseHTML(`
+    <div style="display: flex; align-items: center; justify-content: center; width: ${sizes[0]}px; height: ${sizes[0]}px; cursor: pointer;">
+      <img alt=" " src="${src}" style="height: ${sizes[1]}px"></img>
+    </div>
+  `);
+  badge.onclick = ()=>{
+    InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: "acord" });
+  }
+  return badge;
+}
 
 export function patchDOM() {
 
@@ -181,20 +195,26 @@ export function patchDOM() {
       let user = utils.react.getProps(elm, i=>i?.user)?.user;
       if (!user) return;
 
-      if (await internal.other?.isActiveAcordUser?.(user.id)) return;
-
       let sizes = elm.classList.contains(badgeClasses2.profileBadges) ? [22, 14] : [24, 16];
-      let container = dom.parseHTML(`
-        <div style="display: flex; align-items: center; justify-content: center; width: ${sizes[0]}px; height: ${sizes[0]}px; cursor: pointer;" acord--tooltip-content="${i18n.format("ACTIVE_USER")}">
-          <img alt=" " src="https://raw.githubusercontent.com/AcordPlugin/assets/main/Acord.svg" style="height: ${sizes[1]}px"></img>
-        </div>
-      `);
 
-      container.onclick = ()=>{
-        InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: "acord" });
-      }
+      (async ()=>{
+        if (await internal.other?.isActiveAcordUser?.(user.id)) return;
+        
+        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/Acord.svg", sizes);
+        badge.setAttribute("acord--tooltip-content", i18n.format("ACTIVE_USER"));
 
-      elm.appendChild(container);
+        elm.appendChild(badge);
+      })();
+
+      (async ()=>{
+        if (!ACORD_ADMINS.includes(user.id)) return;
+        
+        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordAdmin.svg", sizes);
+        badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_ADMIN"));
+        
+        elm.appendChild(badge);
+      })();
+
     })
   )
 }
