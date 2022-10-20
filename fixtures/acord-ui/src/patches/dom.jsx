@@ -207,7 +207,7 @@ export function patchDOM() {
 
         if (Date.now() - lastLogin > 1000 * 60 * 60 * 24) return;
         
-        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/Acord.svg", sizes);
+        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordMember.svg", sizes);
         badge.setAttribute("acord--tooltip-content", i18n.format("ACTIVE_USER"));
 
         elm.appendChild(badge);
