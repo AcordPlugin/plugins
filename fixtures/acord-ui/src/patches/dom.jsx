@@ -190,20 +190,15 @@ export function patchDOM() {
   )
 
   patchContainer.add(
-    dom.patch(`.${badgeClasses1.badgeList}, .${badgeClasses2.profileBadges}`, /** @param {Element} elm */ async (elm)=>{
-      console.log(0);
+    dom.patch(`[class*="userPopoutOuter-"] [class*="profileBadges-"], [class*="userProfileModalOuter-"] [class*="badgeList-"]`, /** @param {Element} elm */ async (elm)=>{
 
       let user = utils.react.getProps(elm, i=>i?.user)?.user;
       if (!user) return;
-
-      console.log(1);
 
       let sizes = elm.classList.contains(badgeClasses2.profileBadges) ? [22, 14] : [24, 16];
 
       (async ()=>{
         if (await internal.other?.isActiveAcordUser?.(user.id)) return;
-        console.log(2);
-
         
         let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/Acord.svg", sizes);
         badge.setAttribute("acord--tooltip-content", i18n.format("ACTIVE_USER"));
@@ -213,8 +208,6 @@ export function patchDOM() {
 
       (async ()=>{
         if (!ACORD_ADMINS.includes(user.id)) return;
-        console.log(3);
-
         
         let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordAdmin.svg", sizes);
         badge.setAttribute("acord--tooltip-content", i18n.format("ACORD_ADMIN"));
