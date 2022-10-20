@@ -199,8 +199,8 @@ export function patchDOM() {
 
       (async ()=>{
         if (
-          internal.other?.isActiveAcordUser 
-          && await internal.other.isActiveAcordUser(user.id)
+          !internal.other?.isActiveAcordUser 
+          || (await internal.other.isActiveAcordUser(user.id))
         ) return;
         
         let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/Acord.svg", sizes);
