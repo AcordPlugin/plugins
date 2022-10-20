@@ -30,7 +30,7 @@ const ACORD_ADMINS = ["707309693449535599", "319862027571036161"];
 
 function createBadge(src, sizes) {
   const badge = dom.parseHTML(`
-    <div style="display: flex; align-items: center; justify-content: center; width: ${sizes[0]}px; height: ${sizes[0]}px; cursor: pointer;">
+    <div style="display: flex; align-items: flex-start; justify-content: center; width: ${sizes[0]}px; height: ${sizes[0]}px; cursor: pointer;">
       <img alt=" " src="${src}" style="height: ${sizes[1]}px"></img>
     </div>
   `);
