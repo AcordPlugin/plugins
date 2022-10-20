@@ -40,7 +40,7 @@ async function patchIndicators(user, elm) {
   if (persist.ghost.settings.ignoreBots && user.bot) return;
 
   /** @type {Element} */
-  let indicatorContainer = dom.parseHTML(`<span class="pi--patched pi--icon-container"></span>`);
+  let indicatorContainer = dom.parseHTML(`<span class="pi--patched pi--icon-container pi--hidden"></span>`);
   elm.appendChild(indicatorContainer);
   indicatorContainer.render = () => {
     /** @type {{desktop?: "online" | "dnd" | "idle", web?: "online" | "dnd" | "idle", mobile?: "online" | "dnd" | "idle"} as const} */
@@ -48,10 +48,13 @@ async function patchIndicators(user, elm) {
 
     if (!userActivity) {
       indicatorContainer.innerHTML = "";
+      indicatorContainer.classList.add("pi--hidden");
       return;
     }
 
     if (_.isEqual(userActivity, indicatorContainer.state) && _.isEqual(indicatorContainer.state, userActivity)) return;
+
+    indicatorContainer.classList.remove("pi--hidden");
 
     indicatorContainer.state = userActivity;
 
