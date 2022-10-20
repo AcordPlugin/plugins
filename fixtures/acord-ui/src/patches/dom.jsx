@@ -21,8 +21,8 @@ const anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
 const messageClasses = webpack.findByProps("message", "cozyMessage", "mentioned");
 const buttonClasses = webpack.findByProps("button", "lookFilled", "colorBrand");
 
-const badgeClasses1 = webpack.findByProps("badgeList", "headerTop", "relationshipButtons");
-const badgeClasses2 = webpack.findByProps("profileBadges", "avatarPositionPanel", "betaTagVisible");
+const badgeClasses1 = webpack.findByProps("badgeList", "details");
+const badgeClasses2 = webpack.findByProps("profileBadges", "avatarPositionPanel");
 
 const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
