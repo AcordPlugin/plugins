@@ -217,9 +217,20 @@
         }
 
         .info-side {
-          width: 80%;
           display: flex;
           flex-direction: column;
+
+          &.size-small {
+            width: 85%;
+          }
+
+          &.size-medium {
+            width: 70%;
+          }
+
+          &.size-large {
+            width: 55%;
+          }
 
           .name {
             font-size: 18px;

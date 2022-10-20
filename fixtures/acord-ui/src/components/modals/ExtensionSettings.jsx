@@ -2,6 +2,7 @@ import { useNest } from "nests/react";
 import extensions from "@acord/extensions";
 import { CheckBox } from "../CheckBox.jsx";
 import { React } from "../../other/apis.js";
+import { TextInput } from "../TextInput.jsx";
 
 export function ExtensionSettings({ url, extension }) {
   useNest(extensions.nests.enabled);
@@ -36,6 +37,25 @@ export function ExtensionSettings({ url, extension }) {
             onChange={(e) => {
               persist.store.settings[setting.property] = e.target.checked;
               callUpdate(setting.property, e.target.checked);
+              setUpdater(Math.random().toString(36));
+            }}
+          />
+        </div>
+      </>
+    },
+    input: (setting) => {
+      return <>
+        <div className={`left info-side size-${setting.size || "medium"}`}>
+          <div className="name">{setting.name}</div>
+          {setting.description ? <div className="description">{setting.description}</div> : null}
+        </div>
+        <div className="right">
+          <TextInput
+            value={persist.ghost.settings?.[setting.property] ?? setting.value}
+            type={setting.altType || "text"}
+            onChange={(e) => {
+              persist.store.settings[setting.property] = e.target.value;
+              callUpdate(setting.property, e.target.value);
               setUpdater(Math.random().toString(36));
             }}
           />
