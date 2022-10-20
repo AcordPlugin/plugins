@@ -8,6 +8,7 @@ import modals from "@acord/ui/modals";
 import toasts from "@acord/ui/toasts";
 import events from "@acord/events";
 import extensions from "@acord/extensions";
+import internal from "@acord/internal";
 import patchContainer from "../other/patchContainer.js";
 import { showModal } from "../other/apis.js";
 import { ModalBase } from "../components/modals/ModalBase.jsx";
@@ -19,6 +20,9 @@ const optionsClasses = webpack.findByProps("item", "selected", "separator");
 const anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
 const messageClasses = webpack.findByProps("message", "cozyMessage", "mentioned");
 const buttonClasses = webpack.findByProps("button", "lookFilled", "colorBrand");
+
+const badgeClasses1 = webpack.findByProps("badgeList", "headerTop", "relationshipButtons");
+const badgeClasses2 = webpack.findByProps("profileBadges", "avatarPositionPanel", "betaTagVisible");
 
 let extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
@@ -168,7 +172,29 @@ export function patchDOM() {
           );
         });
       });
+    })
+  )
 
+  patchContainer.add(
+    dom.patch(`.${badgeClasses1.badgeList}, .${badgeClasses2.profileBadges}`, /** @param {Element} elm */ async (elm)=>{
+
+      let user = utils.react.getProps(elm, i=>i?.user)?.user;
+      if (!user) return;
+
+      if (await internal.other?.isActiveAcordUser?.(user.id)) return;
+
+      let sizes = elm.classList.contains(badgeClasses2.profileBadges) ? [22, 14] : [24, 16];
+      let container = dom.parseHTML(`
+        <div style="display: flex; align-items: center; justify-content: center; width: ${sizes[0]}px; height: ${sizes[0]}px; cursor: pointer;" acord--tooltip-content="${i18n.format("ACTIVE_USER")}">
+          <img alt=" " src="https://raw.githubusercontent.com/AcordPlugin/assets/main/Acord.svg" style="height: ${sizes[1]}px"></img>
+        </div>
+      `);
+
+      container.onclick = ()=>{
+        InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: "acord" });
+      }
+
+      elm.appendChild(container);
     })
   )
 }
