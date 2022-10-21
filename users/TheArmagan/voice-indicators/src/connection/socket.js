@@ -3,10 +3,7 @@ import { UserStore } from "../other/apis";
 import { getUserVoiceStateShaped, getVoiceChannelMembers } from "../other/VoiceStates";
 
 export const socket = io("https://ccwss.armagan.rest/voice-indicators", {
-  transports: ["websocket"],
-  extraHeaders: {
-    "x-type": "Acord"
-  }
+  transports: ["websocket"]
 });
 
 socket.on("connect", () => {
