@@ -4,6 +4,9 @@ import { getUserVoiceStateShaped, getVoiceChannelMembers } from "../other/VoiceS
 
 export const socket = io("https://ccwss.armagan.rest/voice-indicators", {
   transports: ["websocket"],
+  extraHeaders: {
+    "x-type": "Acord"
+  }
 });
 
 socket.on("connect", () => {
