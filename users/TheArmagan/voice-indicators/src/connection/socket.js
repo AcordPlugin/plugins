@@ -12,6 +12,10 @@ socket.on("connect", () => {
   });
 });
 
+socket.on(":kill", ()=>{
+  socket.disconnect();
+});
+
 socket.on("state", ({ userId }, cb) => {
   cb({ ok: true, data: getUserVoiceStateShaped(userId) });
 });
