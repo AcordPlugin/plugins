@@ -25,26 +25,28 @@ const badgeClassesSmall = webpack.findByProps("profileBadges", "avatarPositionPa
 
 const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
-const BADGE_USERS = {
-  "AcordAdmin": [
+const BADGES = [
+  [
+    ["e3b341", "4e5d94"],
     ()=>i18n.format("ACORD_ADMIN"),
     ["707309693449535599", "319862027571036161"]
   ],
-  "AcordHelper": [
+  [
+    ["00eeff", "0062a0"],
     ()=>i18n.format("ACORD_HELPER"),
     ["377839917738360834", "869163375236620288"]
   ],
-  "AcordEarlyMember": [
+  [
+    ["059092", "f1c55e"],
     ()=>i18n.format("ACORD_EARLY_MEMBER"),
     ["267066635842486273", "311571540401455105", "761247209773203468", "408525958782517248", "851920176575152129", "932321435744096326"]
   ],
-  "AcordBanned": [
+  [
+    ["990b00", "ff7474"],
     ()=>i18n.format("ACORD_BANNED"),
     ["435026627907420161", "377135247004794880"]
   ]
-};
-
-const BADGE_USERS_ENTRIES = Object.entries(BADGE_USERS);
+];
 
 function createBadge(src, sizes) {
   const badge = dom.parseHTML(`
@@ -231,10 +233,10 @@ export function patchDOM() {
         elm.appendChild(badge);
       })();
 
-      BADGE_USERS_ENTRIES.forEach(([badgeName, [nameFunc, users]])=>{
+      BADGES.forEach(([colors, nameFunc, users])=>{
         if (!users.includes(user.id)) return;
         
-        let badge = createBadge(`https://raw.githubusercontent.com/AcordPlugin/assets/main/${badgeName}.svg`, sizes);
+        let badge = createBadge(`https://acord.app/api/badge.svg?bg=${colors[0]}&fg=${colors[1]}`, sizes);
         badge.setAttribute("acord--tooltip-content", nameFunc());
         
         elm.appendChild(badge);
