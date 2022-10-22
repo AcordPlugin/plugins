@@ -26,6 +26,7 @@ const badgeClassesSmall = webpack.findByProps("profileBadges", "avatarPositionPa
 const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
 const BADGES = [
+  // GLOBAL BADGES
   [
     ["e3b341", "4e5d94"],
     ()=>i18n.format("ACORD_ADMIN"),
@@ -45,6 +46,13 @@ const BADGES = [
     ["990b00", "ff7474"],
     ()=>i18n.format("ACORD_BANNED"),
     ["435026627907420161", "377135247004794880"]
+  ],
+
+  // CUSTOM BADGES
+  [
+    ["18191c", "18191c"],
+    ()=>"ghost.",
+    ["367333221811355648"] // dirt
   ]
 ];
 
