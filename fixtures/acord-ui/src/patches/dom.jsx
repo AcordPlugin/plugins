@@ -21,8 +21,6 @@ const anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
 const messageClasses = webpack.findByProps("message", "cozyMessage", "mentioned");
 const buttonClasses = webpack.findByProps("button", "lookFilled", "colorBrand");
 
-const badgeClassesSmall = webpack.findByProps("profileBadges", "avatarPositionPanel");
-
 const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
 
 const BADGES = [
@@ -218,12 +216,12 @@ export function patchDOM() {
   )
 
   patchContainer.add(
-    dom.patch(`[class*="profileBadges-"], [class*="badgeList-"]`, /** @param {Element} elm */ async (elm)=>{
+    dom.patch(`[class*="profileBadges-"], [class*="badgeList-"], [class*="userInfo-"] > div > [class*="container-"]`, /** @param {Element} elm */ async (elm)=>{
 
       let user = utils.react.getProps(elm, i=>i?.user)?.user;
       if (!user) return;
 
-      let sizes = elm.classList.contains(badgeClassesSmall.profileBadges) ? [22, 14] : [24, 16];
+      let sizes = ["profileBadges-", "container-"].some(i=>elm.className.includes(i)) ? [22, 14] : [24, 16];
 
       (async () => {
 
