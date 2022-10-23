@@ -2,7 +2,7 @@ import { ChannelStore, GuildStore, UserStore, VoiceStateStore } from "./apis";
 import { persist } from "@acord/extension";
 
 /**
- * @typedef {{states:{deaf:boolean,mute:boolean,selfDeaf:boolean,selfMute:boolean,selfStream:boolean,selfVideo:boolean,suppress:boolean},isPrivate:boolean,user:{id:string,tag:string,avatar:string},channel:{id:string,name:string,icon:string,redacted:boolean},guild:{id:string,name:string,icon:string}}} VoiceStateShaped
+ * @typedef {{state:"guild-deaf"|"deaf"|"guild-mute"|"mute"|"video"|"stream"|"voice",isPrivate:boolean,user:{id:string,tag:string,avatar:string},channel:{id:string,name:string,icon:string,redacted:boolean},guild:{id:string,name:string,icon:string}}} VoiceStateShaped
  */
 
 /**
@@ -47,15 +47,15 @@ function makeShape(i) {
   let guild = GuildStore.getGuild(channel?.guild_id);
   let user = UserStore.getUser(i.userId);
   return {
-    states: {
-      deaf: i.deaf,
-      mute: i.mute,
-      selfDeaf: i.selfDeaf,
-      selfMute: i.selfMute,
-      selfStream: i.selfStream,
-      selfVideo: i.selfVideo,
-      suppress: i.suppress
-    },
+    state: (i.selfDeaf || i.deaf)
+            ? `${i.deaf ? "guild-" : ""}deaf`
+            : (i.selfMute || i.mute || i.suppress)
+            ? `${i.mute ? "guild-" : ""}mute`
+            : i.selfVideo
+            ? "video"
+            : i.selfStream
+            ? "stream"
+            : "voice",
     isPrivate: !guild,
     user: {
       id: i.userId,
