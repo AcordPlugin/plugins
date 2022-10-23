@@ -1,0 +1,13 @@
+{
+  "hash": "5182ed72306f27550e92efe9b2a629330a125d45e8e768a7e574f4457c0c0ce4",
+  "type": "plugin",
+  "about": {
+    "name": "Typing Indicators",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Shows typing indicators top of the user avatars.",
+    "version": "1.0.0",
+    "license": "MIT"
+  }
+}

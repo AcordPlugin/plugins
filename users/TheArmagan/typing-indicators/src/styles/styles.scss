@@ -1,0 +1,24 @@
+.ti {
+    &--container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 50%;
+        z-index: 98;
+        display: none !important;
+        
+        &.visible {
+            display: flex;
+        }
+
+        img {
+            opacity: 0.95;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 2px;
+            border-radius: 99px;
+        }
+    }
+}
