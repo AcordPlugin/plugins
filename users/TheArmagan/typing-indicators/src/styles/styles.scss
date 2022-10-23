@@ -8,10 +8,10 @@
         left: 0px;
         border-radius: 50%;
         z-index: 98;
-        display: none !important;
+        display: none;
         
         &.visible {
-            display: flex;
+            display: flex !important;
         }
 
         img {
