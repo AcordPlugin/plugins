@@ -8,7 +8,7 @@ export function patchUpdater() {
 
     let interval = setInterval(() => {
       events.emit("TypingIndicators:1s");
-    }, 1)
+    }, 1000)
 
     return () => {
       clearInterval(interval)
