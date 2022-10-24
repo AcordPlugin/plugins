@@ -20,8 +20,10 @@ export function patchBulkUpdater() {
                 let removes = [];
 
                 await chillout.forEach(currentStates, (cs)=>{
+                    let found = localCache.lastVoiceStates.find(i=>i[0] === cs[0]);
                     if (
-                        localCache.lastVoiceStates.findIndex(i=>i[0] === cs[0]) === -1
+                        !found
+                        || !_.isEqual(found[1], found[1])
                     ) {
                         updates.push(cs);
                     }
