@@ -2,7 +2,7 @@ import webpack from "@acord/modules/webpack";
 import utils from "@acord/utils";
 import toasts from "@acord/ui/toasts";
 import { fetchVoiceMembers } from "../../other/api";
-import { InviteStore, ModalRoot, selectVoiceChannel, React, transitionTo } from "../../other/apis";
+import { InviteStore, ModalRoot, selectVoiceChannel, React, transitionTo, PermissionStore, Permissions, ChannelStore } from "../../other/apis";
 import { COLORS } from "../../other/constants";
 import { ArrowIcon } from "./ArrowIcon";
 import { CloseIcon } from "./CloseIcon";
@@ -15,20 +15,34 @@ import events from "@acord/events";
 
 const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
-export function Modal({ e, data }) {
-  let [members, setMembers] = React.useState([]);
-  let fetching = false;
+const indicatorMap = {
+  guildDeaf: DeafIcon({ color: COLORS.DANGER }),
+  deaf: DeafIcon({ color: COLORS.SECONDARY }),
+  guildMute: MuteIcon({ color: COLORS.DANGER }),
+  mute: MuteIcon({ color: COLORS.SECONDARY }),
+  video: VideoIcon({ color: COLORS.SECONDARY }),
+  stream: <div class="v--icon vi--red-dot" ></div>,
+  normal: VoiceIcon({ color: COLORS.SECONDARY })
+}
 
-  async function onChange() {
-    if (fetching) return;
-    fetching = true;
-    let d = await fetchVoiceMembers(data.state.channel.id);
-    fetching = false;
-    setMembers(d || []);
+export function Modal({ e, states }) {
+  const [selectedState, setSelectedState] = React.useState(states[0]);
+  const [currentData, setCurrentData] = React.useState({inMyChannels: false, isJoinable:false});
+  const [members, setMembers] = React.useState([]);
+
+  async function onChange(channelId) {
+    let channel = ChannelStore.getChannel(channelId);
+    let inMyChannels = !!channel;
+    let isJoinable = !inMyChannels ? false : (channel.type == 3 ? true : (PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel)))
+    setCurrentData({inMyChannels, isJoinable});
+
+    setMembers([]);
+    await new Promise(r=>setTimeout(r, 100));
+    setMembers(await fetchVoiceMembers(channelId));
   }
 
   React.useEffect(() => {
-    return events.on("VoiceIndicators:EverySecond", onChange);
+    onChange(selectedState.channelId);
   }, []);
 
   return (
@@ -37,7 +51,7 @@ export function Modal({ e, data }) {
       size="large"
       className="vi--modal-root">
       <div className="vi--modal-header" >
-        <div className="title-container">
+        {/* <div className="title-container">
           <div className="icon" style={{ backgroundImage: data.state.guildId ? `url('https://cdn.discordapp.com/icons/${data.state.guildId}/${data.state.guildIcon}.png?size=128')` : (data.state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${data.state.channelId}/${data.state.channelIcon}.png?size=128')` : null) }}></div>
           <div className="title">
             <div className="guild">
@@ -59,6 +73,9 @@ export function Modal({ e, data }) {
               </div>
             }
           </div>
+        </div> */}
+        <div className="title">
+          Voice States
         </div>
         
         <div onClick={e.onClose} className="vi--modal-close" >
@@ -66,38 +83,53 @@ export function Modal({ e, data }) {
         </div>
       </div>
       <div className="vi--modal-content">
-        <div className="channel">
+
+        <div className="tabs">
+          {
+            states.map(state=>(
+              <div className={`item ${state.channelId === selectedState.channelId ? "active" : ""}`} onClick={()=>{ setSelectedState(state); onChange(selectedState.channelId); }}>
+                <div className="icon-and-name">
+                  <div className="icon" style={{ backgroundImage: state.guildId ? `url('https://cdn.discordapp.com/icons/${state.guildId}/${state.guildIcon}.png?size=128')` : (state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${state.channelId}/${state.channelIcon}.png?size=128')` : null) }}></div>
+                  <div className="name">{!state.guildId ? "Private Call" : state.guildName}</div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div className="content">
+          <div className="channel">
           <div className="name-container">
             <div className="name">
               <VoiceIcon />
-              {data.state.channelName || "Unknown"}
+              {selectedState.channelName || "Unknown"}
             </div>
             <div className="controls">
               <div
-                className={`control ${!data.isJoinable ? "vi--cant-click vi--cant-join" : ""}`}
+                className={`control ${!currentData.isJoinable ? "vi--cant-click vi--cant-join" : ""}`}
                 onClick={(ev) => {
                   ev.preventDefault();
-                  if (!data.isJoinable) return;
+                  if (!currentData.isJoinable) return;
                   toasts.show(`Joining to "${data.state.channelName}"!`);
                   selectVoiceChannel(data.state.channelId)
                   e.onClose();
                 }}
               >
-                <div acord--tooltip-content={`${!data.isJoinable ? "Can't " : ""} Connect`}>
+                <div acord--tooltip-content={`${!currentData.isJoinable ? "Can't " : ""} Connect`}>
                   <JoinCallIcon color={COLORS.SECONDARY} />
                 </div>
               </div>
               <div
-                className={`control ${!data.inMyChannels ? "vi--cant-click" : ""}`}
+                className={`control ${!currentData.inMyChannels ? "vi--cant-click" : ""}`}
                 onClick={(ev) => {
                   ev.preventDefault();
-                  if (!data.inMyChannels) return;
+                  if (!currentData.inMyChannels) return;
                   toasts.show(`Viewing "${data.state.channelName}"!`);
                   transitionTo(`/channels/${data.state.guildId || "@me"}/${data.state.channelId}`);
                   e.onClose();
                 }}
               >
-                <div acord--tooltip-content={`${!data.inMyChannels ? "Can't " : ""} Show Channel`}>
+                <div acord--tooltip-content={`${!currentData.inMyChannels ? "Can't " : ""} Show Channel`}>
                   <ArrowIcon color={COLORS.SECONDARY} />
                 </div>
               </div>
@@ -120,28 +152,16 @@ export function Modal({ e, data }) {
                       <div className="name">{member.tag.split("#")[0]}</div>
                       <div className="discriminator">#{member.tag.split("#")[1]}</div>
                     </div>
-                    {member?.states ? 
-                      <div className="state vi--icon-container">
-                        {
-                          (member.states.selfDeaf || member.states.deaf)
-                            ? <DeafIcon color={COLORS[member.states.deaf ? "DANGER" : "SECONDARY"]} />
-                            : (member.states.selfMute || member.states.mute || member.states.suppress)
-                              ? <MuteIcon color={COLORS[member.states.mute ? "DANGER" : "SECONDARY"]} />
-                              : member.states.selfVideo
-                                ? <VideoIcon color={COLORS.SECONDARY} />
-                                : member.states.selfStream
-                                  ? <div className="v--icon vi--red-dot" />
-                                  : <VoiceIcon color={COLORS.SECONDARY} />
-                        }
-                      </div> 
-                      : null
-                    }
+                    {member?.states ? indicatorMap[member?.states] : null}
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
+        </div>
+
+        
       </div>
     </ModalRoot>
   );

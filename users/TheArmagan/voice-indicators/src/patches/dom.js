@@ -19,16 +19,15 @@ async function patchIndicators(user, elm) {
   let indicatorContainer = dom.parseHTML(`<span class="vi--patched vi--icon-container vi--hidden"></span>`);
 
   indicatorContainer.render = async () => {
-    let rawState = (await fetchUserVoiceStates(user.id))?.[0];
-    console.log(rawState)
+    let rawStates = await fetchUserVoiceStates(user.id);
+    indicatorContainer.states = rawStates;
+    let rawState = rawStates[0];
     if (!rawState) {
       indicatorContainer.innerHTML = "";
       indicatorContainer.state = null;
       indicatorContainer.classList.add("vi--hidden");
       return;
     }
-
-    console.log(rawState);
     
     if (_.isEqual(rawState, indicatorContainer.state)) return;
     let state = rawToParsed(rawState);
@@ -38,7 +37,7 @@ async function patchIndicators(user, elm) {
     indicatorContainer.classList.remove("vi--hidden");
     indicatorContainer.classList[!channel ? "add" : "remove"]("vi--cant-join");
 
-    let tooltipText = `${channel ? "✅" : "❌"} ${state.guildId ? (state.guildName || "Unknown Guild") : "Private Call"} > ${state.channelName || "Plugin Deprecated"}`;
+    let tooltipText = `(${rawStates.length}) ${channel ? "✅" : "❌"} ${state.guildId ? (state.guildName || "Unknown Guild") : "Private Call"} > ${state.channelName || "Plugin Deprecated"}`;
 
     indicatorContainer.setAttribute("acord--tooltip-content", tooltipText);
     indicatorContainer.replaceChildren(dom.parseHTML(renderIcon(state)));
@@ -60,7 +59,7 @@ async function patchIndicators(user, elm) {
     if (!!persist.ghost.settings?.redacted) return;
 
     // transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
-    showModal(indicatorContainer.state);
+    showModal(indicatorContainer.states.map(rawToParsed));
   });
 
   elm.appendChild(indicatorContainer);
