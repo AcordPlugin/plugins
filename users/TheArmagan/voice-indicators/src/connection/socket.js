@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import { UserStore } from "../other/apis";
-import { getUserVoiceStateShaped, getVoiceChannelMembers } from "../other/VoiceStates";
+import { getAllVoiceStates, getUserVoiceState, getVoiceChannelMembers } from "../other/VoiceStates";
 
 export const socket = io("https://ccwss.armagan.rest/voice-indicators", {
   transports: ["websocket"]
@@ -17,7 +17,7 @@ socket.on(":kill", ()=>{
 });
 
 socket.on("state", ({ userId }, cb) => {
-  cb({ ok: true, data: getUserVoiceStateShaped(userId) });
+  cb({ ok: true, data: getUserVoiceState(userId) });
 });
 
 socket.on("members", ({ channelId }, cb) => {

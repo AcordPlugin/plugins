@@ -6,7 +6,7 @@ import { COLORS } from "../other/constants.js";
 
 /**
  * 
- * @param {import("../other/VoiceStates.js").VoiceStateShaped} state 
+ * @param {import("../other/VoiceStates.js").VoiceStateRaw} state 
  * @returns 
  */
 export function renderIcon(state, direct = false) {

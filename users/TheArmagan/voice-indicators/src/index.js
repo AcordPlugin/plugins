@@ -27,7 +27,18 @@ export default {
         description: "When this setting is on, your private information will not be shared with the other party. However, you will not be able to see other people's private information.",
         property: "redacted",
         value: false
-      }
+      },
+      {
+        type: "header",
+        name: "Other"
+      },
+      {
+        type: "checkbox",
+        name: "Ignore Bots",
+        description: "Do not show voice indicators on bots.",
+        property: "ignoreBots",
+        value: true
+      },
     ]
   }
 }

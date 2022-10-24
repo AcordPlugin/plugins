@@ -40,7 +40,7 @@ async function patchIndicators(user, elm) {
     indicatorContainer.state = state;
   }
 
-  let unpatchUpdater = events.on("VoiceIndicators:EverySecond", indicatorContainer.render);
+  let unpatchUpdater = events.on("VoiceIndicators:Render", indicatorContainer.render);
 
   indicatorContainer.unmount = () => {
     unpatchUpdater();

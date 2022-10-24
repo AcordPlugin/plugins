@@ -1,5 +1,5 @@
 import { awaitResponse } from "../connection/socket";
-import { getUserVoiceStateShaped, getVoiceChannelMembers } from "./VoiceStates";
+import { getUserVoiceState, getVoiceChannelMembers } from "./VoiceStates";
 
 const cache = new Map();
 
@@ -11,9 +11,9 @@ setInterval(() => {
   });
 }, 1000);
 
-/** @returns {import("./VoiceStates.js").VoiceStateShaped?} */
+/** @returns {import("./VoiceStates.js").VoiceStateRaw?} */
 export async function fetchUserVoiceState(userId) {
-  let state = getUserVoiceStateShaped(userId);
+  let state = getUserVoiceState(userId);
   if (!state) {
     let cached = cache.get(`Users:${userId}`);
     if (cached) return cached.state;
