@@ -8,8 +8,9 @@ export async function fetchUserVoiceStates(userId) {
   let cached = localCache.responseCache.get(`Users:${userId}`);
   if (cached) return cached.states;
 
-  states = await new Promise(r=>localCache.stateRequestCache.push([userId, r]));
+  let states = await new Promise(r=>localCache.stateRequestCache.push([userId, r]));
   localCache.responseCache.set(`Users:${userId}`, { at: Date.now(), states, ttl: 1000 });
+  console.log(states);
   return states;
 }
 

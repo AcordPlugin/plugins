@@ -24,18 +24,24 @@ export function patchBulkUpdater() {
                     let found = localCache.lastVoiceStates.find(i=>i[0] === cs[0]);
                     if (
                         !found
-                        || !_.isEqual(found[1], found[1])
+                        || !_.isEqual(found[1], cs[1])
                     ) {
                         updates.push(cs);
                     }
                 });
                 
-                await chillout.forEach(localCache.lastVoiceStates, (ls)=>{
-                    if (
-                        currentStates.findIndex(i=>i[0] === ls[0]) === -1
-                    ) {
-                        removes.push(ls[0]);
-                    }
+                await chillout.forEach(localCache.lastVoiceStates, (lss)=>{
+                    lss[1].forEach(ls=>{
+                        let css = currentStates.find(i=>i[0] === lss[0]);
+                        if (!css) {
+                            removes.push(ls[0]);
+                        } else {
+                            let cs = css[1].find(cs=>cs[8] === ls[8]);
+                            if (!cs || cs[4] != ls[1][4]) {
+                                removes.push([ls[0], ls[1][4]]);
+                            }
+                        }
+                    }) 
                 });
 
                 localCache.lastVoiceStates = currentStates;
