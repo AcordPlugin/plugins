@@ -39,6 +39,13 @@ export default {
         property: "ignoreBots",
         value: true
       },
+      {
+        type: "checkbox",
+        name: "Performance Mode",
+        description: "Slower checks.",
+        property: "performanceMode",
+        value: false
+      },
     ]
   }
 }

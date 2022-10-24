@@ -191,7 +191,7 @@ export function patchDOM() {
       let user = utils.react.getProps(elm, i=>i?.user)?.user;
       if (!user) return;
 
-      let sizes = ["profileBadges-", "container-"].some(i=>elm.className.includes(i)) ? [22, 14] : [24, 16];
+      let sizes = ["profileBadges-", "container-1gYwHN"].some(i=>elm.className.includes(i)) ? [22, 14] : [24, 16];
 
       (async () => {
 
