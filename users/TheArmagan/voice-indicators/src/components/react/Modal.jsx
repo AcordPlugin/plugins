@@ -52,18 +52,18 @@ export function Modal({ e, states }) {
       className="vi--modal-root">
       <div className="vi--modal-header" >
         {/* <div className="title-container">
-          <div className="icon" style={{ backgroundImage: data.state.guildId ? `url('https://cdn.discordapp.com/icons/${data.state.guildId}/${data.state.guildIcon}.png?size=128')` : (data.state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${data.state.channelId}/${data.state.channelIcon}.png?size=128')` : null) }}></div>
+          <div className="icon" style={{ backgroundImage: selectedState.guildId ? `url('https://cdn.discordapp.com/icons/${selectedState.guildId}/${selectedState.guildIcon}.png?size=128')` : (selectedState.channelId ? `url('https://cdn.discordapp.com/channel-icons/${selectedState.channelId}/${selectedState.channelIcon}.png?size=128')` : null) }}></div>
           <div className="title">
             <div className="guild">
-              {!data.state.guildId ? "Private Call" : data.state.guildName}
+              {!selectedState.guildId ? "Private Call" : selectedState.guildName}
             </div>
             {
-              !data.state.guildVanity || data.inMyChannels ? null : <div
+              !selectedState.guildVanity || data.inMyChannels ? null : <div
                 className="vanity"
                 onClick={(ev) => {
                   ev.preventDefault();
-                  if (!data.state.guildVanity) return;
-                  InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: data.state.guildVanity });
+                  if (!selectedState.guildVanity) return;
+                  InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: selectedState.guildVanity });
                   e.onClose();
                 }}
               >
@@ -110,8 +110,8 @@ export function Modal({ e, states }) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   if (!currentData.isJoinable) return;
-                  toasts.show(`Joining to "${data.state.channelName}"!`);
-                  selectVoiceChannel(data.state.channelId)
+                  toasts.show(`Joining to "${selectedState.channelName}"!`);
+                  selectVoiceChannel(selectedState.channelId)
                   e.onClose();
                 }}
               >
@@ -124,8 +124,8 @@ export function Modal({ e, states }) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   if (!currentData.inMyChannels) return;
-                  toasts.show(`Viewing "${data.state.channelName}"!`);
-                  transitionTo(`/channels/${data.state.guildId || "@me"}/${data.state.channelId}`);
+                  toasts.show(`Viewing "${selectedState.channelName}"!`);
+                  transitionTo(`/channels/${selectedState.guildId || "@me"}/${selectedState.channelId}`);
                   e.onClose();
                 }}
               >
