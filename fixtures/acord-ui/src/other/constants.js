@@ -1,3 +1,5 @@
+import i18n from "@acord/i18n";
+
 export const COLORS = {
   DANGER: "#eb3d47",
   SECONDARY: "#8a8e93",

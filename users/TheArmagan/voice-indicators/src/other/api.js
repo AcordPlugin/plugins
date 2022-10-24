@@ -1,5 +1,5 @@
 import { awaitResponse } from "../connection/socket";
-import { getUserVoiceState, getVoiceChannelMembers } from "./VoiceStates";
+import { getUserVoiceStates, getVoiceChannelMembers } from "./VoiceStates";
 
 const cache = new Map();
 
@@ -13,7 +13,7 @@ setInterval(() => {
 
 /** @returns {import("./VoiceStates.js").VoiceStateRaw?} */
 export async function fetchUserVoiceState(userId) {
-  let state = getUserVoiceState(userId);
+  let state = getUserVoiceStates(userId);
   if (!state) {
     let cached = cache.get(`Users:${userId}`);
     if (cached) return cached.state;

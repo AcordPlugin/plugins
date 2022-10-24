@@ -12,15 +12,20 @@ import { persist } from "@acord/extension";
  */
 export function getAllVoiceStates(rawString) {
 
-  return Object.fromEntries(
-    Object.values(VoiceStateStore.getAllVoiceStates())
-      .map((i) => Object.values(i))
-      .flat()
-      .map((i) => [
-        i.userId,
-        Object.values(VoiceStateStore.__getLocalVars().users[i.userId] || {}).map(i=> rawString ? makeRawArray(i).join(";") : makeRawArray(i))
-      ]).filter(i=>i[1]?.length)
-  );
+  return Object.fromEntries(getAllVoiceStatesEntries(rawString));
+}
+
+/**
+ * @returns {[string, VoiceStateRawArray[]][]}
+ */
+export function getAllVoiceStatesEntries(rawString) {
+  return Object.values(VoiceStateStore.getAllVoiceStates())
+  .map((i) => Object.values(i))
+  .flat()
+  .map((i) => [
+    i.userId,
+    getUserVoiceStates(i.userId, rawString)
+  ]).filter(i=>i[1]?.length)
 }
 
 /** @returns {{id: string, tag: string, avatar: string}[]} */
@@ -32,15 +37,14 @@ export function getVoiceChannelMembers(channelId) {
       id: u?.id,
       tag: u?.tag,
       avatar: u?.avatar,
-      states: getUserVoiceState(u?.id)
+      states: getUserVoiceStates(u?.id)
     }
   }).filter(i=>i?.id) : [];
 }
 
 /** @returns {VoiceStateRawArray?} */
-export function getUserVoiceState(userId) {
-  let state = VoiceStateStore.getVoiceStateForUser(userId);
-  return state ? makeRawArray(state) : null;
+export function getUserVoiceStates(userId, rawString) {
+  return Object.values(VoiceStateStore.__getLocalVars().users[userId] || {}).map(i=> rawString ? makeRawArray(i).join(";") : makeRawArray(i));
 }
 
 /** @returns {VoiceStateRawArray} */
