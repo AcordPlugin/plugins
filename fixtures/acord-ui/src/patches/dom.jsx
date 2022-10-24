@@ -15,6 +15,7 @@ import { ModalBase } from "../components/modals/ModalBase.jsx";
 import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
 import { DOMCopyIcon } from "../components/dom/DOMCopyIcon.js";
+import { BADGES } from "../other/constants.js";
 
 const optionsClasses = webpack.findByProps("item", "selected", "separator");
 const anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
@@ -22,45 +23,6 @@ const messageClasses = webpack.findByProps("message", "cozyMessage", "mentioned"
 const buttonClasses = webpack.findByProps("button", "lookFilled", "colorBrand");
 
 const extensionsRegex = /^https?:\/\/acord\.app\/(plugin|theme)s?\/(.*)$/;
-
-const BADGES = [
-  // GLOBAL BADGES
-  [
-    ["e3b341", "4e5d94"],
-    ()=>i18n.format("ACORD_ADMIN"),
-    ["707309693449535599", "319862027571036161"]
-  ],
-  [
-    ["00eeff", "0062a0"],
-    ()=>i18n.format("ACORD_HELPER"),
-    ["377839917738360834", "869163375236620288", "367333221811355648"]
-  ],
-  [
-    ["059092", "f1c55e"],
-    ()=>i18n.format("ACORD_EARLY_MEMBER"),
-    ["267066635842486273", "311571540401455105", "761247209773203468", "408525958782517248", "851920176575152129", "932321435744096326", "326734988177440769"]
-  ],
-  [
-    ["990b00", "ff7474"],
-    ()=>i18n.format("ACORD_BANNED"),
-    ["435026627907420161", "377135247004794880"]
-  ],
-
-  // CUSTOM BADGES
-
-  // dirt
-  [
-    ["18191c", "18191c"],
-    ()=>"ghost.",
-    ["367333221811355648"] 
-  ],
-  // Eashion
-  [
-    ["FFFFFF", "111437"],
-    ()=>"Eashion",
-    ["267066635842486273"] 
-  ]
-];
 
 function createBadge(src, sizes) {
   const badge = dom.parseHTML(`
