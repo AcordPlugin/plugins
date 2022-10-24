@@ -39,7 +39,7 @@ export function patchBulkUpdater() {
 
                 socket.emit("bulkUpdate", [updates, removes]);
 
-                await new Promise(r=>setTimeout(r, persist.ghost.settings.performanceMode ? 3e4 : 5e3));
+                await new Promise(r=>setTimeout(r, persist.ghost.settings.performanceMode ? 2e4 : 5e3));
                 loop();
             }
 
