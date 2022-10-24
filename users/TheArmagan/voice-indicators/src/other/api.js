@@ -5,14 +5,11 @@ import { localCache } from "./cache.js";
 
 /** @returns {import("./VoiceStates.js").VoiceStateRaw?} */
 export async function fetchUserVoiceStates(userId) {
-  let states = localCache.lastVoiceStates.find(i=>i[0]===userId)?.[1] || [];
-  if (!states.length) {
-    let cached = localCache.responseCache.get(`Users:${userId}`);
-    if (cached) return cached.states;
+  let cached = localCache.responseCache.get(`Users:${userId}`);
+  if (cached) return cached.states;
 
-    states = await new Promise(r=>localCache.stateRequestCache.push([userId, r]));
-    localCache.responseCache.set(`Users:${userId}`, { at: Date.now(), states, ttl: 1000 });
-  }
+  states = await new Promise(r=>localCache.stateRequestCache.push([userId, r]));
+  localCache.responseCache.set(`Users:${userId}`, { at: Date.now(), states, ttl: 1000 });
   return states;
 }
 
