@@ -38,18 +38,18 @@ export function Modal({ e, data }) {
       className="vi--modal-root">
       <div className="vi--modal-header" >
         <div className="title-container">
-          <div className="icon" style={{ backgroundImage: data.state.guild ? `url('https://cdn.discordapp.com/icons/${data.state.guild.id}/${data.state.guild.icon}.png?size=128')` : (data.state.channel ? `url('https://cdn.discordapp.com/channel-icons/${data.state.channel.id}/${data.state.channel.icon}.png?size=128')` : null) }}></div>
+          <div className="icon" style={{ backgroundImage: data.state.guildId ? `url('https://cdn.discordapp.com/icons/${data.state.guildId}/${data.state.guildIcon}.png?size=128')` : (data.state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${data.state.channelId}/${data.state.channelIcon}.png?size=128')` : null) }}></div>
           <div className="title">
             <div className="guild">
-              {data.state.isPrivate ? "Private Call" : data.state.guild.name}
+              {!data.state.guildId ? "Private Call" : data.state.guildName}
             </div>
             {
-              !data.state?.guild?.vanity || data.inMyChannels ? null : <div
+              !data.state.guildVanity || data.inMyChannels ? null : <div
                 className="vanity"
                 onClick={(ev) => {
                   ev.preventDefault();
-                  if (!data.state?.guild?.vanity) return;
-                  InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: data.state?.guild?.vanity });
+                  if (!data.state.guildVanity) return;
+                  InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: data.state.guildVanity });
                   e.onClose();
                 }}
               >
@@ -70,7 +70,7 @@ export function Modal({ e, data }) {
           <div className="name-container">
             <div className="name">
               <VoiceIcon />
-              {data.state.channel?.name || "Unknown"}
+              {data.state.channelName || "Unknown"}
             </div>
             <div className="controls">
               <div
@@ -78,8 +78,8 @@ export function Modal({ e, data }) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   if (!data.isJoinable) return;
-                  toasts.show(`Joining to "${data.state.channel.name}"!`);
-                  selectVoiceChannel(data.state.channel.id)
+                  toasts.show(`Joining to "${data.state.channelName}"!`);
+                  selectVoiceChannel(data.state.channelId)
                   e.onClose();
                 }}
               >
@@ -92,8 +92,8 @@ export function Modal({ e, data }) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   if (!data.inMyChannels) return;
-                  toasts.show(`Viewing "${data.state.channel.name}"!`);
-                  transitionTo(`/channels/${data.state.guild ? data.state.guild.id : "@me"}/${data.state.channel.id}`);
+                  toasts.show(`Viewing "${data.state.channelName}"!`);
+                  transitionTo(`/channels/${data.state.guildId || "@me"}/${data.state.channelId}`);
                   e.onClose();
                 }}
               >

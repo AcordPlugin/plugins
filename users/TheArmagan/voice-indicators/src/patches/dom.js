@@ -5,9 +5,10 @@ import events from "@acord/events";
 import { persist } from "@acord/extension";
 import patchContainer from "../other/patchContainer.js";
 import { renderIcon } from "../lib/renderIcon.js";
-import { fetchUserVoiceState } from "../other/api.js";
+import { fetchUserVoiceStates } from "../other/api.js";
 import { ChannelStore } from "../other/apis.js";
 import { showModal } from "../lib/showModal.jsx";
+import { rawToParsed } from "../other/VoiceStates.js";
 
 const indicatorClasses = [webpack.findByProps("bot", "nameTag").nameTag, webpack.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, webpack.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
 
@@ -18,26 +19,30 @@ async function patchIndicators(user, elm) {
   let indicatorContainer = dom.parseHTML(`<span class="vi--patched vi--icon-container vi--hidden"></span>`);
 
   indicatorContainer.render = async () => {
-    let state = await fetchUserVoiceState(user.id);
-    if (!state) {
+    let rawState = (await fetchUserVoiceStates(user.id))?.[0];
+    console.log(rawState)
+    if (!rawState) {
       indicatorContainer.innerHTML = "";
       indicatorContainer.state = null;
       indicatorContainer.classList.add("vi--hidden");
       return;
     }
+
+    console.log(rawState);
     
-    if (_.isEqual(state, indicatorContainer.state)) return;
+    if (_.isEqual(rawState, indicatorContainer.state)) return;
+    let state = rawToParsed(rawState);
     
-    let channel = ChannelStore.getChannel(state?.channel?.id);
+    let channel = ChannelStore.getChannel(state.channelId);
     
     indicatorContainer.classList.remove("vi--hidden");
     indicatorContainer.classList[!channel ? "add" : "remove"]("vi--cant-join");
 
-    let tooltipText = `${channel ? "✅" : "❌"} ${state.guild ? (state.guild?.name || "Unknown Guild") : "Private Call"} > ${state.channel?.name || "Plugin Deprecated"}`;
+    let tooltipText = `${channel ? "✅" : "❌"} ${state.guildId ? (state.guildName || "Unknown Guild") : "Private Call"} > ${state.channelName || "Plugin Deprecated"}`;
 
     indicatorContainer.setAttribute("acord--tooltip-content", tooltipText);
     indicatorContainer.replaceChildren(dom.parseHTML(renderIcon(state)));
-    indicatorContainer.state = state;
+    indicatorContainer.state = rawState;
   }
 
   let unpatchUpdater = events.on("VoiceIndicators:Render", indicatorContainer.render);

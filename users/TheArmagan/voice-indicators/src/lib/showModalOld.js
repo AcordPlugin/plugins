@@ -4,7 +4,7 @@ import events from "@acord/events";
 import modals from "@acord/ui/modals";
 import toasts from "@acord/ui/toasts";
 import { renderModal } from "./renderModal.js";
-import { fetchUserVoiceState, fetchVoiceMembers } from "../other/api.js";
+import { fetchUserVoiceStates, fetchVoiceMembers } from "../other/api.js";
 import { ChannelStore, InviteStore, Permissions, PermissionStore, selectVoiceChannel, transitionTo } from "../other/apis.js";
 
 export async function showModal(stateOrUserId) {
@@ -13,7 +13,7 @@ export async function showModal(stateOrUserId) {
 
   let closeFunc;
 
-  let state = typeof stateOrUserId == "string" ? await fetchUserVoiceState(stateOrUserId) : stateOrUserId;
+  let state = typeof stateOrUserId == "string" ? (await fetchUserVoiceStates(stateOrUserId))?.[0] : stateOrUserId;
   let channelId = state.channel.id;
 
   let rendering = false;

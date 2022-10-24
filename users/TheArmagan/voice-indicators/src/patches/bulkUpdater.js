@@ -3,6 +3,7 @@ import { persist } from "@acord/extension";
 import { localCache } from "../other/cache.js";
 import { getAllVoiceStatesEntries } from "../other/VoiceStates.js";
 import chillout from "chillout";
+import { socket } from "../connection/socket.js";
 
 export function patchBulkUpdater() {
     patchContainer.add(
@@ -18,13 +19,25 @@ export function patchBulkUpdater() {
                 let updates = [];
                 let removes = [];
 
-                await chillout.forEach(currentStates, ()=>{
-                    
+                await chillout.forEach(currentStates, (cs)=>{
+                    if (
+                        localCache.lastVoiceStates.findIndex(i=>i[0] === cs[0]) === -1
+                    ) {
+                        updates.push(cs);
+                    }
                 });
                 
-                await chillout.forEach(localCache.lastVoiceStates, ()=>{
+                await chillout.forEach(localCache.lastVoiceStates, (ls)=>{
+                    if (
+                        currentStates.findIndex(i=>i[0] === ls[0]) === -1
+                    ) {
+                        removes.push(ls[0]);
+                    }
+                });
 
-                })
+                localCache.lastVoiceStates = currentStates;
+
+                socket.emit("bulkUpdate", [updates, removes]);
 
                 await new Promise(r=>setTimeout(r, persist.ghost.settings.performanceMode ? 3e4 : 5e3));
                 loop();

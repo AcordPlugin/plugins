@@ -1,3 +1,5 @@
 export const localCache = {
-    lastVoiceStates: []
+    lastVoiceStates: [],
+    responseCache: new Map(),
+    stateRequestCache: []
 }

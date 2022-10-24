@@ -2,7 +2,7 @@ import { ChannelStore, GuildStore, UserStore, VoiceStateStore } from "./apis";
 import { persist } from "@acord/extension";
 
 /**
- * @typedef {["guildDeaf"|"deaf"|"guildMute"|"mute"|"video"|"stream"|"voice", string, string, string?, string?, string?, string?, string?, string?, string?, string?, string?]} VoiceStateRawArray
+ * @typedef {["guildDeaf"|"deaf"|"guildMute"|"mute"|"video"|"stream"|"normal", string, string, string?, string?, string?, string?, string?, string?, string?, string?, string?]} VoiceStateRawArray
  * @typedef {string} VoiceStateRawString
  * @typedef {{state: string, userId: string, userTag: string, userAvatar?: string, channelId?: string, channelName?: string, channelIcon?: string, channelRedacted?: string, guildId?: string, guildName?: string, guildVanity?: string, guildIcon?: string }} VoiceStateParsed
  */

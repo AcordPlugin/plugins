@@ -1,37 +1,29 @@
 import { awaitResponse } from "../connection/socket";
-import { getUserVoiceStates, getVoiceChannelMembers } from "./VoiceStates";
+import { getVoiceChannelMembers } from "./VoiceStates";
+import { localCache } from "./cache.js";
 
-const cache = new Map();
-
-setInterval(() => {
-  cache.forEach((item, key) => {
-    if (Date.now() - item.at > item.ttl) {
-      cache.delete(key);
-    }
-  });
-}, 1000);
 
 /** @returns {import("./VoiceStates.js").VoiceStateRaw?} */
-export async function fetchUserVoiceState(userId) {
-  let state = getUserVoiceStates(userId);
-  if (!state) {
-    let cached = cache.get(`Users:${userId}`);
-    if (cached) return cached.state;
+export async function fetchUserVoiceStates(userId) {
+  let states = localCache.lastVoiceStates.find(i=>i[0]===userId)?.[1] || [];
+  if (!states.length) {
+    let cached = localCache.responseCache.get(`Users:${userId}`);
+    if (cached) return cached.states;
 
-    state = (await awaitResponse("state", { userId }))?.data;
-    cache.set(`Users:${userId}`, { at: Date.now(), state, ttl: 1000 });
+    states = await new Promise(r=>localCache.stateRequestCache.push([userId, r]));
+    localCache.responseCache.set(`Users:${userId}`, { at: Date.now(), states, ttl: 1000 });
   }
-  return state;
+  return states;
 }
 
 export async function fetchVoiceMembers(channelId) {
   let members = getVoiceChannelMembers(channelId);
   if (!members.length) {
-    let cached = cache.get(`VoiceMembers:${channelId}`);
+    let cached = localCache.responseCache.get(`VoiceMembers:${channelId}`);
     if (cached) return cached.members;
 
     members = (await awaitResponse("members", { channelId }))?.data || [];
-    cache.set(`VoiceMembers:${channelId}`, { at: Date.now(), members, ttl: 10000 });
+    localCache.responseCache.set(`VoiceMembers:${channelId}`, { at: Date.now(), members, ttl: 10000 });
   }
   return members;
 }
