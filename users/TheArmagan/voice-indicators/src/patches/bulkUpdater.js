@@ -4,6 +4,7 @@ import { localCache } from "../other/cache.js";
 import { getAllVoiceStatesEntries } from "../other/VoiceStates.js";
 import chillout from "chillout";
 import { socket } from "../connection/socket.js";
+import utils from "@acord/utils"
 
 export function patchBulkUpdater() {
     patchContainer.add(
@@ -52,4 +53,8 @@ export function patchBulkUpdater() {
             }
         })()
     );
+
+    patchContainer.add(utils.interval(()=>{
+        localCache.lastVoiceStates = [];
+    }, 60000*30));
 }
