@@ -10,7 +10,7 @@ export function patchBulkUpdater() {
     patchContainer.add(
         (()=>{
             let STOP = 0;
-            localCache.lastVoiceStates = getAllVoiceStatesEntries();
+            localCache.lastVoiceStates = [];
 
             async function loop() {
                 if (STOP) return;
