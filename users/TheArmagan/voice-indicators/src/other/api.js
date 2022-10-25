@@ -1,5 +1,5 @@
 import { awaitResponse } from "../connection/socket";
-import { getVoiceChannelMembers } from "./VoiceStates";
+import { getVoiceChannelMembers, rawToParsed } from "./VoiceStates";
 import { localCache } from "./cache.js";
 
 
@@ -13,14 +13,14 @@ export async function fetchUserVoiceStates(userId) {
   return states;
 }
 
-export async function fetchVoiceMembers(channelId) {
-  let members = getVoiceChannelMembers(channelId);
+export async function fetchVoiceMembers(id) {
+  let members = getVoiceChannelMembers(id);
   if (!members.length) {
-    let cached = localCache.responseCache.get(`VoiceMembers:${channelId}`);
+    let cached = localCache.responseCache.get(`VoiceMembers:${id}`);
     if (cached) return cached.members;
 
-    members = (await awaitResponse("members", { channelId }))?.data || [];
-    localCache.responseCache.set(`VoiceMembers:${channelId}`, { at: Date.now(), members, ttl: 10000 });
+    members = ((await awaitResponse("members", { id }))?.data || []).map(rawToParsed);
+    localCache.responseCache.set(`VoiceMembers:${id}`, { at: Date.now(), members, ttl: 1000 });
   }
   return members;
 }

@@ -11,7 +11,6 @@ import { JoinCallIcon } from "./JoinCallIcon";
 import { MuteIcon } from "./MuteIcon";
 import { VideoIcon } from "./VideoIcon";
 import { VoiceIcon } from "./VoiceIcon";
-import events from "@acord/events";
 
 const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
@@ -26,23 +25,20 @@ const indicatorMap = {
 }
 
 export function Modal({ e, states }) {
-  const [selectedState, setSelectedState] = React.useState(states[0]);
-  const [currentData, setCurrentData] = React.useState({inMyChannels: false, isJoinable:false});
+  const [currentData, setCurrentData] = React.useState({inMyChannels: false, isJoinable:false, state: states[0]});
   const [members, setMembers] = React.useState([]);
 
-  async function onChange(channelId) {
-    let channel = ChannelStore.getChannel(channelId);
+  async function onChange(state) {
+    let channel = ChannelStore.getChannel(state.channelId);
     let inMyChannels = !!channel;
     let isJoinable = !inMyChannels ? false : (channel.type == 3 ? true : (PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel)))
-    setCurrentData({inMyChannels, isJoinable});
+    setCurrentData({inMyChannels, isJoinable, state});
 
-    setMembers([]);
-    await new Promise(r=>setTimeout(r, 100));
-    setMembers(await fetchVoiceMembers(channelId));
+    setMembers(await fetchVoiceMembers(state.channelId));
   }
 
   React.useEffect(() => {
-    onChange(selectedState.channelId);
+    onChange(states[0]);
   }, []);
 
   return (
@@ -52,18 +48,18 @@ export function Modal({ e, states }) {
       className="vi--modal-root">
       <div className="vi--modal-header" >
         {/* <div className="title-container">
-          <div className="icon" style={{ backgroundImage: selectedState.guildId ? `url('https://cdn.discordapp.com/icons/${selectedState.guildId}/${selectedState.guildIcon}.png?size=128')` : (selectedState.channelId ? `url('https://cdn.discordapp.com/channel-icons/${selectedState.channelId}/${selectedState.channelIcon}.png?size=128')` : null) }}></div>
+          <div className="icon" style={{ backgroundImage: currentData.state.guildId ? `url('https://cdn.discordapp.com/icons/${currentData.state.guildId}/${currentData.state.guildIcon}.png?size=128')` : (currentData.state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${currentData.state.channelId}/${currentData.state.channelIcon}.png?size=128')` : null) }}></div>
           <div className="title">
             <div className="guild">
-              {!selectedState.guildId ? "Private Call" : selectedState.guildName}
+              {!currentData.state.guildId ? "Private Call" : currentData.state.guildName}
             </div>
             {
-              !selectedState.guildVanity || data.inMyChannels ? null : <div
+              !currentData.state.guildVanity || data.inMyChannels ? null : <div
                 className="vanity"
                 onClick={(ev) => {
                   ev.preventDefault();
-                  if (!selectedState.guildVanity) return;
-                  InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: selectedState.guildVanity });
+                  if (!currentData.state.guildVanity) return;
+                  InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: currentData.state.guildVanity });
                   e.onClose();
                 }}
               >
@@ -84,13 +80,28 @@ export function Modal({ e, states }) {
       </div>
       <div className="vi--modal-content">
 
-        <div className="tabs">
+        <div className={`tabs ${scrollClasses.thin}`}>
           {
             states.map(state=>(
-              <div className={`item ${state.channelId === selectedState.channelId ? "active" : ""}`} onClick={()=>{ setSelectedState(state); onChange(selectedState.channelId); }}>
-                <div className="icon-and-name">
+              <div className={`item ${state.channelId === currentData.state.channelId ? "active" : ""}`} onClick={()=>{ onChange(state); }}>
+                <div className="content">
                   <div className="icon" style={{ backgroundImage: state.guildId ? `url('https://cdn.discordapp.com/icons/${state.guildId}/${state.guildIcon}.png?size=128')` : (state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${state.channelId}/${state.channelIcon}.png?size=128')` : null) }}></div>
-                  <div className="name">{!state.guildId ? "Private Call" : state.guildName}</div>
+                  <div className="name" acord--tooltip-content={state.guildName} >{!state.guildId ? "Private Call" : state.guildName}</div>
+                  {
+                    !state.guildVanity ? null : <div
+                      className="vanity"
+                      onClick={(ev) => {
+                        ev.preventDefault();
+                        if (!state.guildVanity) return;
+                        InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: state.guildVanity });
+                        e.onClose();
+                      }}
+                    >
+                      <div acord--tooltip-content="Join Guild">
+                        <ArrowIcon color={COLORS.PRIMARY} />
+                      </div>
+                    </div>
+                  }
                 </div>
               </div>
             ))
@@ -102,7 +113,7 @@ export function Modal({ e, states }) {
           <div className="name-container">
             <div className="name">
               <VoiceIcon />
-              {selectedState.channelName || "Unknown"}
+              {currentData.state.channelName || "Unknown"}
             </div>
             <div className="controls">
               <div
@@ -110,8 +121,8 @@ export function Modal({ e, states }) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   if (!currentData.isJoinable) return;
-                  toasts.show(`Joining to "${selectedState.channelName}"!`);
-                  selectVoiceChannel(selectedState.channelId)
+                  toasts.show(`Joining to "${currentData.state.channelName}"!`);
+                  selectVoiceChannel(currentData.state.channelId)
                   e.onClose();
                 }}
               >
@@ -124,8 +135,8 @@ export function Modal({ e, states }) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   if (!currentData.inMyChannels) return;
-                  toasts.show(`Viewing "${selectedState.channelName}"!`);
-                  transitionTo(`/channels/${selectedState.guildId || "@me"}/${selectedState.channelId}`);
+                  toasts.show(`Viewing "${currentData.state.channelName}"!`);
+                  transitionTo(`/channels/${currentData.state.guildId || "@me"}/${currentData.state.channelId}`);
                   e.onClose();
                 }}
               >
@@ -142,17 +153,19 @@ export function Modal({ e, states }) {
                   className="member"
                   onClick={async (ev) => {
                     ev.preventDefault();
-                    utils.copyText(member.tag);
-                    toasts.show(`"${member.tag}" copied!`);
+                    utils.copyText(member.userTag);
+                    toasts.show(`"${member.userTag}" copied!`);
                   }}
                 >
-                  <div className="avatar" style={{ backgroundImage: `url("${member.avatar ? `https://cdn.discordapp.com/avatars/${member.id}/${member.avatar}.png?size=128` : `https://cdn.discordapp.com/embed/avatars/${Number(member.tag.split("#")[1]) % 5}.png`}")` }}></div>
+                  <div className="avatar" style={{ backgroundImage: `url("${member.userAvatar ? `https://cdn.discordapp.com/avatars/${member.userId}/${member.userAvatar}.png?size=128` : `https://cdn.discordapp.com/embed/avatars/${Number(member.userTag.split("#")[1]) % 5}.png`}")` }}></div>
                   <div className="about">
                     <div className="name-container">
-                      <div className="name">{member.tag.split("#")[0]}</div>
-                      <div className="discriminator">#{member.tag.split("#")[1]}</div>
+                      <div className="name">{member.userTag.split("#")[0]}</div>
+                      <div className="discriminator">#{member.userTag.split("#")[1]}</div>
                     </div>
-                    {member?.states ? indicatorMap[member?.states] : null}
+                    <div className="state">
+                      {indicatorMap[member?.state] || null}
+                    </div>
                   </div>
                 </div>
               ))}

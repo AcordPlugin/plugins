@@ -109,6 +109,8 @@
     .tabs {
       display: flex;
       gap: 4px;
+      overflow-x: auto;
+      padding-bottom: 2px;
 
       .item {
         width: 100%;
@@ -122,9 +124,10 @@
         border-top-right-radius: 8px;
         cursor: pointer;
 
-        .icon-and-name {
+        & > .content {
           display: flex;
           align-items: center;
+          gap: 4px;
 
           .icon {
             width: 32px;
@@ -134,25 +137,40 @@
             background-position: center;
             background-size: contain;
             border-radius: 50%;
-            margin-right: 4px;
             background-color: #5865f2;
           }
   
           .name {
-            font-size: 12px;
+            font-size: 16px;
             color: #efefef;
+            max-width: 128px;
+            overflow: hidden;
+            white-space:nowrap;
+            text-overflow: ellipsis;
+          }
+
+          .vanity {
+            svg {
+              width: 14px;
+              height: 14px;
+            }
           }
         }
 
         border-bottom: 2px solid transparent;
-        &:hover, &.active {
+        &:hover {
+          opacity: 0.85;
+          border-bottom: 2px solid rgba(255, 255, 255, 0.75);
+        }
+
+        &.active {
           opacity: 1;
           border-bottom: 2px solid white;
         }
       }
     }
 
-    .content {
+    & > .content {
       margin-top: 8px;
       & > .channel {
         & > .name-container {
@@ -244,6 +262,7 @@
   
                 & > .state {
                   background-color: transparent;
+                  margin-left: 4px;
                   svg {
                     width: 16px;
                     height: 16px;

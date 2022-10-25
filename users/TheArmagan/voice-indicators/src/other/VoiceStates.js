@@ -28,21 +28,14 @@ export function getAllVoiceStatesEntries(rawString) {
   ]).filter(i=>i[1]?.length)
 }
 
-/** @returns {{id: string, tag: string, avatar: string}[]} */
 export function getVoiceChannelMembers(channelId) {
   let states = VoiceStateStore.getVoiceStatesForChannel(channelId);
   return states ? Object.keys(states).map(i => {
-    let u = UserStore.getUser(i);
-    return {
-      id: u?.id,
-      tag: u?.tag,
-      avatar: u?.avatar,
-      states: getUserVoiceStates(u?.id)
-    }
+    return rawToParsed(getUserVoiceStates(i))
   }).filter(i=>i?.id) : [];
 }
 
-/** @returns {VoiceStateRawArray?} */
+/** @returns {VoiceStateRawArray} */
 export function getUserVoiceStates(userId, rawString) {
   return Object.values(VoiceStateStore.__getLocalVars().users[userId] || {}).map(i=> rawString ? makeRawArray(i).join(";") : makeRawArray(i));
 }
@@ -65,8 +58,8 @@ function makeRawArray(i) {
     : "normal",
     user.id,
     user.tag,
-    user?.avatar || "",
-    !channel ? "" : channel.id,
+    user.avatar || "",
+    i.channelId || "",
     !channel ? "" : (channelRedacted ? "Unknown" : (channel.name || [...new Map([...channel.recipients.map(i => [i, UserStore.getUser(i)]), [UserStore.getCurrentUser().id, UserStore.getCurrentUser()]]).values()].filter(i=>i).map(i => i.username).sort((a, b) => a > b).join(", ") || "Unknown")),
     !channel ? "" : (channelRedacted ? "" : (channel?.icon || "")),
     !channel ? "" : (channelRedacted || ""),
