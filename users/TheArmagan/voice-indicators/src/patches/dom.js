@@ -15,6 +15,8 @@ const indicatorClasses = [webpack.findByProps("bot", "nameTag").nameTag, webpack
 /** @param {HTMLElement} elm */
 async function patchIndicators(user, elm) {
 
+  if (persist.ghost.settings.ignoreBots && user.bot) return;
+
   /** @type {Element} */
   let indicatorContainer = dom.parseHTML(`<span class="vi--patched vi--icon-container vi--hidden"></span>`);
 
