@@ -46,30 +46,7 @@ export function Modal({ e, states }) {
       transitionState={e.transitionState}
       size="large"
       className="vi--modal-root">
-      <div className="vi--modal-header" >
-        {/* <div className="title-container">
-          <div className="icon" style={{ backgroundImage: currentData.state.guildId ? `url('https://cdn.discordapp.com/icons/${currentData.state.guildId}/${currentData.state.guildIcon}.png?size=128')` : (currentData.state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${currentData.state.channelId}/${currentData.state.channelIcon}.png?size=128')` : null) }}></div>
-          <div className="title">
-            <div className="guild">
-              {!currentData.state.guildId ? "Private Call" : currentData.state.guildName}
-            </div>
-            {
-              !currentData.state.guildVanity || data.inMyChannels ? null : <div
-                className="vanity"
-                onClick={(ev) => {
-                  ev.preventDefault();
-                  if (!currentData.state.guildVanity) return;
-                  InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: currentData.state.guildVanity });
-                  e.onClose();
-                }}
-              >
-                <div acord--tooltip-content="Join Guild">
-                  <ArrowIcon color={COLORS.PRIMARY} />
-                </div>
-              </div>
-            }
-          </div>
-        </div> */}
+      <div className="vi--modal-header">
         <div className="title">
           Voice States
         </div>
@@ -86,7 +63,7 @@ export function Modal({ e, states }) {
               <div className={`item ${state.channelId === currentData.state.channelId ? "active" : ""}`} onClick={()=>{ onChange(state); }}>
                 <div className="content">
                   <div className="icon" style={{ backgroundImage: state.guildId ? `url('https://cdn.discordapp.com/icons/${state.guildId}/${state.guildIcon}.png?size=128')` : (state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${state.channelId}/${state.channelIcon}.png?size=128')` : null) }}></div>
-                  <div className="name" acord--tooltip-content={state.guildName} >{!state.guildId ? "Private Call" : state.guildName}</div>
+                  <div className="name" acord--tooltip-content={state.guildName || "Private Call"}>{!state.guildId ? "Private Call" : state.guildName}</div>
                   {
                     !state.guildVanity ? null : <div
                       className="vanity"

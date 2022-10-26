@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "socket.io-client": "^4.5.2"
+  },
+  "scripts": {
+    "build": "npx acord-cli@latest build",
+    "dev": "npx acord-cli@latest dev"
+  },
+  "private": false
+}

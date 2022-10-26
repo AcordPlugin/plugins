@@ -1,0 +1,30 @@
+{
+  "hash": "017f472e032c8fb352a8be699f67570edf570ef996bfbd903578b7ae780d0f23",
+  "type": "plugin",
+  "about": {
+    "name": "Also Known As",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "See each user's aliases!",
+    "version": "1.0.0",
+    "preview": "https://i.imgur.com/o9rvQki.png",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "AKA": "Also Known As",
+      "SEE_ALIASES": "See Aliases",
+      "ALL": "All Nicks",
+      "USER": "Friend Nick",
+      "GUILD": "Member Nick"
+    },
+    "tr": {
+      "AKA": "Diğer Adlarıyla",
+      "SEE_ALIASES": "Diğer Adlarını Gör",
+      "ALL": "All Nicks",
+      "USER": "Arkadaş Adı",
+      "GUILD": "Üye Adı"
+    }
+  }
+}
