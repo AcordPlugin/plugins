@@ -2,16 +2,41 @@ import patchContainer from "./other/patchContainer.js"
 import { persist } from "@acord/extension";
 import patcher from "@acord/patcher";
 import webpack from "@acord/modules/webpack"
-
-const WebSound = webpack.find(i=> i?.prototype?._ensureAudio, true);
+import { MediaEngineStore } from "@acord/modules/common";
 
 export default {
     load() {
+        const WebSound = webpack.find(i=> i?.prototype?._ensureAudio, true);
+
         patchContainer.add(
-            patcher.before("_ensureAudio", WebSound.prototype, function() {
+            patcher.instead("_ensureAudio", WebSound.prototype, function(args, instead) {
+                let t = this;
                 let map = Object.fromEntries(persist.ghost.settings.preset.split(";").map(i=>i.split("=")));
+
                 if (map[this.name]) {
-                    this.name = map[this.name];
+                    let val = map[this.name];
+                    if (!val.startsWith("https://")) {
+                        this.name = val;
+                        return instead.apply(this, args);
+                    } else {
+                        return new Promise((resolve, reject) => {
+                            let o = new Audio();
+                            o.onloadeddata = function() {
+                                o.volume = Math.min(MediaEngineStore.getOutputVolume() / 100 * t._volume, 1);
+                                resolve(o);
+                            }
+                            o.onerror = function() {
+                                return reject(new Error("could not play audio"))
+                            }
+                            o.onended = function() {
+                                return t._destroyAudio()
+                            }
+                            o.load();
+                            o.src = val;
+                        });
+                    }
+                } else {
+                    return instead.apply(this, args);
                 }
             })
         )
