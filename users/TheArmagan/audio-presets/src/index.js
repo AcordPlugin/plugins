@@ -25,8 +25,8 @@ export default {
                 "type": "input",
                 "altType": "text",
                 "property": "preset",
-                "value": "message1=message2;call_ringing=call_ringing_beat;unmute=discodo",
-                "placeholder": "message1=message2;call_ringing=call_ringing_beat;unmute=discodo",
+                "value": "message1=message2;call_ringing=call_ringing_beat",
+                "placeholder": "message1=message2;call_ringing=call_ringing_beat",
                 "name": "Audio Preset",
                 "description": "Your audio preset configuration..",
                 "size": "large"
