@@ -9,7 +9,7 @@ export default {
         const WebSound = webpack.find(i=> i?.prototype?._ensureAudio, true);
 
         patchContainer.add(
-            patcher.instead("_ensureAudio", WebSound.prototype, function(args, instead) {
+            patcher.instead("_ensureAudio", WebSound.prototype, async function(args, instead) {
                 let t = this;
                 let map = Object.fromEntries(persist.ghost.settings.preset.split(";").map(i=>i.split("=")));
 
@@ -19,21 +19,9 @@ export default {
                         this.name = val;
                         return instead.apply(this, args);
                     } else {
-                        return new Promise((resolve, reject) => {
-                            let o = new Audio();
-                            o.onloadeddata = function() {
-                                o.volume = Math.min(MediaEngineStore.getOutputVolume() / 100 * t._volume, 1);
-                                resolve(o);
-                            }
-                            o.onerror = function() {
-                                return reject(new Error("could not play audio"))
-                            }
-                            o.onended = function() {
-                                return t._destroyAudio()
-                            }
-                            o.load();
-                            o.src = val;
-                        });
+                        let a = await instead.apply(this, args);
+                        a.src = val;
+                        return a;
                     }
                 } else {
                     return instead.apply(this, args);
