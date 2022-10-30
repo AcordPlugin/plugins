@@ -17,7 +17,8 @@ export async function fetchIsUserTyping(id) {
     let cached = cache.get(`Users:${id}`);
     if (cached) return cached.state;
 
-    state = !!(await awaitResponse("typing", { id }))?.data;
+    // state = !!(await awaitResponse("typing", { id }))?.data;
+    state = await new Promise(resolve => { localCache.requestCache.push([id, resolve]); });
     cache.set(`Users:${id}`, { at: Date.now(), state, ttl: 1000 });
   }
   return state;

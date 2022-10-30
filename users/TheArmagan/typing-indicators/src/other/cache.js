@@ -1,3 +1,4 @@
 export const localCache = {
-    typingUsers: []
+    typingUsers: [],
+    requestCache: [],
 }
