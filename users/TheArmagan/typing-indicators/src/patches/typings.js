@@ -3,6 +3,7 @@ import { TypingStore } from "../other/apis.js";
 import { localCache } from "../other/cache.js";
 import patchContainer from "../other/patchContainer.js";
 import utils from "@acord/utils";
+import chillout from "chillout";
 
 export function patchTypings() {
     patchContainer.add((()=>{
