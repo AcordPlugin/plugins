@@ -3,7 +3,6 @@ import { TypingStore } from "../other/apis.js";
 import { localCache } from "../other/cache.js";
 import patchContainer from "../other/patchContainer.js";
 import utils from "@acord/utils";
-import chillout from "chillout";
 
 export function patchTypings() {
     patchContainer.add((()=>{
@@ -27,7 +26,8 @@ export function patchTypings() {
             let d = [...localCache.requestCache];
             localCache.requestCache = [];
             let res = (await awaitResponse("bulkTyping", d.map(i=>i[0])))?.data || [];
-            await chillout.forEach(res, (r)=>{
+
+            res.forEach((r)=>{
                 let results = d.filter(i=>i[0] === r[0]);
                 results.forEach(v=>{
                     v[1](r[1] || []);
