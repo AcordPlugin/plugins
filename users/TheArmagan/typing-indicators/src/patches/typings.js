@@ -1,4 +1,4 @@
-import { socket } from "../connection/socket.js";
+import { awaitResponse, socket } from "../connection/socket.js";
 import { TypingStore } from "../other/apis.js";
 import { localCache } from "../other/cache.js";
 import patchContainer from "../other/patchContainer.js";
