@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "dev": "npx acord-cli@latest dev",
+    "build": "npx acord-cli@latest build"
+  }
+}
