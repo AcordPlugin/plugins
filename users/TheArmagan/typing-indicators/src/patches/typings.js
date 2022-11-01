@@ -30,7 +30,7 @@ export function patchTypings() {
             res.forEach((r)=>{
                 let results = d.filter(i=>i[0] === r[0]);
                 results.forEach(v=>{
-                    v[1](r[1] || []);
+                    v[1](r[1] || false);
                 })
             });
         }
