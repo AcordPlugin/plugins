@@ -44,9 +44,7 @@ async function patchIndicators(user, elm) {
 
     
 
-    let tooltipText = isPromotingAcord() 
-      ? `(${rawStates.length}) ${channel ? "✅" : "❌"} ${state.guildId ? (state.guildName || "Unknown Guild") : "Private Call"} > ${state.channelName || "Plugin Deprecated"}`
-      : i18n.format("PROMOTION_REQUIRED");
+    let tooltipText = `(${rawStates.length}) ${channel ? "✅" : "❌"} ${state.guildId ? (state.guildName || "Unknown Guild") : i18n.format("PRIVATE_CALL")} > ${state.channelName || "Plugin Deprecated"}`;
 
     indicatorContainer.setAttribute("acord--tooltip-content", tooltipText);
     indicatorContainer.replaceChildren(dom.parseHTML(renderIcon(state)));
