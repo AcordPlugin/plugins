@@ -1,5 +1,5 @@
 {
-  "hash": "54d93e96518dbb43eb5719215b39ec4b65da0a28702b14bb192515f270a9694f",
+  "hash": "5684b5678e1df343faf8fea77efa1ecaccac9b26d0cd35d15ff4a525ca386e41",
   "type": "plugin",
   "about": {
     "name": "Voice Indicators",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Shows voice indicators right side of the users. Supports private calls too.",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "preview": "https://i.imgur.com/vEuqPmL.png",
     "license": "MIT"
   },

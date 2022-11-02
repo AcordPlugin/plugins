@@ -118,7 +118,7 @@ export function Modal({ e, states }) {
                   e.onClose();
                 }}
               >
-                <div acord--tooltip-content={i18n.format(`${!currentData.inMyChannels ? "CANT_" : ""}SHOW`)}>
+                <div acord--tooltip-content={i18n.format(`${!currentData.inMyChannels ? "CANT_" : ""}VIEW`)}>
                   <ArrowIcon color={COLORS.SECONDARY} />
                 </div>
               </div>
