@@ -11,6 +11,7 @@ import { JoinCallIcon } from "./JoinCallIcon";
 import { MuteIcon } from "./MuteIcon";
 import { VideoIcon } from "./VideoIcon";
 import { VoiceIcon } from "./VoiceIcon";
+import { i18n } from "@acord/extension";
 
 const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
@@ -48,7 +49,7 @@ export function Modal({ e, states }) {
       className="vi--modal-root">
       <div className="vi--modal-header">
         <div className="title">
-          Voice States
+          {i18n.format("VOICE_STATES")}
         </div>
         
         <div onClick={e.onClose} className="vi--modal-close" >
@@ -63,7 +64,7 @@ export function Modal({ e, states }) {
               <div className={`item ${state.channelId === currentData.state.channelId ? "active" : ""}`} onClick={()=>{ onChange(state); }}>
                 <div className="content">
                   <div className="icon" style={{ backgroundImage: state.guildId ? `url('https://cdn.discordapp.com/icons/${state.guildId}/${state.guildIcon}.png?size=128')` : (state.channelId ? `url('https://cdn.discordapp.com/channel-icons/${state.channelId}/${state.channelIcon}.png?size=128')` : null) }}></div>
-                  <div className="name" acord--tooltip-content={state.guildName || "Private Call"}>{!state.guildId ? "Private Call" : state.guildName}</div>
+                  <div className="name" acord--tooltip-content={state.guildName || i18n.format("PRIVATE_CALL")}>{!state.guildId ? i18n.format("PRIVATE_CALL") : state.guildName}</div>
                   {
                     !state.guildVanity ? null : <div
                       className="vanity"
@@ -74,7 +75,7 @@ export function Modal({ e, states }) {
                         e.onClose();
                       }}
                     >
-                      <div acord--tooltip-content="Join Guild">
+                      <div acord--tooltip-content={i18n.format("JOIN_GUILD")}>
                         <ArrowIcon color={COLORS.PRIMARY} />
                       </div>
                     </div>
@@ -90,7 +91,7 @@ export function Modal({ e, states }) {
           <div className="name-container">
             <div className="name">
               <VoiceIcon />
-              {currentData.state.channelName || "Unknown"}
+              {currentData.state.channelName || i18n.format("UNKNOWN")}
             </div>
             <div className="controls">
               <div
@@ -98,12 +99,12 @@ export function Modal({ e, states }) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   if (!currentData.isJoinable) return;
-                  toasts.show(`Joining to "${currentData.state.channelName}"!`);
+                  toasts.show(i18n.format("X_JOIN_CHANNEL", currentData.state.channelName));
                   selectVoiceChannel(currentData.state.channelId)
                   e.onClose();
                 }}
               >
-                <div acord--tooltip-content={`${!currentData.isJoinable ? "Can't " : ""} Connect`}>
+                <div acord--tooltip-content={i18n.format(`${!currentData.isJoinable ? "CANT_" : ""}JOIN`)}>
                   <JoinCallIcon color={COLORS.SECONDARY} />
                 </div>
               </div>
@@ -112,12 +113,12 @@ export function Modal({ e, states }) {
                 onClick={(ev) => {
                   ev.preventDefault();
                   if (!currentData.inMyChannels) return;
-                  toasts.show(`Viewing "${currentData.state.channelName}"!`);
+                  toasts.show(i18n.format("X_VIEW_CHANNEL", currentData.state.channelName));
                   transitionTo(`/channels/${currentData.state.guildId || "@me"}/${currentData.state.channelId}`);
                   e.onClose();
                 }}
               >
-                <div acord--tooltip-content={`${!currentData.inMyChannels ? "Can't " : ""} Show Channel`}>
+                <div acord--tooltip-content={i18n.format(`${!currentData.inMyChannels ? "CANT_" : ""}SHOW`)}>
                   <ArrowIcon color={COLORS.SECONDARY} />
                 </div>
               </div>
@@ -131,7 +132,7 @@ export function Modal({ e, states }) {
                   onClick={async (ev) => {
                     ev.preventDefault();
                     utils.copyText(member.userTag);
-                    toasts.show(`"${member.userTag}" copied!`);
+                    toasts.show(i18n.format("X_COPIED", member.userTag));
                   }}
                 >
                   <div className="avatar" style={{ backgroundImage: `url("${member.userAvatar ? `https://cdn.discordapp.com/avatars/${member.userId}/${member.userAvatar}.png?size=128` : `https://cdn.discordapp.com/embed/avatars/${Number(member.userTag.split("#")[1]) % 5}.png`}")` }}></div>
@@ -149,9 +150,7 @@ export function Modal({ e, states }) {
             </div>
           </div>
         </div>
-        </div>
-
-        
+        </div>        
       </div>
     </ModalRoot>
   );

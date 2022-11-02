@@ -2,13 +2,15 @@ import webpack from "@acord/modules/webpack";
 import dom from "@acord/dom";
 import utils from "@acord/utils";
 import events from "@acord/events";
-import { persist } from "@acord/extension";
+import { persist, i18n } from "@acord/extension";
 import patchContainer from "../other/patchContainer.js";
 import { renderIcon } from "../lib/renderIcon.js";
 import { fetchUserVoiceStates } from "../other/api.js";
-import { ChannelStore } from "../other/apis.js";
+import { ChannelStore, isPromotingAcord } from "../other/apis.js";
 import { showModal } from "../lib/showModal.jsx";
 import { rawToParsed } from "../other/VoiceStates.js";
+import modals from "@acord/ui/modals";
+
 
 const indicatorClasses = [webpack.findByProps("bot", "nameTag").nameTag, webpack.findByProps("wrappedName", "nameAndDecorators").nameAndDecorators, webpack.findByProps("wrappedName", "nameAndDecorators", "selected").nameAndDecorators];
 
@@ -28,6 +30,7 @@ async function patchIndicators(user, elm) {
       indicatorContainer.innerHTML = "";
       indicatorContainer.state = null;
       indicatorContainer.classList.add("vi--hidden");
+      indicatorContainer.setAttribute("acord--tooltip-content", "");
       return;
     }
     
@@ -39,7 +42,11 @@ async function patchIndicators(user, elm) {
     indicatorContainer.classList.remove("vi--hidden");
     indicatorContainer.classList[!channel ? "add" : "remove"]("vi--cant-join");
 
-    let tooltipText = `(${rawStates.length}) ${channel ? "✅" : "❌"} ${state.guildId ? (state.guildName || "Unknown Guild") : "Private Call"} > ${state.channelName || "Plugin Deprecated"}`;
+    
+
+    let tooltipText = isPromotingAcord() 
+      ? `(${rawStates.length}) ${channel ? "✅" : "❌"} ${state.guildId ? (state.guildName || "Unknown Guild") : "Private Call"} > ${state.channelName || "Plugin Deprecated"}`
+      : i18n.format("PROMOTION_REQUIRED");
 
     indicatorContainer.setAttribute("acord--tooltip-content", tooltipText);
     indicatorContainer.replaceChildren(dom.parseHTML(renderIcon(state)));
@@ -59,6 +66,10 @@ async function patchIndicators(user, elm) {
     e.stopPropagation();
 
     if (!!persist.ghost.settings?.redacted) return;
+    if (!isPromotingAcord()) {
+      modals.show.alert(i18n.format("ALERT"), i18n.format("PROMOTION_REQUIRED"));
+      return;
+    }
 
     // transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
     showModal(indicatorContainer.states.map(rawToParsed));

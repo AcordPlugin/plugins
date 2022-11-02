@@ -1,14 +1,40 @@
 {
-  "hash": "7cd09bda52af01c892d83de336fdc19295768483e0014fd152daeb0296b3abb6",
+  "hash": "54d93e96518dbb43eb5719215b39ec4b65da0a28702b14bb192515f270a9694f",
   "type": "plugin",
   "about": {
     "name": "Voice Indicators",
     "authors": [
       "Kıraç Armağan Önal"
     ],
-    "description": "Shows voice indicators right side of the users.",
-    "version": "2.0.0",
+    "description": "Shows voice indicators right side of the users. Supports private calls too.",
+    "version": "2.0.1",
     "preview": "https://i.imgur.com/vEuqPmL.png",
     "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "VOICE_STATES": "Voice States",
+      "X_VIEW_CHANNEL": "Viewing {0}",
+      "X_JOIN_CHANNEL": "Joining to {0}",
+      "PRIVATE_CALL": "Private Call",
+      "JOIN_GUILD": "Join Guild",
+      "UNKNOWN": "<Unknown>",
+      "CANT_JOIN": "Can't Join",
+      "CANT_VIEW": "Can't View",
+      "JOIN": "Join",
+      "VIEW": "View"
+    },
+    "tr": {
+      "VOICE_STATES": "Ses Durumları",
+      "X_VIEW_CHANNEL": "{0} kanalı görüntüleniyor.",
+      "X_JOIN_CHANNEL": "{0} kanalına katılınıyor.",
+      "PRIVATE_CALL": "Özel Arama",
+      "JOIN_GUILD": "Sunucuya Katıl",
+      "UNKNOWN": "<Bilinmeyen>",
+      "CANT_JOIN": "Katılınamıyor",
+      "CANT_VIEW": "Görüntülenemiyor.",
+      "JOIN": "Katıl",
+      "VIEW": "Gör"
+    }
   }
 }
