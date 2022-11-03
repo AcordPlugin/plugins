@@ -23,7 +23,7 @@ export function patchDOM() {
 
                 let container = dom.parseHTML(`
                     <div class="ti--container" style="left: ${avatarWrapperRect.left - elmRect.left}px; top: ${avatarWrapperRect.top - elmRect.top}px; width: ${avatarWrapperRect.width}px; height: ${avatarWrapperRect.height}px;">
-                        <img src="https://i.imgur.com/khSp0aH.gif" width="${elmRect.width / 1.5}"></img>
+                        <img src="https://i.imgur.com/khSp0aH.gif"></img>
                     </div>
                 `);
 
