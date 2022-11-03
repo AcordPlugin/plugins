@@ -6,7 +6,7 @@ import { persist, i18n } from "@acord/extension";
 import patchContainer from "../other/patchContainer.js";
 import { renderIcon } from "../lib/renderIcon.js";
 import { fetchUserVoiceStates } from "../other/api.js";
-import { ChannelStore, isPromotingAcord } from "../other/apis.js";
+import { ChannelStore } from "../other/apis.js";
 import { showModal } from "../lib/showModal.jsx";
 import { rawToParsed } from "../other/VoiceStates.js";
 import modals from "@acord/ui/modals";
@@ -64,10 +64,6 @@ async function patchIndicators(user, elm) {
     e.stopPropagation();
 
     if (!!persist.ghost.settings?.redacted) return;
-    if (!isPromotingAcord()) {
-      modals.show.alert(i18n.format("ALERT"), i18n.format("PROMOTION_REQUIRED"));
-      return;
-    }
 
     // transitionTo(`/channels/${state.guild ? state.guild.id : "@me"}/${state.channel.id}`);
     showModal(indicatorContainer.states.map(rawToParsed));
