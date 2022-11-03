@@ -4,19 +4,26 @@ import utils from "@acord/utils";
 import events from "@acord/events";
 import { fetchIsUserTyping } from "../other/api.js";
 
+// [class*="layout-"] [class*="avatar-"] [class*="wrapper-"], [class*="userInfo-"] [class*="avatar-"] [class*="wrapper-"]
+
 export function patchDOM() {
     patchContainer.add(
         dom.patch(
             `[class*="layout-"] [class*="avatar-"] [class*="wrapper-"], [class*="userInfo-"] [class*="avatar-"] [class*="wrapper-"]`,
-            /** @param {Element} elm */ (elm)=>{
+            /** @param {Element} elm */ (avatarWrapper)=>{
+                let elm = dom.parents(avatarWrapper, `[data-list-item-id]`)?.[0];
+                if (!elm) return;
                 let user = utils.react.getProps(elm, i=>i?.user)?.user;
                 if (!user) return;
 
-                let boundingRect = elm.getBoundingClientRect();
+                elm.classList.add("ti--wrapper");
+
+                let elmRect = elm.getBoundingClientRect();
+                let avatarWrapperRect = avatarWrapper.getBoundingClientRect();
 
                 let container = dom.parseHTML(`
-                    <div class="ti--container" style="width: ${boundingRect.width}px; height: ${boundingRect.height}px">
-                        <img src="https://i.imgur.com/khSp0aH.gif" width="${boundingRect.width / 1.5}"></img>
+                    <div class="ti--container" style="left: ${avatarWrapperRect.left - elmRect.left}px; top: ${avatarWrapperRect.top - elmRect.top}px; width: ${avatarWrapperRect.width}px; height: ${avatarWrapperRect.height}px;">
+                        <img src="https://i.imgur.com/khSp0aH.gif" width="${elmRect.width / 1.5}"></img>
                     </div>
                 `);
 
