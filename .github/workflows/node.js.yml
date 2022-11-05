@@ -1,0 +1,32 @@
+name: Update Index
+
+on: push
+
+jobs:
+
+  build:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - uses: actions/checkout@v2
+      
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.11.0
+
+      - name: Configure Globals
+        run: |
+          git config --global user.name "TheArmagan"
+          git config --global user.email "kiracarmaganonal@gmail.com"
+
+      - name: Run Updater & Update Index
+        run: node createIndex.js
+
+      - name: Deploy Updated Index
+        run: |
+          git add index.json -f
+          git commit -m "[⚒️] Update Index"
+          git push -f
