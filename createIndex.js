@@ -27,6 +27,6 @@ users.forEach((userName)=>{
 
 fs.writeFileSync(
     path.resolve(__dirname, "./index.json"), 
-    JSON.stringify(result.extensions.sort((a, b)=>b.at - a.at), null, 2), 
+    JSON.stringify(result.extensions.sort((a, b)=>a.at - b.at), null, 2), 
     "utf-8"
 );
