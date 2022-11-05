@@ -1,41 +1,6 @@
 [
   {
     "manifest": {
-      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df0",
-      "type": "plugin",
-      "about": {
-        "name": "Join Guild Notifications",
-        "authors": [
-          "ErdemGKSL"
-        ],
-        "description": "Sets the notification settings when joining a guild.",
-        "version": "1.0.0",
-        "license": "MIT"
-      }
-    },
-    "user": "ErdemGKSL",
-    "slug": "join-guild-notifications"
-  },
-  {
-    "manifest": {
-      "hash": "8f7b49ee69e62898335f672f61d5aa0881c5de97ea3dbecffa11af12259e8f4e",
-      "type": "plugin",
-      "about": {
-        "name": "Platform Indicators",
-        "authors": [
-          "ErdemGKSL"
-        ],
-        "description": "Shows user's platform next to their username.",
-        "version": "1.1.0",
-        "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1031687430279012352/unknown.png",
-        "license": "MIT"
-      }
-    },
-    "user": "ErdemGKSL",
-    "slug": "platform-indicators"
-  },
-  {
-    "manifest": {
       "hash": "af42d59927c01c48f2cfdb6415a576eb43e188163d4ff866cb30178fa72bc5a9",
       "type": "plugin",
       "about": {
@@ -122,6 +87,23 @@
   },
   {
     "manifest": {
+      "hash": "23be87ca1fa98157d2d45c61c8a91be7c8927f35c194ed96b6460ba842b07003",
+      "type": "plugin",
+      "about": {
+        "name": "Copy Role Color",
+        "authors": [
+          "Risy"
+        ],
+        "description": "Copy role color to clipboard",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "therisy",
+    "slug": "copy-role-color"
+  },
+  {
+    "manifest": {
       "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
       "type": "plugin",
       "about": {
@@ -139,6 +121,23 @@
   },
   {
     "manifest": {
+      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df0",
+      "type": "plugin",
+      "about": {
+        "name": "Join Guild Notifications",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Sets the notification settings when joining a guild.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "join-guild-notifications"
+  },
+  {
+    "manifest": {
       "hash": "01f0a396df587422ce32517b2622c25359cc6dd37b62e4cb023ce3a03d74191d",
       "type": "plugin",
       "about": {
@@ -153,6 +152,24 @@
     },
     "user": "TheArmagan",
     "slug": "note-indicators"
+  },
+  {
+    "manifest": {
+      "hash": "8f7b49ee69e62898335f672f61d5aa0881c5de97ea3dbecffa11af12259e8f4e",
+      "type": "plugin",
+      "about": {
+        "name": "Platform Indicators",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Shows user's platform next to their username.",
+        "version": "1.1.0",
+        "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1031687430279012352/unknown.png",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "platform-indicators"
   },
   {
     "manifest": {
@@ -205,22 +222,5 @@
     },
     "user": "TheArmagan",
     "slug": "voice-indicators"
-  },
-  {
-    "manifest": {
-      "hash": "23be87ca1fa98157d2d45c61c8a91be7c8927f35c194ed96b6460ba842b07003",
-      "type": "plugin",
-      "about": {
-        "name": "Copy Role Color",
-        "authors": [
-          "Risy"
-        ],
-        "description": "Copy role color to clipboard",
-        "version": "0.0.1",
-        "license": "MIT"
-      }
-    },
-    "user": "therisy",
-    "slug": "copy-role-color"
   }
 ]
