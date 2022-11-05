@@ -18,8 +18,7 @@ users.forEach((userName)=>{
             result.extensions.push({
                 manifest: ({...JSON.parse(fs.readFileSync(manifestPath, "utf-8")), "i18n": undefined }),
                 user: userName,
-                slug: extensionName,
-                at: fs.statSync(manifestPath).ctime.getTime()
+                slug: extensionName
             });
         }
     });
@@ -27,6 +26,6 @@ users.forEach((userName)=>{
 
 fs.writeFileSync(
     path.resolve(__dirname, "./index.json"), 
-    JSON.stringify(result.extensions.sort((a, b)=>a.at - b.at), null, 2), 
+    JSON.stringify(result.extensions, null, 2),
     "utf-8"
 );
