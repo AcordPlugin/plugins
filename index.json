@@ -1,25 +1,6 @@
 [
   {
     "manifest": {
-      "hash": "208e20db713b0062ac3a6c39c3d4aede35841bcd7aff9c2d7cd812ffe4f09d47",
-      "type": "plugin",
-      "about": {
-        "name": "Voice Indicators",
-        "authors": [
-          "Kıraç Armağan Önal"
-        ],
-        "description": "Shows voice indicators right side of the users. Supports private calls too.",
-        "version": "2.0.2",
-        "preview": "https://i.imgur.com/vEuqPmL.png",
-        "license": "MIT"
-      }
-    },
-    "user": "TheArmagan",
-    "slug": "voice-indicators",
-    "at": 1667636491520
-  },
-  {
-    "manifest": {
       "hash": "23be87ca1fa98157d2d45c61c8a91be7c8927f35c194ed96b6460ba842b07003",
       "type": "plugin",
       "about": {
@@ -34,79 +15,7 @@
     },
     "user": "therisy",
     "slug": "copy-role-color",
-    "at": 1667636491520
-  },
-  {
-    "manifest": {
-      "hash": "1d28d76ae58155f492e3334ca5a4e16d96a49a0b34e36b5204f50e61cd483b27",
-      "type": "plugin",
-      "about": {
-        "name": "Become Mod",
-        "authors": [
-          "Kıraç Armağan Önal"
-        ],
-        "description": "Become mod permissions on any server. (Client Sided)",
-        "version": "1.0.0",
-        "license": "MIT"
-      }
-    },
-    "user": "TheArmagan",
-    "slug": "become-mod",
-    "at": 1667636491516
-  },
-  {
-    "manifest": {
-      "hash": "110874ff6535af73a474cbf6a6b81a2d352daebc9677e20de0dbce3e7419adcc",
-      "type": "plugin",
-      "about": {
-        "name": "Call Timer",
-        "authors": [
-          "Kıraç Armağan Önal"
-        ],
-        "description": "Shows how much time you spent in voice channel.",
-        "version": "1.0.0",
-        "license": "MIT"
-      }
-    },
-    "user": "TheArmagan",
-    "slug": "call-timer",
-    "at": 1667636491516
-  },
-  {
-    "manifest": {
-      "hash": "0606d1421c76972e9657577174040c698ea097ef1c86fcdd417fd571409efdf8",
-      "type": "plugin",
-      "about": {
-        "name": "Copy Image URL",
-        "authors": [
-          "Kıraç Armağan Önal"
-        ],
-        "description": "Esily copy user's banner and avatars!",
-        "version": "0.0.1",
-        "license": "MIT"
-      }
-    },
-    "user": "TheArmagan",
-    "slug": "copy-image-url",
-    "at": 1667636491516
-  },
-  {
-    "manifest": {
-      "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
-      "type": "plugin",
-      "about": {
-        "name": "Hide Sidebar",
-        "authors": [
-          "Kıraç Armağan Önal"
-        ],
-        "description": "Option for hiding sidebar.",
-        "version": "0.0.1",
-        "license": "MIT"
-      }
-    },
-    "user": "TheArmagan",
-    "slug": "hide-sidebar",
-    "at": 1667636491516
+    "at": 1667636585845
   },
   {
     "manifest": {
@@ -124,7 +33,7 @@
     },
     "user": "TheArmagan",
     "slug": "note-indicators",
-    "at": 1667636491516
+    "at": 1667636585841
   },
   {
     "manifest": {
@@ -142,7 +51,7 @@
     },
     "user": "TheArmagan",
     "slug": "typing-indicators",
-    "at": 1667636491516
+    "at": 1667636585841
   },
   {
     "manifest": {
@@ -160,44 +69,26 @@
     },
     "user": "TheArmagan",
     "slug": "unfriend-and-guild-leave-logger",
-    "at": 1667636491516
+    "at": 1667636585841
   },
   {
     "manifest": {
-      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df0",
+      "hash": "208e20db713b0062ac3a6c39c3d4aede35841bcd7aff9c2d7cd812ffe4f09d47",
       "type": "plugin",
       "about": {
-        "name": "Join Guild Notifications",
+        "name": "Voice Indicators",
         "authors": [
-          "ErdemGKSL"
+          "Kıraç Armağan Önal"
         ],
-        "description": "Sets the notification settings when joining a guild.",
-        "version": "1.0.0",
+        "description": "Shows voice indicators right side of the users. Supports private calls too.",
+        "version": "2.0.2",
+        "preview": "https://i.imgur.com/vEuqPmL.png",
         "license": "MIT"
       }
     },
-    "user": "ErdemGKSL",
-    "slug": "join-guild-notifications",
-    "at": 1667636491512
-  },
-  {
-    "manifest": {
-      "hash": "8f7b49ee69e62898335f672f61d5aa0881c5de97ea3dbecffa11af12259e8f4e",
-      "type": "plugin",
-      "about": {
-        "name": "Platform Indicators",
-        "authors": [
-          "ErdemGKSL"
-        ],
-        "description": "Shows user's platform next to their username.",
-        "version": "1.1.0",
-        "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1031687430279012352/unknown.png",
-        "license": "MIT"
-      }
-    },
-    "user": "ErdemGKSL",
-    "slug": "platform-indicators",
-    "at": 1667636491512
+    "user": "TheArmagan",
+    "slug": "voice-indicators",
+    "at": 1667636585841
   },
   {
     "manifest": {
@@ -216,7 +107,7 @@
     },
     "user": "TheArmagan",
     "slug": "app-lock",
-    "at": 1667636491512
+    "at": 1667636585837
   },
   {
     "manifest": {
@@ -234,6 +125,115 @@
     },
     "user": "TheArmagan",
     "slug": "audio-presets",
-    "at": 1667636491512
+    "at": 1667636585837
+  },
+  {
+    "manifest": {
+      "hash": "1d28d76ae58155f492e3334ca5a4e16d96a49a0b34e36b5204f50e61cd483b27",
+      "type": "plugin",
+      "about": {
+        "name": "Become Mod",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Become mod permissions on any server. (Client Sided)",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "become-mod",
+    "at": 1667636585837
+  },
+  {
+    "manifest": {
+      "hash": "110874ff6535af73a474cbf6a6b81a2d352daebc9677e20de0dbce3e7419adcc",
+      "type": "plugin",
+      "about": {
+        "name": "Call Timer",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Shows how much time you spent in voice channel.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "call-timer",
+    "at": 1667636585837
+  },
+  {
+    "manifest": {
+      "hash": "0606d1421c76972e9657577174040c698ea097ef1c86fcdd417fd571409efdf8",
+      "type": "plugin",
+      "about": {
+        "name": "Copy Image URL",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Esily copy user's banner and avatars!",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "copy-image-url",
+    "at": 1667636585837
+  },
+  {
+    "manifest": {
+      "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
+      "type": "plugin",
+      "about": {
+        "name": "Hide Sidebar",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Option for hiding sidebar.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "hide-sidebar",
+    "at": 1667636585837
+  },
+  {
+    "manifest": {
+      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df0",
+      "type": "plugin",
+      "about": {
+        "name": "Join Guild Notifications",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Sets the notification settings when joining a guild.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "join-guild-notifications",
+    "at": 1667636585833
+  },
+  {
+    "manifest": {
+      "hash": "8f7b49ee69e62898335f672f61d5aa0881c5de97ea3dbecffa11af12259e8f4e",
+      "type": "plugin",
+      "about": {
+        "name": "Platform Indicators",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Shows user's platform next to their username.",
+        "version": "1.1.0",
+        "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1031687430279012352/unknown.png",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "platform-indicators",
+    "at": 1667636585833
   }
 ]
