@@ -15,7 +15,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "app-lock"
+    "slug": "app-lock",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/app-lock/dist"
   },
   {
     "manifest": {
@@ -32,7 +33,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "audio-presets"
+    "slug": "audio-presets",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/audio-presets/dist"
   },
   {
     "manifest": {
@@ -49,7 +51,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "become-mod"
+    "slug": "become-mod",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/become-mod/dist"
   },
   {
     "manifest": {
@@ -66,7 +69,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "call-timer"
+    "slug": "call-timer",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/call-timer/dist"
   },
   {
     "manifest": {
@@ -83,7 +87,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "copy-image-url"
+    "slug": "copy-image-url",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/copy-image-url/dist"
   },
   {
     "manifest": {
@@ -100,7 +105,8 @@
       }
     },
     "user": "therisy",
-    "slug": "copy-role-color"
+    "slug": "copy-role-color",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/therisy/copy-role-color/dist"
   },
   {
     "manifest": {
@@ -117,7 +123,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "hide-sidebar"
+    "slug": "hide-sidebar",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/hide-sidebar/dist"
   },
   {
     "manifest": {
@@ -134,7 +141,8 @@
       }
     },
     "user": "ErdemGKSL",
-    "slug": "join-guild-notifications"
+    "slug": "join-guild-notifications",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/join-guild-notifications/dist"
   },
   {
     "manifest": {
@@ -151,7 +159,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "note-indicators"
+    "slug": "note-indicators",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/note-indicators/dist"
   },
   {
     "manifest": {
@@ -169,7 +178,8 @@
       }
     },
     "user": "ErdemGKSL",
-    "slug": "platform-indicators"
+    "slug": "platform-indicators",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/platform-indicators/dist"
   },
   {
     "manifest": {
@@ -186,7 +196,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "typing-indicators"
+    "slug": "typing-indicators",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/typing-indicators/dist"
   },
   {
     "manifest": {
@@ -203,7 +214,8 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "unfriend-and-guild-leave-logger"
+    "slug": "unfriend-and-guild-leave-logger",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/unfriend-and-guild-leave-logger/dist"
   },
   {
     "manifest": {
@@ -221,6 +233,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "voice-indicators"
+    "slug": "voice-indicators",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/voice-indicators/dist"
   }
 ]
