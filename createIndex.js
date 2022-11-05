@@ -19,7 +19,7 @@ users.forEach((userName)=>{
                 manifest: ({...JSON.parse(fs.readFileSync(manifestPath, "utf-8")), "i18n": undefined }),
                 user: userName,
                 slug: extensionName,
-                url: `https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/${userName}/${extensionName}/${cfg.out.directory.replace(/^\.?\/?/, "").replace(/\/?$/, "")}`
+                url: `https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/${userName}/${extensionName}/${cfg.out.directory.replace(/^\.?\/?/, "").replace(/\/?$/, "")}/`
             });
         }
     });
