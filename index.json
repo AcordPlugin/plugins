@@ -14,8 +14,7 @@
       }
     },
     "user": "ErdemGKSL",
-    "slug": "join-guild-notifications",
-    "at": 1667636651017
+    "slug": "join-guild-notifications"
   },
   {
     "manifest": {
@@ -33,8 +32,7 @@
       }
     },
     "user": "ErdemGKSL",
-    "slug": "platform-indicators",
-    "at": 1667636651017
+    "slug": "platform-indicators"
   },
   {
     "manifest": {
@@ -52,8 +50,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "app-lock",
-    "at": 1667636651017
+    "slug": "app-lock"
   },
   {
     "manifest": {
@@ -70,8 +67,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "audio-presets",
-    "at": 1667636651017
+    "slug": "audio-presets"
   },
   {
     "manifest": {
@@ -88,8 +84,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "become-mod",
-    "at": 1667636651017
+    "slug": "become-mod"
   },
   {
     "manifest": {
@@ -106,8 +101,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "call-timer",
-    "at": 1667636651017
+    "slug": "call-timer"
   },
   {
     "manifest": {
@@ -124,8 +118,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "copy-image-url",
-    "at": 1667636651021
+    "slug": "copy-image-url"
   },
   {
     "manifest": {
@@ -142,8 +135,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "hide-sidebar",
-    "at": 1667636651021
+    "slug": "hide-sidebar"
   },
   {
     "manifest": {
@@ -160,8 +152,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "note-indicators",
-    "at": 1667636651021
+    "slug": "note-indicators"
   },
   {
     "manifest": {
@@ -178,8 +169,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "typing-indicators",
-    "at": 1667636651021
+    "slug": "typing-indicators"
   },
   {
     "manifest": {
@@ -196,8 +186,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "unfriend-and-guild-leave-logger",
-    "at": 1667636651021
+    "slug": "unfriend-and-guild-leave-logger"
   },
   {
     "manifest": {
@@ -215,8 +204,7 @@
       }
     },
     "user": "TheArmagan",
-    "slug": "voice-indicators",
-    "at": 1667636651021
+    "slug": "voice-indicators"
   },
   {
     "manifest": {
@@ -233,7 +221,6 @@
       }
     },
     "user": "therisy",
-    "slug": "copy-role-color",
-    "at": 1667636651021
+    "slug": "copy-role-color"
   }
 ]
