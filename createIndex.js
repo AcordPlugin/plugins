@@ -19,7 +19,7 @@ users.forEach((userName)=>{
                 manifest: ({...JSON.parse(fs.readFileSync(manifestPath, "utf-8")), "i18n": undefined }),
                 user: userName,
                 slug: extensionName,
-                at: fs.statSync(manifestPath).mtime.getTime()
+                at: fs.statSync(manifestPath).ctime.getTime()
             });
         }
     });
