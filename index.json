@@ -1,1 +1,226 @@
-[]
+[
+  {
+    "manifest": {
+      "hash": "af42d59927c01c48f2cfdb6415a576eb43e188163d4ff866cb30178fa72bc5a9",
+      "type": "plugin",
+      "about": {
+        "name": "App Lock",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Lock the app using CTRL+L, default password is 1234.",
+        "version": "0.0.1",
+        "license": "MIT",
+        "preview": "https://media.discordapp.net/attachments/887446333047312464/1037115824625963008/unknown.png"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "app-lock"
+  },
+  {
+    "manifest": {
+      "hash": "6d46105c56968bbee9c53833a21376c678276c3174168398c04a1bda725a4bba",
+      "type": "plugin",
+      "about": {
+        "name": "Audio Presets",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Allows you to change/switch discord's audios.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "audio-presets"
+  },
+  {
+    "manifest": {
+      "hash": "1d28d76ae58155f492e3334ca5a4e16d96a49a0b34e36b5204f50e61cd483b27",
+      "type": "plugin",
+      "about": {
+        "name": "Become Mod",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Become mod permissions on any server. (Client Sided)",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "become-mod"
+  },
+  {
+    "manifest": {
+      "hash": "110874ff6535af73a474cbf6a6b81a2d352daebc9677e20de0dbce3e7419adcc",
+      "type": "plugin",
+      "about": {
+        "name": "Call Timer",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Shows how much time you spent in voice channel.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "call-timer"
+  },
+  {
+    "manifest": {
+      "hash": "0606d1421c76972e9657577174040c698ea097ef1c86fcdd417fd571409efdf8",
+      "type": "plugin",
+      "about": {
+        "name": "Copy Image URL",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Esily copy user's banner and avatars!",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "copy-image-url"
+  },
+  {
+    "manifest": {
+      "hash": "23be87ca1fa98157d2d45c61c8a91be7c8927f35c194ed96b6460ba842b07003",
+      "type": "plugin",
+      "about": {
+        "name": "Copy Role Color",
+        "authors": [
+          "Risy"
+        ],
+        "description": "Copy role color to clipboard",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "therisy",
+    "slug": "copy-role-color"
+  },
+  {
+    "manifest": {
+      "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
+      "type": "plugin",
+      "about": {
+        "name": "Hide Sidebar",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Option for hiding sidebar.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "hide-sidebar"
+  },
+  {
+    "manifest": {
+      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df0",
+      "type": "plugin",
+      "about": {
+        "name": "Join Guild Notifications",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Sets the notification settings when joining a guild.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "join-guild-notifications"
+  },
+  {
+    "manifest": {
+      "hash": "01f0a396df587422ce32517b2622c25359cc6dd37b62e4cb023ce3a03d74191d",
+      "type": "plugin",
+      "about": {
+        "name": "Note Indicators",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Esily see user's notes.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "note-indicators"
+  },
+  {
+    "manifest": {
+      "hash": "8f7b49ee69e62898335f672f61d5aa0881c5de97ea3dbecffa11af12259e8f4e",
+      "type": "plugin",
+      "about": {
+        "name": "Platform Indicators",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Shows user's platform next to their username.",
+        "version": "1.1.0",
+        "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1031687430279012352/unknown.png",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "platform-indicators"
+  },
+  {
+    "manifest": {
+      "hash": "b8eb69c8b59c888ab498a300c8a8ed1bc263b580c508a4c0c12217bbc4e4ca3c",
+      "type": "plugin",
+      "about": {
+        "name": "Typing Indicators",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Shows typing indicators top of the user avatars.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "typing-indicators"
+  },
+  {
+    "manifest": {
+      "hash": "118d1666080553580809bc3bf885b502395b661130bda95bde8dafbd25196a7d",
+      "type": "plugin",
+      "about": {
+        "name": "Unfriend and Guild Leave Logger",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Logs when some one removes you from friends or kicks you from a server.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "unfriend-and-guild-leave-logger"
+  },
+  {
+    "manifest": {
+      "hash": "208e20db713b0062ac3a6c39c3d4aede35841bcd7aff9c2d7cd812ffe4f09d47",
+      "type": "plugin",
+      "about": {
+        "name": "Voice Indicators",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Shows voice indicators right side of the users. Supports private calls too.",
+        "version": "2.0.2",
+        "preview": "https://i.imgur.com/vEuqPmL.png",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "voice-indicators"
+  }
+]
