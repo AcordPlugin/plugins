@@ -13,32 +13,54 @@ export default {
   load() {
     ref.unpatchers.push(
       dom.patch(`.${GifClasses.result}`, /** @param {Element} elm*/(elm) => {
-        setTimeout(() => {
-          if (elm.querySelector(`.${GifCategory.categoryFade}, .${GifCategory.categoryFadeBlurple}`)) return;
-          if (elm.classList.contains("acord--mass-dm")) return;
-          elm.classList.add("acord--mass-dm");
+        if (elm.querySelector(`.${GifCategory.categoryFade}, .${GifCategory.categoryFadeBlurple}`)) return;
+        if (elm.classList.contains("acord--mass-dm")) return;
+        elm.classList.add("acord--mass-dm");
+        console.log(1)
+        const rProps = react.getProps(elm);
+        console.log(2)
+        if (!rProps) return;
+        console.log(3)
+        const oClick = rProps?.children?.props?.onClick;
+        console.log(4)
+        if (!oClick) return;
+        console.log(31)
+        console.log(rProps);
+        window.rProps = rProps;
+        rProps.children.props.onClick = function (...args) {
+          console.log(...args);
+          return oClick.call(this, ...args);
+        }
+        return;
+        let arr = rProps.children?.props?.children;
+        if (!Array.isArray(arr)) arr = [rProps.children?.props?.children];
+        let found = (arr.find(x => x?.props?.url))?.props?.url;
+        if (found) anyImage = found;
+
+
+        elm.oncontextmenu = () => {
+          console.log(0)
           const imageElm = (elm.querySelector("img") || elm.querySelector("video"));
+          console.log(1)
           let anyImage = imageElm?.getAttribute("src");
-          const rProps = react.getProps(elm);
+          console.log(2)
           if (anyImage) {
-            
+            console.log(3)
+
             if (!anyImage.startsWith("https:")) anyImage = "https:" + anyImage;
-            
+            console.log(4)
+
             if (anyImage.includes("tenor.co")) {
               if (rProps) {
-                let arr = rProps.children?.props?.children;
-                if (!Array.isArray(arr)) arr = [rProps.children?.props?.children];
-                let found = (arr.find(x => x?.props?.url))?.props?.url;
-                if (found) anyImage = found;
+
               }
             }
-            
-            elm.oncontextmenu = () => {
-              SendMessageStore.sendMessage(SelectedChannelStore.getChannelId(), { content: anyImage });
-            };
+
+            SendMessageStore.sendMessage(SelectedChannelStore.getChannelId(), { content: anyImage });
 
           }
-        }, 250);
+
+        };
         return;
       })
     );
