@@ -1,6 +1,24 @@
 [
   {
     "manifest": {
+      "hash": "a875aa1103d6e1ac65da47d870a9a138de721d07c61189795258d6281d070dd4",
+      "type": "plugin",
+      "about": {
+        "name": "Anti Message Deletion",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Snipe the deleted messages!",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "anti-message-deletion",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/anti-message-deletion/dist/"
+  },
+  {
+    "manifest": {
       "hash": "af42d59927c01c48f2cfdb6415a576eb43e188163d4ff866cb30178fa72bc5a9",
       "type": "plugin",
       "about": {
@@ -219,7 +237,7 @@
   },
   {
     "manifest": {
-      "hash": "208e20db713b0062ac3a6c39c3d4aede35841bcd7aff9c2d7cd812ffe4f09d47",
+      "hash": "ea72e59ae67c6f42979c15e34067712e5acd51cb11328d88d106b6a042235306",
       "type": "plugin",
       "about": {
         "name": "Voice Indicators",
