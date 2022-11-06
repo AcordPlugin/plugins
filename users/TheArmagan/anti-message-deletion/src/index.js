@@ -61,7 +61,7 @@ export default {
             let storeDidChange = ogHandler.storeDidChange;
 
             ogHandler.actionHandler = (msg)=>{
-                if (!msg?.id || msg.author.bot) return;
+                if (!msg?.id || msg?.author?.bot) return;
                 
                 getModifiedData(msg.id, true).deleted = true;
 
