@@ -1,7 +1,7 @@
 [
   {
     "manifest": {
-      "hash": "063af5a32a6ea67d3d66eafe06476de337aca5415d0f0c49f242d9f6be186d20",
+      "hash": "bc285ab46ff804750957e9f1d89fee1ec5f29b27c491c538a8216f697fa573f4",
       "type": "plugin",
       "about": {
         "name": "Anti Message Deletion",
