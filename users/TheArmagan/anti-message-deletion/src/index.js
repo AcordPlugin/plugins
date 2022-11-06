@@ -61,8 +61,8 @@ export default {
             let storeDidChange = ogHandler.storeDidChange;
 
             ogHandler.actionHandler = (msg)=>{
-                if (!msg?.id) return;
-
+                if (!msg?.id || msg.author.bot) return;
+                
                 getModifiedData(msg.id, true).deleted = true;
 
                 utils.ifExists(
@@ -89,7 +89,7 @@ export default {
             let storeDidChange = ogHandler.storeDidChange;
 
             ogHandler.actionHandler = function (arg) {
-                if (!arg?.message?.id) return;
+                if (!arg?.message?.id ||arg?.message?.author?.bot) return;
 
                 if (arg.message.content) {
                     let oldMsg = getRawMessage(arg.message.channel_id, arg.message.id);
