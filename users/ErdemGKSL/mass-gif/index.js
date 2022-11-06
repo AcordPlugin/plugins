@@ -1,7 +1,8 @@
-import { dom } from "@acord";
+import { dom, patcher } from "@acord";
 import { SelectedChannelStore } from "@acord/modules/common";
 import { findByProperties } from "@acord/modules/webpack";
 import { react } from "@acord/utils";
+import { findByDomNode } from "@acord/utils/react";
 
 const GifClasses = findByProperties("desiredItemWidth", "result", "results", "emptyHintFavorite");
 const GifCategory = findByProperties("categoryFade", "categoryFadeBlurple", "categoryIcon", "formatSelectors");
@@ -11,21 +12,19 @@ const ref = { unpatchers: [] };
 
 export default {
   load() {
+
+    findByDomNode()
+
     ref.unpatchers.push(
+      
       dom.patch(`.${GifClasses.result}`, /** @param {Element} elm*/(elm) => {
         if (elm.querySelector(`.${GifCategory.categoryFade}, .${GifCategory.categoryFadeBlurple}`)) return;
         if (elm.classList.contains("acord--mass-dm")) return;
         elm.classList.add("acord--mass-dm");
-        console.log(1)
         const rProps = react.getProps(elm);
-        console.log(2)
         if (!rProps) return;
-        console.log(3)
         const oClick = rProps?.children?.props?.onClick;
-        console.log(4)
         if (!oClick) return;
-        console.log(31)
-        console.log(rProps);
         window.rProps = rProps;
         rProps.children.props.onClick = function (...args) {
           console.log(...args);
