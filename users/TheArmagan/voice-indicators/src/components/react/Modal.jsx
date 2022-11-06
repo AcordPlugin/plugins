@@ -34,8 +34,7 @@ export function Modal({ e, states }) {
     let inMyChannels = !!channel;
     let isJoinable = !inMyChannels ? false : (channel.type == 3 ? true : (PermissionStore.can(Permissions.CONNECT, channel) && PermissionStore.can(Permissions.VIEW_CHANNEL, channel)))
     setCurrentData({inMyChannels, isJoinable, state});
-
-    setMembers(await fetchVoiceMembers(state.channelId));
+    setMembers(state.channelRedacted ? [] : await fetchVoiceMembers(state.channelId));
   }
 
   React.useEffect(() => {

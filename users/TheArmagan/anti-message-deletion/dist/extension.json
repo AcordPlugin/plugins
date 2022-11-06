@@ -1,0 +1,13 @@
+{
+  "hash": "a875aa1103d6e1ac65da47d870a9a138de721d07c61189795258d6281d070dd4",
+  "type": "plugin",
+  "about": {
+    "name": "Anti Message Deletion",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Snipe the deleted messages!",
+    "version": "0.0.1",
+    "license": "MIT"
+  }
+}
