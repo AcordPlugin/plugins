@@ -165,24 +165,6 @@
   },
   {
     "manifest": {
-      "hash": "8833da0fcb10a1a406f4985f7d393a7ab2a513968176f26156e3ea917da48c05",
-      "type": "plugin",
-      "about": {
-        "name": "Mass Gif",
-        "authors": [
-          "ErdemGKSL"
-        ],
-        "description": "You can send gif's without closing the gif search window. (by right clicking on the gif)",
-        "version": "1.0.0",
-        "license": "MIT"
-      }
-    },
-    "user": "ErdemGKSL",
-    "slug": "mass-gif",
-    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/mass-gif/dist/"
-  },
-  {
-    "manifest": {
       "hash": "5645adf427d122d96ce8488914ace094f1b8c1bfb8f4072a6549165fbb68044a",
       "type": "plugin",
       "about": {
