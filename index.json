@@ -10,7 +10,8 @@
         ],
         "description": "Snipe the deleted messages!",
         "version": "0.0.1",
-        "license": "MIT"
+        "license": "MIT",
+        "preview": "https://media.discordapp.net/attachments/724874750383358073/1038829310372479056/image.png"
       }
     },
     "user": "TheArmagan",
