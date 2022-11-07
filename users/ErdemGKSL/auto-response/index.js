@@ -19,7 +19,7 @@ function handleMessageCreate({ message: msg, channelId }) {
 
 function loadResponses(val) {
   /** @type {string} */
-  const responseStr = val || persist.ghost.settings.responses;
+  const responseStr = val || persist.ghost?.settings?.responses;
   if (responseStr) ref.responses = [...responseStr.matchAll(transformatorRegex)].map(
     (match, type, finderRegex, _, responseStr, __, debounce) => ({
       type,
@@ -33,8 +33,12 @@ function loadResponses(val) {
 
 export default {
   load() {
-    loadResponses();
-    FluxDispatcher.subscribe("MESSAGE_CREATE", handleMessageCreate);
+    try {
+      loadResponses();
+      FluxDispatcher.subscribe("MESSAGE_CREATE", handleMessageCreate);
+    } catch (e) {
+      console.error("[AR Error]",e)
+    }
   },
   unload() {
     ref.responses = [];
