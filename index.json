@@ -57,7 +57,7 @@
   },
   {
     "manifest": {
-      "hash": "1dd7084af21e7165ba4642de1238c8fc579dd7f23a4f096b690f085c9b60476z",
+      "hash": "a170483cca1e39636d4bfd48b73de916ed14a149324872244ce7414228d7cf3a",
       "type": "plugin",
       "about": {
         "name": "Auto Response",
@@ -66,7 +66,8 @@
         ],
         "description": "Auto Response.",
         "version": "1.0.1",
-        "license": "MIT"
+        "license": "MIT",
+        "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1039280410481397851/Discord_8NYZaRk4j7.gif"
       },
       "eula": "When using this plugin, you are responsible of your own account. You must not use this plugin as a self bot automation."
     },
