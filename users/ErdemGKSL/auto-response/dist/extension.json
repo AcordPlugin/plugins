@@ -9,5 +9,6 @@
     "description": "Auto Response.",
     "version": "1.0.0",
     "license": "MIT"
-  }
+  },
+  "eula": "When using this plugin, you are responsible of your own account. You must not use this plugin as a self bot automation."
 }
