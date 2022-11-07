@@ -1,3 +1,4 @@
+import { utils } from "@acord";
 import { persist } from "@acord/extension"
 import { webpack } from "@acord/modules";
 import { FluxDispatcher, UserStore } from "@acord/modules/common";
@@ -14,7 +15,11 @@ function handleMessageCreate({ message: msg, channelId } = {}) {
   if (!response) return;
   if (response.rateLimit > Date.now()) return;
   response.rateLimit = Date.now() + response.debounceLimit;
-  SendMessageStore.sendMessage(channelId, { content: response.response, tts: false, invalidEmojis: [], validNonShortcutEmojis: [] }, undefined, {});
+  try {
+    SendMessageStore.sendMessage(channelId, { content: response.response, tts: false, invalidEmojis: [], validNonShortcutEmojis: [] }, undefined, {});
+  } catch (e) {
+    utils.logger.error(e);
+  };
 }
 
 function loadResponses(val) {
