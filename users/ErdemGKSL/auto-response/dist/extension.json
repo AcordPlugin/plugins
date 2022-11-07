@@ -1,0 +1,15 @@
+{
+  "hash": "8404c1e7cdb38ca851ebf1b1b8e3696897a076c4351e6136499d7daafa37009s",
+  "type": "plugin",
+  "about": {
+    "name": "Auto Response",
+    "authors": [
+      "ErdemGKSL"
+    ],
+    "description": "Allows you to auto response to discord messages with regex matching.",
+    "version": "1.0.1",
+    "license": "MIT",
+    "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1039280410481397851/Discord_8NYZaRk4j7.gif"
+  },
+  "eula": "When using this plugin, you are responsible of your own account. You must not use this plugin as a self bot automation."
+}
