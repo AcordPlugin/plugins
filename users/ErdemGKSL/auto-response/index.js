@@ -10,7 +10,7 @@ function handleMessageCreate({ message: msg, channelId }) {
   if (msg.author.id == UserStore.getCurrentUser().id) return;
 
   const response = ref.responses.find(x => (x.type == "A" || (x.type == "G" && msg.guild_id) || (x.type == "D" && !msg.guild_id)) && x.matcher.test(msg.content));
-
+  if (!response) return;
   if (response.rateLimit > Date.now()) return;
   response.rateLimit = Date.now() + response.debounceLimit;
   SendMessageStore.sendMessage(channelId, { content: response.response });
