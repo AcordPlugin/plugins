@@ -57,7 +57,7 @@
   },
   {
     "manifest": {
-      "hash": "4f53d979cf1f5b6089c70ecfd72d40990d11e18ae82db71937a5bbaabff8ac2b",
+      "hash": "af16906c98d2647c2bc1743b6cf9dd2f43b3fe51f84072d54679d8ada7964b0c",
       "type": "plugin",
       "about": {
         "name": "Auto Response",
@@ -65,7 +65,7 @@
           "ErdemGKSL"
         ],
         "description": "Auto Response.",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "license": "MIT"
       }
     },
