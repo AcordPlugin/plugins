@@ -57,6 +57,24 @@
   },
   {
     "manifest": {
+      "hash": "02833cf06349115b578c1ffe999f5557640aee442a59ab78d2b9f721503577f1",
+      "type": "plugin",
+      "about": {
+        "name": "Auto Response",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Auto Response.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "auto-response",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/auto-response/dist/"
+  },
+  {
+    "manifest": {
       "hash": "1d28d76ae58155f492e3334ca5a4e16d96a49a0b34e36b5204f50e61cd483b27",
       "type": "plugin",
       "about": {
@@ -126,24 +144,6 @@
     "user": "therisy",
     "slug": "copy-role-color",
     "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/therisy/copy-role-color/dist/"
-  },
-  {
-    "manifest": {
-      "hash": "02833cf06349115b578c1ffe999f5557640aee442a59ab78d2b9f721503577f1",
-      "type": "plugin",
-      "about": {
-        "name": "Example plugin",
-        "authors": [
-          "Unknown"
-        ],
-        "description": "Example description.",
-        "version": "0.0.1",
-        "license": "MIT"
-      }
-    },
-    "user": "ErdemGKSL",
-    "slug": "auto-response",
-    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/auto-response/dist/"
   },
   {
     "manifest": {
