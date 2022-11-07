@@ -30,6 +30,8 @@ function loadResponses(val) {
   )
 }
 
+let debouncedLoadResponses = _.debounce(loadResponses, 3000);
+
 export default {
   load() {
     try {
@@ -58,7 +60,7 @@ export default {
     update(key, value) {
       switch (key) {
         case "responses": {
-          loadResponses(value);
+          debouncedLoadResponses(value);
           break;
         }
       }
