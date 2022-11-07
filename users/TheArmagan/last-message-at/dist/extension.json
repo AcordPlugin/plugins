@@ -1,0 +1,24 @@
+{
+  "hash": "1bcf28b378c086539f9a4b4a342976c9e1603adb7a7fa412975e1653a7e3b44f",
+  "type": "plugin",
+  "about": {
+    "name": "Last Message At",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "See user's last message date.",
+    "version": "1.0.0",
+    "preview": "https://media.discordapp.net/attachments/887446333047312464/1039299708759330956/image.png",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "LAST_MESSAGE_AT": "Last Message At",
+      "NOT_FOUND": "Not Found"
+    },
+    "tr": {
+      "LAST_MESSAGE_AT": "Son Mesaj Tarihi",
+      "NOT_FOUND": "Bulunamadı"
+    }
+  }
+}
