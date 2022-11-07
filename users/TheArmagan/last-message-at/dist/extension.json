@@ -1,5 +1,5 @@
 {
-  "hash": "0132b5e55d1cd378a7a7fb20102495417fb0e117e89ba7e42b4deb5bba4a34cf",
+  "hash": "6c1c5969a45127e52007a3af69db0be8ffe59dbfe1069f842624db56fdc221cf",
   "type": "plugin",
   "about": {
     "name": "Last Message At",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "See user's last message date.",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "preview": "https://media.discordapp.net/attachments/887446333047312464/1039299708759330956/image.png",
     "license": "MIT"
   },
