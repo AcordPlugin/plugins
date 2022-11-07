@@ -1,5 +1,5 @@
 {
-  "hash": "af16906c98d2647c2bc1743b6cf9dd2f43b3fe51f84072d54679d8ada7964b0c",
+  "hash": "64db7a4eda9a361a9cd81759a7f4942edb00632f979cd87cf8c28b23949e8d8b",
   "type": "plugin",
   "about": {
     "name": "Auto Response",
@@ -7,7 +7,7 @@
       "ErdemGKSL"
     ],
     "description": "Auto Response.",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "license": "MIT"
   }
 }
