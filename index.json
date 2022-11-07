@@ -185,6 +185,25 @@
   },
   {
     "manifest": {
+      "hash": "1bcf28b378c086539f9a4b4a342976c9e1603adb7a7fa412975e1653a7e3b44f",
+      "type": "plugin",
+      "about": {
+        "name": "Last Message At",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "See user's last message date.",
+        "version": "1.0.0",
+        "preview": "https://media.discordapp.net/attachments/887446333047312464/1039299708759330956/image.png",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "last-message-at",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/last-message-at/dist/"
+  },
+  {
+    "manifest": {
       "hash": "5645adf427d122d96ce8488914ace094f1b8c1bfb8f4072a6549165fbb68044a",
       "type": "plugin",
       "about": {
