@@ -4,7 +4,7 @@ import webpack from "@acord/modules/webpack";
 import utils from "@acord/utils";
 import { fetchLastMessageAt } from "../other/api.js";
 import { i18n } from "@acord/extension";
-import { i18n as mainI18N } from "@acord/i18n";
+import mainI18N from "@acord/i18n";
 
 let sectionClasses = webpack.findByProps("section", "lastSection");
 let colorClasses = webpack.findByProps("defaultColor", "lineClamp1");
