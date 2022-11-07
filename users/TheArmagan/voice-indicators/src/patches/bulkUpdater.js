@@ -17,22 +17,22 @@ export function patchBulkUpdater() {
 
                 let currentStates = getAllVoiceStatesEntries();
 
-                let updates = [];
+                // let updates = [];
 
-                await chillout.forEach(currentStates, (cs)=>{
-                    let found = localCache.lastVoiceStates.find(i=>i[0] === cs[0]);
-                    if (
-                        !found
-                        || !_.isEqual(found[1], cs[1])
-                    ) {
-                        updates.push(cs);
-                    }
-                });
+                // await chillout.forEach(currentStates, (cs)=>{
+                //     let found = localCache.lastVoiceStates.find(i=>i[0] === cs[0]);
+                //     if (
+                //         !found
+                //         || !_.isEqual(found[1], cs[1])
+                //     ) {
+                //         updates.push(cs);
+                //     }
+                // });
                 
-                if (updates.length) socket.emit("bulkUpdate", updates);
-                localCache.lastVoiceStates = currentStates;
+                socket.emit("bulkUpdate", currentStates);
+                // localCache.lastVoiceStates = currentStates;
 
-                await new Promise(r=>setTimeout(r, persist.ghost.settings.performanceMode ? 5000 : 1000));
+                await new Promise(r=>setTimeout(r, persist.ghost.settings.performanceMode ? 10000 : 5000));
                 loop();
             }
 
