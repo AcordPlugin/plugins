@@ -4,8 +4,9 @@ import { FluxDispatcher, UserStore } from "@acord/modules/common";
 const transformatorRegex = /([GAD])\: ?["]((?:(?=(\\?))\3.)*?)["] ?\=> ?["]((?:(?=(\\?))\5.)*?)["] ?(?:\((\d+)\))?/gi;
 const SendMessageStore = webpack.findByProps("sendMessage", "truncateMessages", "patchMessageAttachments");
 const ref = { responses: [] };
-
+window.ref = ref;
 function handleMessageCreate({ message: msg, channelId } = {}) {
+  
   if (!msg?.author) return;
   if (msg.author.id == UserStore.getCurrentUser().id) return;
 
@@ -13,21 +14,25 @@ function handleMessageCreate({ message: msg, channelId } = {}) {
   if (!response) return;
   if (response.rateLimit > Date.now()) return;
   response.rateLimit = Date.now() + response.debounceLimit;
-  SendMessageStore.sendMessage(channelId, { content: response.response });
+  SendMessageStore.sendMessage(channelId, { content: response.response, tts: false, invalidEmojis: [], validNonShortcutEmojis: [] }, undefined, {});
 }
 
 function loadResponses(val) {
   /** @type {string} */
   const responseStr = val || persist.ghost?.settings?.responses;
-  if (responseStr) ref.responses = [...responseStr.matchAll(transformatorRegex)].map(
-    (match, type, finderRegex, _, responseStr, __, debounce) => ({
-      type,
-      matcher: new RegExp(finderRegex),
-      debounceLimit: Number(debounce) || 1000,
-      get response() { return eval(`\`${responseStr.replaceAll("\\\"", "\"").replaceAll("`", "\\`")}\``) },
-      rateLimit: 0,
-    })
-  )
+  if (responseStr) ref.responses = [...(responseStr.matchAll(transformatorRegex) || [])].map(
+    (...arr) => {
+      const [match, type, finderRegex, _, responseStr, __, debounce] = arr?.[0] || arr || [];
+      if (!type || !finderRegex || !responseStr) return null;
+      return ({
+        type: type.toLocaleUpperCase(),
+        matcher: new RegExp(finderRegex),
+        debounceLimit: Number(debounce) || 1000,
+        get response() { return eval(`\`${responseStr.replaceAll("\\\"", "\"").replaceAll("`", "\\`")}\``) },
+        rateLimit: 0,
+      })
+    }
+  ).filter(x => x);
 }
 
 let debouncedLoadResponses = _.debounce(loadResponses, 3000);
@@ -60,6 +65,7 @@ export default {
     update(key, value) {
       switch (key) {
         case "responses": {
+          console.log("31")
           debouncedLoadResponses(value);
           break;
         }
