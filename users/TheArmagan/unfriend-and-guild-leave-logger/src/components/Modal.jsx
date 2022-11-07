@@ -10,6 +10,9 @@ const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 export function Modal({ e }) {
   useNest(persist);
 
+  if (!Array.isArray(persist.ghost.unfriends)) persist.store.unfriends = [];
+  if (!Array.isArray(persist.ghost.leavedGuilds)) persist.store.leavedGuilds = [];
+
   return (
     <ModalRoot
       transitionState={e.transitionState}
@@ -51,6 +54,7 @@ export function Modal({ e }) {
                     </div>
                     <div className="right" onClick={() => {
                       persist.store.unfriends.splice(persist.store.unfriends.findIndex(j=>j._id == i._id), 1);
+                      persist.store.unfriends = persist.store.unfriends;
                     }}>
                       <CloseIcon color={COLORS.SECONDARY} />
                     </div>
@@ -90,6 +94,7 @@ export function Modal({ e }) {
                     </div>
                     <div className="right" onClick={() => {
                       persist.store.leavedGuilds.splice(persist.store.leavedGuilds.findIndex(j=>j._id == i._id), 1);
+                      persist.store.leavedGuilds = persist.store.leavedGuilds;
                     }}>
                       <CloseIcon color={COLORS.SECONDARY} />
                     </div>
