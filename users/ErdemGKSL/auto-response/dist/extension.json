@@ -1,5 +1,5 @@
 {
-  "hash": "1dd7084af21e7165ba4642de1238c8fc579dd7f23a4f096b690f085c9b604762",
+  "hash": "1dd7084af21e7165ba4642de1238c8fc579dd7f23a4f096b690f085c9b60476z",
   "type": "plugin",
   "about": {
     "name": "Auto Response",
@@ -7,7 +7,7 @@
       "ErdemGKSL"
     ],
     "description": "Auto Response.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT"
   },
   "eula": "When using this plugin, you are responsible of your own account. You must not use this plugin as a self bot automation."
