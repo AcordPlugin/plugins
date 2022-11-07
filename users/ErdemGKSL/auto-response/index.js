@@ -4,7 +4,7 @@ import { FluxDispatcher, UserStore } from "@acord/modules/common";
 const transformatorRegex = /([GAD])\: ?["]((?:(?=(\\?))\3.)*?)["] ?\=> ?["]((?:(?=(\\?))\5.)*?)["] ?(?:\((\d+)\))?/gi;
 const SendMessageStore = webpack.findByProps("sendMessage", "truncateMessages", "patchMessageAttachments");
 const ref = { responses: [] };
-window.ref = ref;
+
 function handleMessageCreate({ message: msg, channelId } = {}) {
   
   if (!msg?.author) return;
