@@ -129,6 +129,24 @@
   },
   {
     "manifest": {
+      "hash": "02833cf06349115b578c1ffe999f5557640aee442a59ab78d2b9f721503577f1",
+      "type": "plugin",
+      "about": {
+        "name": "Example plugin",
+        "authors": [
+          "Unknown"
+        ],
+        "description": "Example description.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "auto-response",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/auto-response/dist/"
+  },
+  {
+    "manifest": {
       "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
       "type": "plugin",
       "about": {
