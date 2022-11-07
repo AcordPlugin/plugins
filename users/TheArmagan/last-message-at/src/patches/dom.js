@@ -4,12 +4,18 @@ import webpack from "@acord/modules/webpack";
 import utils from "@acord/utils";
 import { fetchLastMessageAt } from "../other/api.js";
 import { i18n } from "@acord/extension";
+import { i18n as mainI18N } from "@acord/i18n";
 
 let sectionClasses = webpack.findByProps("section", "lastSection");
 let colorClasses = webpack.findByProps("defaultColor", "lineClamp1");
 let eyebrowClasses = webpack.findByProps("eyebrow", "display-lg", "display-md");
 let colorClasses2 = webpack.find(i=>i?.defaultColor && Object.keys(i).length == 1);
 let titleClasses = webpack.find(i=>i?.title && i?.body && Object.keys(i).length == 2);
+
+function formatDateNum(n) {
+    let date = new Date(n);
+    return `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")} ${date.toLocaleString(mainI18N.locale, { month: 'short' })} ${(new Date().getDate()).toString().padStart(2, "0")}, ${date.getFullYear()}`;
+}
 
 export function patchDOM() {
     patchContainer.add(
@@ -31,7 +37,7 @@ export function patchDOM() {
                 let section = dom.parseHTML(`
                     <div class="${sectionClasses.section}">
                         <h2 class="${colorClasses.defaultColor} ${eyebrowClasses.eyebrow} ${colorClasses2.defaultColor} ${titleClasses.title}">${i18n.format("LAST_MESSAGE_AT")}</h2>
-                        <div class="${colorClasses.defaultColor} ${titleClasses.body}">${(()=>{ let d = new Date(dateNum); return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}` })()}</div>
+                        <div class="${colorClasses.defaultColor} ${titleClasses.body}">${formatDateNum(dateNum)}</div>
                     </div>
                 `);
 
@@ -60,7 +66,7 @@ export function patchDOM() {
                 `);
 
                 let contentElm = dom.parseHTML(`
-                    <div class="${colorClasses.defaultColor} ${titleClasses.body}" style="margin-bottom: 16px;">${(()=>{ let d = new Date(dateNum); return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}` })()}</div>
+                    <div class="${colorClasses.defaultColor} ${titleClasses.body}" style="margin-bottom: 16px;">${formatDateNum(dateNum)}</div>
                 `);
 
                 p.insertBefore(titleElm, p.children[2]);
