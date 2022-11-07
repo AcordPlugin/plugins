@@ -44,24 +44,24 @@ export default {
     FluxDispatcher.unsubscribe("MESSAGE_CREATE", handleMessageCreate);
   },
   settings: {
-    // data: [
-    //   {
-    //     type: "textarea",
-    //     name: "Auto Responses",
-    //     rows: 6,
-    //     property: "responses",
-    //     description: "Format is: [type]: \"Trigger as regex\" => \"Response as string\" (rate limit as milliseconds), type stands for guild(G), dm(D) or all(A).",
-    //     placeholder: "G: \"acord\" => \"wow\"\nD: \"foo\" => \"bar\"\nA: \"Hello\" => \"world.\" (5000)",
-    //     value: ""
-    //   }
-    // ],
-    // update(key, value) {
-    //   switch (key) {
-    //     case "responses": {
-    //       loadResponses(value);
-    //       break;
-    //     }
-    //   }
-    // }
+    data: [
+      {
+        type: "textarea",
+        name: "Auto Responses",
+        rows: 6,
+        property: "responses",
+        description: "Format is: [type]: \"Trigger as regex\" => \"Response as string\" (rate limit as milliseconds), type stands for guild(G), dm(D) or all(A).",
+        placeholder: "G: \"acord\" => \"wow\"\nD: \"foo\" => \"bar\"\nA: \"Hello\" => \"world.\" (5000)",
+        value: ""
+      }
+    ],
+    update(key, value) {
+      switch (key) {
+        case "responses": {
+          loadResponses(value);
+          break;
+        }
+      }
+    }
   }
 }
