@@ -65,7 +65,6 @@ export default {
     update(key, value) {
       switch (key) {
         case "responses": {
-          console.log("31")
           debouncedLoadResponses(value);
           break;
         }
