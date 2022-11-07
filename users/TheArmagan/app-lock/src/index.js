@@ -56,7 +56,7 @@ export default {
         ],
         update(key, value) {
             if (key == "passCode") {
-                if (`${value || ""}`.length < 1) {
+                if (`${value || ""}`.length < 1 || isNaN(value)) {
                     persist.store.settings.passCode = "0";
                 }
             }

@@ -3,6 +3,7 @@ import extensions from "@acord/extensions";
 import { CheckBox } from "../CheckBox.jsx";
 import { React } from "../../other/apis.js";
 import { TextInput } from "../TextInput.jsx";
+import { TextArea } from "../TextArea.jsx";
 
 export function ExtensionSettings({ url, extension }) {
   useNest(extensions.nests.enabled);
@@ -45,11 +46,11 @@ export function ExtensionSettings({ url, extension }) {
     },
     input: (setting) => {
       return <>
-        <div className={`left info-side size-${setting.size || "medium"}`}>
+        <div className={`left info-side vertical`}>
           <div className="name">{setting.name}</div>
           {setting.description ? <div className="description">{setting.description}</div> : null}
         </div>
-        <div className="right">
+        <div className={`right size-${setting.size || "medium"}`}>
           <TextInput
             value={persist.ghost.settings?.[setting.property] ?? setting.value}
             placeholder={setting.placeholder || ""}
@@ -61,6 +62,28 @@ export function ExtensionSettings({ url, extension }) {
             onChange={(e) => {
               persist.store.settings[setting.property] = setting.altType == "number" ? Number(e.target.value) : e.target.value;
               callUpdate(setting.property, setting.altType == "number" ? Number(e.target.value) : e.target.value);
+              setUpdater(Math.random().toString(36));
+            }}
+          />
+        </div>
+      </>
+    },
+    textarea: (setting)=>{
+      return <>
+        <div className={`top info-side size-none`}>
+          <div className="name">{setting.name}</div>
+          {setting.description ? <div className="description">{setting.description}</div> : null}
+        </div>
+        <div className={`bottom`}>
+          <TextArea
+            value={persist.ghost.settings?.[setting.property] ?? setting.value}
+            placeholder={setting.placeholder || ""}
+            minlength={setting.minLength}
+            maxlength={setting.maxLength}
+            rows={setting.rows}
+            onChange={(e) => {
+              persist.store.settings[setting.property] = e.target.value;
+              callUpdate(setting.property, e.target.value);
               setUpdater(Math.random().toString(36));
             }}
           />

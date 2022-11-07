@@ -1,0 +1,13 @@
+{
+  "hash": "3f70bd2ca39cdec29f5153333a8231f9b2414f867a77ac5be34fdf39672ce081",
+  "type": "plugin",
+  "about": {
+    "name": "Example plugin",
+    "authors": [
+      "Unknown"
+    ],
+    "description": "Example description.",
+    "version": "0.0.1",
+    "license": "MIT"
+  }
+}
