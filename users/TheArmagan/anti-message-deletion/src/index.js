@@ -5,10 +5,9 @@ import utils from "@acord/utils";
 
 import patchSCSS from "./styles.scss";
 
-let modifiedMessages = [];
-
 export default {
-    load() {
+    async load() {
+        let modifiedMessages = [];
         patchContainer.add(patchSCSS());
 
         function getRawMessage(chId, msgId) {
@@ -53,6 +52,10 @@ export default {
             patchMsgElement
         ))
 
+        while (true) {
+            if (FluxDispatcher?._actionHandlers?._orderedActionHandlers?.MESSAGE_DELETE?.find) break;
+            await new utils.sleep(50);
+        }
 
         patchContainer.add((()=>{
             let ogHandler = FluxDispatcher._actionHandlers._orderedActionHandlers.MESSAGE_DELETE.find(i=>i.name == "MessageStore");
@@ -81,6 +84,11 @@ export default {
                 handler.storeDidChange = storeDidChange;
             };
         })());
+
+        while (true) {
+            if (FluxDispatcher?._actionHandlers?._orderedActionHandlers?.MESSAGE_UPDATE?.find) break;
+            await new utils.sleep(50);
+        }
 
         patchContainer.add((()=>{
             let ogHandler = FluxDispatcher._actionHandlers._orderedActionHandlers.MESSAGE_UPDATE.find(i=>i.name == "MessageStore");
@@ -118,9 +126,6 @@ export default {
                 handler.storeDidChange = storeDidChange;
             };
         })());
-
-        
-        
     },
     unload() {
         patchContainer.removeAll();
