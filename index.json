@@ -114,15 +114,15 @@
   },
   {
     "manifest": {
-      "hash": "0606d1421c76972e9657577174040c698ea097ef1c86fcdd417fd571409efdf8",
+      "hash": "b0147d742fe43c15c818750bc531e54272545856bacd605c3e0cc840c06d0d0b",
       "type": "plugin",
       "about": {
         "name": "Copy Image URL",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Esily copy user's banner and avatars!",
-        "version": "0.0.1",
+        "description": "Esily copy user's banner, avatars and guild's icons, banners!",
+        "version": "1.0.0",
         "license": "MIT"
       }
     },
