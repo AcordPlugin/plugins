@@ -69,7 +69,7 @@ export default {
         name: "Auto Responses",
         rows: 6,
         property: "responses",
-        description: "Format is: [type]: \"Trigger as regex\" => \"Response as string\" (rate limit as milliseconds), type stands for guild(G), dm(D) or all(A).",
+        description: "Format is: [type]: \"Trigger as regex\" => \"Response as string\" (rate limit as milliseconds, delay, true if want the reply), type stands for guild(G), dm(D) or all(A).",
         placeholder: "G: \"acord\" => \"wow\"\nD: \"foo\" => \"bar\"\nA: \"Hello\" => \"world.\" (5000)",
         value: ""
       }
