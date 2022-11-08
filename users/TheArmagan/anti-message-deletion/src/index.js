@@ -5,11 +5,11 @@ import utils from "@acord/utils";
 
 import patchSCSS from "./styles.scss";
 
+let modifiedMessages = [];
 
 export default {
     load() {
         patchContainer.add(patchSCSS());
-        let modifiedMessages = [];
 
         function getRawMessage(chId, msgId) {
             return MessageStore.__getLocalVars().rawMessages?.[chId]?.[msgId];
