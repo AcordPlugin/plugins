@@ -18,6 +18,7 @@ export function patchTypings() {
         return ()=>{
             TypingStore.removeChangeListener(onTypings);
             localCache.typingUsers = [];
+            localCache.responseCache.clear();
         }
     })());
 
@@ -35,4 +36,12 @@ export function patchTypings() {
             });
         }
     }, 100));
+
+    patchContainer.add(utils.interval(() => {
+        localCache.responseCache.forEach((item, key) => {
+            if (Date.now() - item.at > item.ttl) {
+                localCache.responseCache.delete(key);
+            }
+        });
+    }, 1000));
 }
