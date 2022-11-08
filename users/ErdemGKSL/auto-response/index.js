@@ -2,7 +2,7 @@ import { utils } from "@acord";
 import { persist } from "@acord/extension"
 import { webpack } from "@acord/modules";
 import { FluxDispatcher, UserStore } from "@acord/modules/common";
-const transformatorRegex = /([GAD])\: ?["]((?:(?=(\\?))\3.)*?)["] ?\=> ?["]((?:(?=(\\?))\5.)*?)["] ?(?:\((\d+)\))?/gi;
+const transformatorRegex = /([GAD])\: ?["]((?:(?=(\\?))\3.)*?)["](i)? ?\=> ?["]((?:(?=(\\?))\6.)*?)["] ?(?:\(([^)]+)\))?/gi;
 const SendMessageStore = webpack.findByProps("sendMessage", "truncateMessages", "patchMessageAttachments");
 const ref = { responses: [] };
 
@@ -15,11 +15,14 @@ function handleMessageCreate({ message: msg, channelId } = {}) {
   if (!response) return;
   if (response.rateLimit > Date.now()) return;
   response.rateLimit = Date.now() + response.debounceLimit;
-  try {
-    SendMessageStore.sendMessage(channelId, { content: response.response, tts: false, invalidEmojis: [], validNonShortcutEmojis: [] }, undefined, {});
-  } catch (e) {
-    utils.logger.error(e);
-  };
+  setTimeout(()=>{
+    try {
+      let c = response.getResponse(response.matcher.exec(msg.content) || []);
+      SendMessageStore.sendMessage(channelId, { content: c, tts: false, invalidEmojis: [], validNonShortcutEmojis: [] }, undefined, reply ? { allowedMentions: undefined, messageReference: { guild_id: msg.guild_id, channel_id: msg.channel_id, message_id: msg.id } } : {});
+    } catch (e) {
+      utils.logger.error(e);
+    };
+  }, response.delay)
 }
 
 function loadResponses(val) {
@@ -27,14 +30,18 @@ function loadResponses(val) {
   const responseStr = val || persist.ghost?.settings?.responses;
   if (responseStr) ref.responses = [...(responseStr.matchAll(transformatorRegex) || [])].map(
     (...arr) => {
-      const [match, type, finderRegex, _, responseStr, __, debounce] = arr?.[0] || arr || [];
-      if (!type || !finderRegex || !responseStr) return null;
+      const [match, type, finderRegex, _, ignoreCase, responseStr, __, opts] = arr?.[0] || arr || [];
+      if (!type || !finderRegex || !responseStr?.trim()) return null;
+      let [debounce, delay, reply] = opts?.split?.(",") || [];
+      reply = reply == "true" ? true : false;
       return ({
         type: type.toLocaleUpperCase(),
-        matcher: new RegExp(finderRegex),
+        matcher: new RegExp(finderRegex, ignoreCase || ""),
         debounceLimit: Number(debounce) || 1000,
-        get response() { return eval(`\`${responseStr.replaceAll("\\\"", "\"").replaceAll("`", "\\`")}\``) },
+        delay: Number(delay) || 0,
+        getResponse($) { return eval(`\`${responseStr.replaceAll("\\\"", "\"")}\``) },
         rateLimit: 0,
+        reply
       })
     }
   ).filter(x => x);

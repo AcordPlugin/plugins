@@ -1,13 +1,14 @@
 {
-  "hash": "8404c1e7cdb38ca851ebf1b1b8e3696897a076c4351e6136499d7daafa37009s",
+  "hash": "3bdaef1fa186846042d8ba35bcaf492a15c32ab1e001289d72da6f5f62127fe9",
   "type": "plugin",
   "about": {
     "name": "Auto Response",
     "authors": [
-      "ErdemGKSL"
+      "ErdemGKSL",
+      "Kıraç Armağan Önal"
     ],
     "description": "Allows you to auto response to discord messages with regex matching.",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "license": "MIT",
     "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1039280410481397851/Discord_8NYZaRk4j7.gif"
   },
