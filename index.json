@@ -57,7 +57,7 @@
   },
   {
     "manifest": {
-      "hash": "89f9d4fa694e0e6121c9adefb43d09dddeaefdd39fd7cb1b41711feeaf248ae7",
+      "hash": "380eb60bb30d07cc818aff02d2e9a1f3b84470570c6bc4c32afb48333c3a7bf5",
       "type": "plugin",
       "about": {
         "name": "Auto Response",
@@ -66,7 +66,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Allows you to auto response to discord messages with regex matching.",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "license": "MIT",
         "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1039280410481397851/Discord_8NYZaRk4j7.gif"
       },
