@@ -18,7 +18,7 @@ function handleMessageCreate({ message: msg, channelId } = {}) {
   setTimeout(()=>{
     try {
       let c = response.getResponse(response.matcher.exec(msg.content) || []);
-      SendMessageStore.sendMessage(channelId, { content: c, tts: false, invalidEmojis: [], validNonShortcutEmojis: [] }, undefined, reply ? { allowedMentions: undefined, messageReference: { guild_id: msg.guild_id, channel_id: msg.channel_id, message_id: msg.id } } : {});
+      SendMessageStore.sendMessage(channelId, { content: c, tts: false, invalidEmojis: [], validNonShortcutEmojis: [] }, undefined, response.reply ? { allowedMentions: undefined, messageReference: { guild_id: msg.guild_id, channel_id: msg.channel_id, message_id: msg.id } } : {});
     } catch (e) {
       utils.logger.error(e);
     };
