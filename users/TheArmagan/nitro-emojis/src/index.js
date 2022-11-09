@@ -17,7 +17,7 @@ export default {
                         args[1].content = args[1].content.replace(
                             customEmoteRegex,
                             (match, animStr, emoteName, emoteId)=>{
-                                return `https://cdn.discordapp.com/emojis/${emoteId}.${animStr == "a" ? "gif" : "png"}?size=32`
+                                return ` https://cdn.discordapp.com/emojis/${emoteId}.${animStr == "a" ? "gif" : "png"}?size=32`
                             }
                         ).trim();
                     }
