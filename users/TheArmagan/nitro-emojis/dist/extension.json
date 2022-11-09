@@ -1,0 +1,13 @@
+{
+  "hash": "98a4a440183044d53a58737b8ce235da896a0d107e934d7772faea19460f65e5",
+  "type": "plugin",
+  "about": {
+    "name": "Nitro Emojis",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Use nitro emojis for free!",
+    "version": "1.0.0",
+    "license": "MIT"
+  }
+}
