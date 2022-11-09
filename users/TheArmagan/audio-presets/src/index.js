@@ -51,11 +51,11 @@ export default {
                 "placeholder": "message1=message2\ncall_ringing=https://discordcdnlink",
                 "name": "Audio Preset",
                 "description": "Your audio preset configuration.. Supports swapping sounds and also custom sounds from discord cdn(uploads) too.",
-                "cols": 6
+                "rows": 6
             },
             {
                 "type": "header",
-                "name": "Debugging"
+                "name": "Debug"
             },
             {
                 "type": "checkbox",
