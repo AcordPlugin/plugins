@@ -205,6 +205,24 @@
   },
   {
     "manifest": {
+      "hash": "98a4a440183044d53a58737b8ce235da896a0d107e934d7772faea19460f65e5",
+      "type": "plugin",
+      "about": {
+        "name": "Nitro Emojis",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Use nitro emojis for free!",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "nitro-emojis",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/nitro-emojis/dist/"
+  },
+  {
+    "manifest": {
       "hash": "5645adf427d122d96ce8488914ace094f1b8c1bfb8f4072a6549165fbb68044a",
       "type": "plugin",
       "about": {
