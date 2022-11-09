@@ -1,0 +1,13 @@
+{
+  "hash": "f5fc9794a964a1759f1fec871260a332a5e4b5b74ed1fe239036dd353876c5e6",
+  "type": "plugin",
+  "about": {
+    "name": "No Spotify Auto Pause",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Prevent Discord from pausing Spotify.",
+    "version": "1.0.0",
+    "license": "MIT"
+  }
+}
