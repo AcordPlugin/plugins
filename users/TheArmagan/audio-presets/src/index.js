@@ -2,7 +2,9 @@ import patchContainer from "./other/patchContainer.js"
 import { persist } from "@acord/extension";
 import patcher from "@acord/patcher";
 import webpack from "@acord/modules/webpack"
-import { MediaEngineStore } from "@acord/modules/common";
+import { logger } from "@acord/utils";
+import { toasts } from "@acord/ui";
+
 
 export default {
     load() {
@@ -10,8 +12,12 @@ export default {
 
         patchContainer.add(
             patcher.instead("_ensureAudio", WebSound.prototype, async function(args, instead) {
-                let t = this;
-                let map = Object.fromEntries(persist.ghost.settings.preset.split(";").map(i=>i.split("=")));
+                let map = Object.fromEntries(persist.ghost.settings.preset.split(/;|\n/).map(i=>i.trim().split("=")));
+
+                if (persist.ghost.settings.logAudioNames) {
+                    logger.log(`[Sound Presets] Sound Name: ${this.name}`);
+                    toasts.show.info(`[Sound Presets] Sound Name: ${this.name}`);
+                }
 
                 if (map[this.name]) {
                     let val = map[this.name];
@@ -35,15 +41,29 @@ export default {
     settings: {
         data: [
             {
-                "type": "input",
-                "altType": "text",
+                "type": "header",
+                "name": "Configuration"
+            },
+            {
+                "type": "textarea",
                 "property": "preset",
-                "value": "message1=message2;call_ringing=call_ringing_beat",
-                "placeholder": "message1=message2;call_ringing=call_ringing_beat",
+                "value": "message1=message2\ncall_ringing=call_ringing_beat",
+                "placeholder": "message1=message2\ncall_ringing=https://discordcdnlink",
                 "name": "Audio Preset",
-                "description": "Your audio preset configuration..",
-                "size": "large"
-            }
+                "description": "Your audio preset configuration.. Supports swapping sounds and also custom sounds from discord cdn(uploads) too.",
+                "cols": 6
+            },
+            {
+                "type": "header",
+                "name": "Debugging"
+            },
+            {
+                "type": "checkbox",
+                "name": "Log Audio Names",
+                "description": "Helpful when trying to identify which sound is which.",
+                "property": "logAudioNames",
+                "value": false
+            },
         ]
     }
 }

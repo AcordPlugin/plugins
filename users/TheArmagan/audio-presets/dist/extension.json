@@ -1,5 +1,5 @@
 {
-  "hash": "6d46105c56968bbee9c53833a21376c678276c3174168398c04a1bda725a4bba",
+  "hash": "d2afb8a9f74347d4add0c31b7b2d61b2325d9ad31708814b8e164e72e0e50107",
   "type": "plugin",
   "about": {
     "name": "Audio Presets",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Allows you to change/switch discord's audios.",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "license": "MIT"
   }
 }
