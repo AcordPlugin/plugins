@@ -1,6 +1,6 @@
 import patchContainer from "./other/patchContainer.js"
 import patcher from "@acord/patcher";
-import { MessageActions, PremiumActions } from "@acord/modules/common";
+import { MessageActions, PremiumActions, QueryActions, SelectedGuildStore } from "@acord/modules/common";
 
 const customEmoteRegex = /<(a)?:([^:]{2,})+:(\d+)>/g;
 
@@ -11,12 +11,17 @@ export default {
                 "sendMessage",
                 MessageActions,
                 async function(args, instead) {
+                    let selectedGuildId = SelectedGuildStore.getGuildId();
                     if (args[1] && args[1].content) {
                         args[1].invalidEmojis = [];
                         args[1].validNonShortcutEmojis = args[1].validNonShortcutEmojis.filter(i=>!i.available);
                         args[1].content = args[1].content.replace(
                             customEmoteRegex,
                             (match, animStr, emoteName, emoteId)=>{
+                                if (!emoteName.trim()) return match;
+                                let { emojis } = QueryActions.queryEmojiResults({query: emoteName});
+                                let emoji = [...emojis.locked, ...emojis.unlocked].find(i=>i.id == emoteId);
+                                if (emoji && !emoji.animated && selectedGuildId && emoji.guildId == selectedGuildId) return match;
                                 return ` https://cdn.discordapp.com/emojis/${emoteId}.${animStr == "a" ? "gif" : "png"}?size=32`
                             }
                         ).trim();
