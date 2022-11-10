@@ -1,5 +1,5 @@
 {
-  "hash": "e0c85477737dbf8c2c9814169d539b13dd26e99d13014d87e86145e6d5498212",
+  "hash": "60ff8b9df0ecc925d1ce2daa361ad7ac108393ed9ab33b136385a453507e73f6",
   "type": "plugin",
   "about": {
     "name": "Anti Message Deletion",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Snipe the deleted and edited messages!",
-    "version": "2.0.2",
+    "version": "2.0.4",
     "license": "MIT",
     "preview": "https://media.discordapp.net/attachments/724874750383358073/1038829310372479056/image.png"
   }

@@ -53,7 +53,7 @@ export default {
         ))
 
         while (true) {
-            if (FluxDispatcher?._actionHandlers?._orderedActionHandlers?.MESSAGE_DELETE?.find) break;
+            if (FluxDispatcher?._actionHandlers?._orderedActionHandlers?.MESSAGE_DELETE?.find?.(i=>i?.name == "MessageStore")) break;
             await new utils.sleep(50);
         }
 
@@ -86,7 +86,7 @@ export default {
         })());
 
         while (true) {
-            if (FluxDispatcher?._actionHandlers?._orderedActionHandlers?.MESSAGE_UPDATE?.find) break;
+            if (FluxDispatcher?._actionHandlers?._orderedActionHandlers?.MESSAGE_DELETE?.find?.(i=>i?.name == "MessageStore")) break;
             await new utils.sleep(50);
         }
 
