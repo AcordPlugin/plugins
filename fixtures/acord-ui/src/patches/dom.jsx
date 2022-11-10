@@ -84,105 +84,108 @@ export function patchDOM() {
             i[0].onclick = i[1];
           });
         });
+        
+      });
+    })
+  )
 
-        node.querySelectorAll(`.${anchorClasses.anchor}.${anchorClasses.anchorUnderlineOnHover}`).forEach(async (elm) => {
-          if (elm.querySelector(".acord--patched")) return;
-          elm.classList.add("acord--patched");
+  patchContainer.add(
+    dom.patch(
+      `.${anchorClasses.anchor}.${anchorClasses.anchorUnderlineOnHover}`,
+      async (elm) => {
+        let originalHref = elm.href;
+        if (!originalHref.endsWith("/")) originalHref += "/";
+        if (!extensionsRegex.test(originalHref)) return;
 
-          let originalHref = elm.href;
-          if (!originalHref.endsWith("/")) originalHref += "/";
-          if (!extensionsRegex.test(originalHref)) return;
+        let [, extensionType, extensionPath] = originalHref.match(extensionsRegex);
+        if (extensionType.endsWith("s")) extensionType = extensionType.slice(0, -1);
+        let extensionTypeUpper = extensionType.toUpperCase();
+        let href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
 
-          let [, extensionType, extensionPath] = originalHref.match(extensionsRegex);
-          if (extensionType.endsWith("s")) extensionType = extensionType.slice(0, -1);
-          let extensionTypeUpper = extensionType.toUpperCase();
-          let href = `https://raw.githubusercontent.com/AcordPlugin/${extensionType}s/main/users/${extensionPath.endsWith("/") ? extensionPath.slice(0, -1) : extensionPath}/dist/`;
+        let manifest;
 
-          let manifest;
+        try {
+          manifest = await (await fetch(`${href}extension.json`, { cache: "no-store" })).json();
+        } catch { };
 
-          try {
-            manifest = await (await fetch(`${href}extension.json`, { cache: "no-store" })).json();
-          } catch { };
+        if (!manifest) return;
 
-          if (!manifest) return;
-
-          async function toggleExtension(ask = false) {
-            if (ask) {
-              let accepted = await modals.show.confirmation(
-                manifest.about.name,
-                i18n.format(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, manifest.about.name)
-              )
-              if (!accepted) return false;
-            }
-
-            try {
-              !extensions.nests.loaded.ghost[href] ? await extensions.load(href) : await extensions.remove(href);
-            } catch (err) {
-              let errStr = `${err}`;
-              toasts.show.error(errStr);
-            }
-            return true;
+        async function toggleExtension(ask = false) {
+          if (ask) {
+            let accepted = await modals.show.confirmation(
+              manifest.about.name,
+              i18n.format(`IMPORT_${extensionTypeUpper}_DESCRIPTION`, manifest.about.name)
+            )
+            if (!accepted) return false;
           }
 
-          elm.addEventListener("click", (e) => {
+          try {
+            !extensions.nests.loaded.ghost[href] ? await extensions.load(href) : await extensions.remove(href);
+          } catch (err) {
+            let errStr = `${err}`;
+            toasts.show.error(errStr);
+          }
+          return true;
+        }
+
+        /** @type {Element} */
+        let messageElm = dom.parents(elm, `.${messageClasses.message}`)?.[0];
+        if (!messageElm) {
+          elm.addEventListener("click", async (e) => {
             e.preventDefault();
             toggleExtension(true);
           });
+          return;
+        }
 
-          /** @type {Element} */
-          let messageElm = dom.parents(elm, `.${messageClasses.message}`)?.[0];
-          if (!messageElm) return;
+        if (messageElm.querySelector(`[acord-href="${href}"]`)) return;
 
-          if (messageElm.querySelector(`[acord-href="${href}"]`)) return;
+        /** @type {Element} */
+        let cardElm = dom.parseHTML(
+          DOMGiftCard({
+            title: manifest.about.name,
+            description: manifest.about.description ? `${manifest.about.description}<br/>(v${manifest.about.version}, ${i18n.format("X_MADE_BY", manifest.about.authors.join(", "))})` : i18n.format(`IMPORT_${extensionTypeUpper}_DESCRIPTION`),
+            buttons: [
+              {
+                contents: !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`),
+                className: "toggle-extension",
+                color: !extensions.nests.loaded.ghost[href] ? "colorBrand" : "colorRed"
+              }
+            ],
+            image: manifest?.about?.preview ?? `https://github.com/AcordPlugin/assets/raw/main/${extensionType}s.png`
+          })
+        );
 
-          /** @type {Element} */
-          let cardElm = dom.parseHTML(
-            DOMGiftCard({
-              title: manifest.about.name,
-              description: manifest.about.description ? `${manifest.about.description}<br/>(v${manifest.about.version}, ${i18n.format("X_MADE_BY", manifest.about.authors.join(", "))})` : i18n.format(`IMPORT_${extensionTypeUpper}_DESCRIPTION`),
-              buttons: [
-                {
-                  contents: !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`),
-                  className: "toggle-extension",
-                  color: !extensions.nests.loaded.ghost[href] ? "colorBrand" : "colorRed"
-                },
-                {
-                  contents: DOMCopyIcon(),
-                  className: "copy-extension-link",
-                  color: "colorTransparent"
-                }
-              ],
-              image: manifest?.about?.preview ?? `https://github.com/AcordPlugin/assets/raw/main/${extensionType}s.png`
-            })
-          );
+        cardElm.setAttribute("acord-href", href);
 
-          cardElm.setAttribute("acord-href", href);
-
-          utils.ifExists(cardElm.querySelector(".toggle-extension"), /** @param {Element} item */(item) => {
-            // item.disabled = !!extensions.nests.loaded.ghost[href];
-            item.onclick = async () => {
-              item.disabled = true;
-              await toggleExtension(false);
-              item.disabled = false;
-              item.classList.remove(buttonClasses.colorBrand, buttonClasses.colorRed);
-              item.classList.add(!extensions.nests.loaded.ghost[href] ? buttonClasses.colorBrand : buttonClasses.colorRed);
-              item.firstElementChild.textContent = !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`);
-            }
+        async function toggleButton(ask=false) {
+          utils.ifExists(cardElm.querySelector(".toggle-extension"), /** @param {Element} item */async (item) => {
+            item.disabled = true;
+            await toggleExtension(ask);
+            item.disabled = false;
+            item.classList.remove(buttonClasses.colorBrand, buttonClasses.colorRed);
+            item.classList.add(!extensions.nests.loaded.ghost[href] ? buttonClasses.colorBrand : buttonClasses.colorRed);
+            item.firstElementChild.textContent = !extensions.nests.loaded.ghost[href] ? i18n.format(`IMPORT_${extensionTypeUpper}`) : i18n.format(`REMOVE_${extensionTypeUpper}`);
           });
+        }
 
-          utils.ifExists(cardElm.querySelector(".copy-extension-link"), (item) => {
-            item.onclick = () => {
-              utils.copyText(originalHref);
-              toasts.show(i18n.format("X_COPIED", originalHref));
-            }
-          });
-
-          messageElm.appendChild(
-            cardElm
-          );
+        elm.addEventListener("click", async (e) => {
+          e.preventDefault();
+          toggleButton(true);
         });
-      });
-    })
+
+        utils.ifExists(cardElm.querySelector(".toggle-extension"), /** @param {Element} item */(item) => {
+          // item.disabled = !!extensions.nests.loaded.ghost[href];
+          item.onclick = async () => {
+            toggleButton();
+          }
+        });
+
+        messageElm.appendChild(
+          cardElm
+        );
+      }
+    )
   )
 
   patchContainer.add(
