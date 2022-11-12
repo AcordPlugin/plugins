@@ -1,0 +1,24 @@
+{
+  "hash": "9faf97519029d125d2d8a0cf6f3b64041042489e554d8b1f5a0a02c33ce3d895",
+  "type": "plugin",
+  "about": {
+    "name": "Sound Board",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Sound board for Discord. Shortcut is CTRL+B",
+    "version": "1.0.0",
+    "preview": "https://media.discordapp.net/attachments/724874750383358073/1040778318389190706/Discord_GwLSnSy529.png",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "SOUND_BOARD": "Sound Board",
+      "VOLUME": "Volume: {0}%"
+    },
+    "tr": {
+      "SOUND_BOARD": "Ses Tablosu",
+      "VOLUME": "Ses Seviyesi: %{0}"
+    }
+  }
+}

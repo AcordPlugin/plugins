@@ -222,5 +222,16 @@ export function patchDOM() {
       });
     })
   )
+
+  patchContainer.add(
+    dom.patch(
+      `[class*="sidebar-"] [class*="privateChannels-"] [class*="scrollerBase-"] [class*="privateChannelsHeaderContainer-"]`,
+      /** @param {Element} elm */ (elm)=>{
+        let parent = elm.parentElement;
+
+        
+      }
+    )
+  )
 }
 
