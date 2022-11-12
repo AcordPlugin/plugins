@@ -15,8 +15,8 @@ let mem = {
 async function playSound(src, volume=0.5) {
     let conns = [...MediaEngineStore.getMediaEngine().connections];
 
-    let buff = mem.buffCache[`${src};${volume}`] || (await mem.audioContext.decodeAudioData((await (await fetch(`https://api.codetabs.com/v1/proxy/?quest=${src}`)).arrayBuffer())));
-    if (!mem.buffCache[`${src};${volume}`]) mem.buffCache[`${src};${volume}`] = buff;
+    let buff = mem.buffCache[`${src}`] || (await mem.audioContext.decodeAudioData((await (await fetch(`https://api.codetabs.com/v1/proxy/?quest=${src}`)).arrayBuffer())));
+    if (!mem.buffCache[`${src}`]) mem.buffCache[`${src}`] = buff;
 
     conns.forEach(conn=>{
         conn.startSamplesPlayback(buff, volume, ()=>{});
@@ -72,7 +72,7 @@ export default {
                 "placeholder": "SoundName;https://discordcdnlink;0.5",
                 "name": "Sounds",
                 "description": "Each line is a new sound. Format: SoundName;SoundLink;Volume",
-                "rows": 6
+                "rows": 9
             }
         ],
         update(key, value) {
