@@ -1,5 +1,5 @@
 {
-  "hash": "9faf97519029d125d2d8a0cf6f3b64041042489e554d8b1f5a0a02c33ce3d895",
+  "hash": "1cb9c593658c5923e738acbdaf60de6d09e0dab8fcc65e53b59d2f149ad9ed1f",
   "type": "plugin",
   "about": {
     "name": "Sound Board",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Sound board for Discord. Shortcut is CTRL+B",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "preview": "https://media.discordapp.net/attachments/724874750383358073/1040778318389190706/Discord_GwLSnSy529.png",
     "license": "MIT"
   },

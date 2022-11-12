@@ -61,6 +61,7 @@ export default {
         mem.audioContext.close();
         mem.audioContext = null;
         mem.table = {};
+        mem.buffCache = {};
     },
     settings: {
         data: [
