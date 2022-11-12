@@ -7,6 +7,8 @@ import patchSCSS from "./styles.scss";
 
 export default {
     async load() {
+        await new Promise(r=>setTimeout(r, 1000));
+
         let modifiedMessages = [];
         patchContainer.add(patchSCSS());
 
@@ -68,10 +70,12 @@ export default {
                 
                 getModifiedData(msg.id, true).deleted = true;
 
-                utils.ifExists(
-                    document.querySelector(`#chat-messages-${msg?.id}`),
-                    patchMsgElement
-                );
+                setTimeout(()=>{
+                    utils.ifExists(
+                        document.querySelector(`#chat-messages-${msg?.id}`),
+                        patchMsgElement
+                    );
+                }, 100);
             }
 
             // NOOP
@@ -112,10 +116,12 @@ export default {
 
                 let res = originalActionHandler.call(this, arg);
 
-                utils.ifExists(
-                    document.querySelector(`#chat-messages-${arg.message.id}`),
-                    patchMsgElement
-                );
+                setTimeout(()=>{
+                    utils.ifExists(
+                        document.querySelector(`#chat-messages-${arg.message.id}`),
+                        patchMsgElement
+                    );
+                }, 100)
                 
                 return res;
             }
