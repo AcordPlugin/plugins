@@ -30,7 +30,7 @@ const updateTable = _.debounce((v)=>{
         mem.table = {};
         return;
     }
-    mem.table = Object.fromEntries(sounds.trim().split("\n").map(i=>{ let v = i.trim().split(";"); return v.length != 3 ? null : [v[0], {src: v[1], volume: Number(v[2]) || 1}]}).filter(i=>i));
+    mem.table = Object.fromEntries(sounds.trim().split("\n").map(i=>{ let v = i.trim().split(";"); return v.length != 3 ? null : [v[0], {src: v[1], volume: Number(v[2]) ?? 1}]}).filter(i=>i));
 });
 
 export default {
