@@ -215,15 +215,18 @@ export function patchDOM() {
         if (!internal.other?.getUserBadges) return;
         let badges = await internal.other.getUserBadges(user.id);
 
-        let badge = createBadge(badges[1], sizes);
-        let tooltip = (()=>{
-          if (badge[2]?.$i18n) return i18n.format(badge[2]?.$i18n, ...(badge[2]?.$params || []));
-          if (badge[2]?.$text) return badge[2]?.$text;
-          return null;
-        })();
-        if (tooltip) badge.setAttribute("acord--tooltip-content", tooltip);
+        badges.forEach(badge=>{
+          let badgeElm = createBadge(badge[1], sizes);
+          let tooltip = (()=>{
+            if (badge[2]?.$i18n) return i18n.format(badge[2]?.$i18n, ...(badge[2]?.$params || []));
+            if (badge[2]?.$text) return badge[2]?.$text;
+            return null;
+          })();
+          if (tooltip) badgeElm.setAttribute("acord--tooltip-content", tooltip);
+          
+          elm.appendChild(badgeElm);
+        })
         
-        elm.appendChild(badge);
       })();
     })
   )
