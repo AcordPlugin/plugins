@@ -194,44 +194,51 @@ export function patchDOM() {
       let user = utils.react.getProps(elm, i=>i?.user)?.user;
       if (!user) return;
 
-      let sizes = ["profileBadges-", "container-1gYwHN"].some(i=>elm.className.includes(i)) ? [22, 14] : [24, 16];
+      // let sizes = ["profileBadges-", "container-1gYwHN"].some(i=>elm.className.includes(i)) ? [22, 14] : [24, 16];ü
+      let sizes = [22, 14];
 
-      (async () => {
+      // (async () => {
 
-        if (!internal.other?.isActiveAcordUser) return;
+      //   if (!internal.other?.isActiveAcordUser) return;
 
-        const lastLogin = await internal.other.isActiveAcordUser(user.id);
+      //   const lastLogin = await internal.other.isActiveAcordUser(user.id);
 
-        if (!lastLogin) return;
+      //   if (!lastLogin) return;
 
-        if (Date.now() - lastLogin > 1000 * 60 * 60 * 24) return;
+      //   if (Date.now() - lastLogin > 1000 * 60 * 60 * 24) return;
         
-        let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordMember.svg", sizes);
-        badge.setAttribute("acord--tooltip-content", i18n.format("ACTIVE_USER"));
+      //   let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordMember.svg", sizes);
+      //   badge.setAttribute("acord--tooltip-content", i18n.format("ACTIVE_USER"));
 
+      //   elm.appendChild(badge);
+      // })();
+
+      (async ()=>{
+        if (!acord.internal.other?.getUserBadges) return;
+        let badges = await acord.internal.other.getUserBadges(user.id);
+
+        let badge = createBadge(badges[1], sizes);
+        let tooltip = (()=>{
+          if (badge[2]?.$i18n) return i18n.format(badge[2]?.$i18n, ...(badge[2]?.$params || []));
+          if (badge[2]?.$text) return badge[2]?.$text;
+          return null;
+        })();
+        if (tooltip) badge.setAttribute("acord--tooltip-content", tooltip);
+        
         elm.appendChild(badge);
       })();
-
-      BADGES.forEach(([colors, nameFunc, users])=>{
-        if (!users.includes(user.id)) return;
-        
-        let badge = createBadge(`https://acord.app/api/badge.svg?bg=${colors[0]}&fg=${colors[1]}`, sizes);
-        badge.setAttribute("acord--tooltip-content", nameFunc());
-        
-        elm.appendChild(badge);
-      });
     })
   )
 
-  patchContainer.add(
-    dom.patch(
-      `[class*="sidebar-"] [class*="privateChannels-"] [class*="scrollerBase-"] [class*="privateChannelsHeaderContainer-"]`,
-      /** @param {Element} elm */ (elm)=>{
-        let parent = elm.parentElement;
+  // patchContainer.add(
+  //   dom.patch(
+  //     `[class*="sidebar-"] [class*="privateChannels-"] [class*="scrollerBase-"] [class*="privateChannelsHeaderContainer-"]`,
+  //     /** @param {Element} elm */ (elm)=>{
+  //       let parent = elm.parentElement;
 
         
-      }
-    )
-  )
+  //     }
+  //   )
+  // )
 }
 
