@@ -14,8 +14,6 @@ import { showModal } from "../other/apis.js";
 import { ModalBase } from "../components/modals/ModalBase.jsx";
 import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
-import { DOMCopyIcon } from "../components/dom/DOMCopyIcon.js";
-import { BADGES } from "../other/constants.js";
 
 const optionsClasses = webpack.findByProps("item", "selected", "separator");
 const anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
@@ -214,8 +212,8 @@ export function patchDOM() {
       // })();
 
       (async ()=>{
-        if (!acord.internal.other?.getUserBadges) return;
-        let badges = await acord.internal.other.getUserBadges(user.id);
+        if (!internal.other?.getUserBadges) return;
+        let badges = await internal.other.getUserBadges(user.id);
 
         let badge = createBadge(badges[1], sizes);
         let tooltip = (()=>{
