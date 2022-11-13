@@ -7,12 +7,12 @@ const PAGE_SIZE = 28;
 
 export function Modal({names, table, playSound, e}) {
     const [data, setData] = React.useState({ page: 0, names: [] });
-    const [hasMore, setHasMore] = React.useState(true);
+    const [hasMore, setHasMore] = React.useState(false);
 
     async function onChange(page=0) {
-        let d = names.slice(page*PAGE_SIZE, PAGE_SIZE);
+        let d = names.slice(page*PAGE_SIZE, page*PAGE_SIZE + PAGE_SIZE);
         setData({ page, names: d });
-        setHasMore(!!d[((page + 1)*PAGE_SIZE)+1]);
+        setHasMore(!!d[(page*PAGE_SIZE)+1]);
     }
 
     React.useEffect(()=>{
@@ -38,9 +38,9 @@ export function Modal({names, table, playSound, e}) {
                 <div className="content">
                     {data.names.map(name=>(
                         <div className="item" onClick={()=>{
-                            playSound(table[name].src, table[name].volume);
+                            if (table[name]) playSound(table[name].src, table[name].volume);
                         }}>
-                            <div className="text" acord--tooltip-content={`${name} (${i18n.format("VOLUME", ~~(table[name].volume * 100))})`}>{name}</div>
+                            <div className="text" acord--tooltip-content={`${name} (${i18n.format("VOLUME", ~~(table[name]?.volume * 100))})`}>{name}</div>
                         </div>
                     ))}
                 </div>
