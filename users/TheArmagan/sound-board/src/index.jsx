@@ -16,7 +16,6 @@ let mem = {
 
 function audioBufferSlice(buffer, begin, end) {
 
-    let duration = buffer.duration;
     let channels = buffer.numberOfChannels;
     let rate = buffer.sampleRate;
 
@@ -24,19 +23,17 @@ function audioBufferSlice(buffer, begin, end) {
     begin = begin / 1000;
     end = end / 1000;
 
-    if (begin < 0) {
-        throw new RangeError('begin time must be greater than 0');
-    }
-
-    if (end > duration) end = Math.max(0.01, duration-0.01);
+    if (end > buffer.duration) end = buffer.duration;
 
     let startOffset = rate * begin;
     let endOffset = rate * end;
-    let frameCount = endOffset - startOffset;
+    let frameCount = Math.max(endOffset - startOffset, 0);
     let newArrayBuffer;
 
+    if (!frameCount) throw "No audio left."
+
     try {
-        newArrayBuffer = mem.audioContext.createBuffer(channels, endOffset - startOffset, rate);
+        newArrayBuffer = mem.audioContext.createBuffer(channels, frameCount, rate);
         let anotherArray = new Float32Array(frameCount);
         let offset = 0;
 
@@ -51,7 +48,7 @@ function audioBufferSlice(buffer, begin, end) {
     return newArrayBuffer;
 }
 
-async function playSound(src, volume = 0.5, slice = { begin: 0, end: 5000 }, wantedEnd) {
+async function playSound(src, volume = 0.5, slice = { begin: 0, end: 1000 }, wantedEnd) {
     if (wantedEnd && slice.end > wantedEnd) return;
     let conns = [...MediaEngineStore.getMediaEngine().connections];
 
@@ -64,16 +61,14 @@ async function playSound(src, volume = 0.5, slice = { begin: 0, end: 5000 }, wan
         mem.last = `${src};${volume}`;
         conns[0].startSamplesPlayback(slicedBuff, volume, (err) => { 
             if (!err && mem.last == `${src};${volume}`) {
-                playSound(src, volume, { begin: slice.end, end: slice.end + 5000 }, wantedEnd);
+                playSound(src, volume, { begin: slice.end, end: slice.end + 1000 }, wantedEnd);
             }
         });
 
         conns.slice(1).forEach(conn => {
             conn.startSamplesPlayback(slicedBuff, volume, () => { });
         });
-    } catch (err) {
-        console.log(err);
-    }
+    } catch (err) {}
 }
 
 const updateTable = _.debounce((v) => {
