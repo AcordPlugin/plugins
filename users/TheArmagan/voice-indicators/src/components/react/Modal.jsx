@@ -131,9 +131,10 @@ export function Modal({ e, states }) {
                   className="member"
                   onClick={async (ev) => {
                     ev.preventDefault();
-                    if (modals.show.user) {
-                      modals.show.user(member.userId);
-                    } else {
+                    try {
+                      if (!modals.show.user) throw Error("Old Acord version");
+                      await modals.show.user(member.userId);
+                    } catch {
                       utils.copyText(member.userTag);
                       toasts.show(i18n.format("X_COPIED", member.userTag));
                     }
