@@ -38,7 +38,7 @@ export function Modal({names, table, playSound, e}) {
                 <div className="content">
                     {data.names.map(name=>(
                         <div className="item" onClick={()=>{
-                            if (table[name]) playSound(table[name].src, table[name].volume, { begin: table[name].begin, end: table[name].begin+1000 }, table[name].end);
+                            if (table[name]) playSound(table[name].src, table[name].volume, { begin: table[name].begin, end: table[name].begin+5000 }, table[name].end);
                         }}>
                             <div className="text" acord--tooltip-content={`${name} (${i18n.format("VOLUME", ~~(table[name]?.volume * 100))})`}>{name}</div>
                         </div>

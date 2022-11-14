@@ -28,7 +28,7 @@ function audioBufferSlice(buffer, begin, end) {
         throw new RangeError('begin time must be greater than 0');
     }
 
-    if (end > duration) end = duration;
+    if (end > duration) end = Math.max(0, duration-10);
 
     let startOffset = rate * begin;
     let endOffset = rate * end;
@@ -51,7 +51,7 @@ function audioBufferSlice(buffer, begin, end) {
     return newArrayBuffer;
 }
 
-async function playSound(src, volume = 0.5, slice = { begin: 0, end: 1000 }, wantedEnd) {
+async function playSound(src, volume = 0.5, slice = { begin: 0, end: 5000 }, wantedEnd) {
     if (wantedEnd && slice.end > wantedEnd) return;
     let conns = [...MediaEngineStore.getMediaEngine().connections];
 
@@ -64,14 +64,16 @@ async function playSound(src, volume = 0.5, slice = { begin: 0, end: 1000 }, wan
         mem.last = `${src};${volume}`;
         conns[0].startSamplesPlayback(slicedBuff, volume, (err) => { 
             if (!err && mem.last == `${src};${volume}`) {
-                playSound(src, volume, { begin: slice.end, end: slice.end + 1000 }, wantedEnd);
+                playSound(src, volume, { begin: slice.end, end: slice.end + 5000 }, wantedEnd);
             }
         });
 
         conns.slice(1).forEach(conn => {
             conn.startSamplesPlayback(slicedBuff, volume, () => { });
         });
-    } catch {}
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 const updateTable = _.debounce((v) => {
