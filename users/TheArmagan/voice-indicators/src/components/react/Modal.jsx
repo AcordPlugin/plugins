@@ -12,6 +12,7 @@ import { MuteIcon } from "./MuteIcon";
 import { VideoIcon } from "./VideoIcon";
 import { VoiceIcon } from "./VoiceIcon";
 import { i18n } from "@acord/extension";
+import modals from "@acord/ui/modals";
 
 const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
@@ -130,8 +131,12 @@ export function Modal({ e, states }) {
                   className="member"
                   onClick={async (ev) => {
                     ev.preventDefault();
-                    utils.copyText(member.userTag);
-                    toasts.show(i18n.format("X_COPIED", member.userTag));
+                    if (modals.show.user) {
+                      modals.show.user(member.userId);
+                    } else {
+                      utils.copyText(member.userTag);
+                      toasts.show(i18n.format("X_COPIED", member.userTag));
+                    }
                   }}
                 >
                   <div className="avatar" style={{ backgroundImage: `url("${member.userAvatar ? `https://cdn.discordapp.com/avatars/${member.userId}/${member.userAvatar}.png?size=128` : `https://cdn.discordapp.com/embed/avatars/${Number(member.userTag.split("#")[1]) % 5}.png`}")` }}></div>
