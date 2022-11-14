@@ -41,6 +41,16 @@ export default {
                 }
             )
         );
+
+        patchContainer.add(
+            patcher.instead(
+                "canUseAnimatedEmojis",
+                PremiumActions,
+                async function(args, instead) {
+                    return true;
+                }
+            )
+        );
     },
     unload() {
         patchContainer.removeAll();
