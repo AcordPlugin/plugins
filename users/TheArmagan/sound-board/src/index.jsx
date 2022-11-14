@@ -58,19 +58,20 @@ async function playSound(src, volume = 0.5, slice = { begin: 0, end: 1000 }, wan
     let buff = mem.buffCache[`${src}`] || (await mem.audioContext.decodeAudioData((await (await fetch(`https://api.codetabs.com/v1/proxy/?quest=${src}`)).arrayBuffer())));
     if (!mem.buffCache[`${src}`]) mem.buffCache[`${src}`] = buff;
 
-    let slicedBuff = audioBufferSlice(buff, slice.begin, slice.end);
+    try {
+        let slicedBuff = audioBufferSlice(buff, slice.begin, slice.end);
 
+        mem.last = `${src};${volume}`;
+        conns[0].startSamplesPlayback(slicedBuff, volume, (err) => { 
+            if (!err && mem.last == `${src};${volume}`) {
+                playSound(src, volume, { begin: slice.end, end: slice.end + 1000 }, wantedEnd);
+            }
+        });
 
-    mem.last = `${src};${volume}`;
-    conns[0].startSamplesPlayback(slicedBuff, volume, (err) => { 
-        if (!err && mem.last == `${src};${volume}`) {
-            playSound(src, volume, { begin: slice.end, end: slice.end + 1000 }, wantedEnd);
-        }
-    });
-
-    conns.slice(1).forEach(conn => {
-        conn.startSamplesPlayback(slicedBuff, volume, () => { });
-    });
+        conns.slice(1).forEach(conn => {
+            conn.startSamplesPlayback(slicedBuff, volume, () => { });
+        });
+    } catch {}
 }
 
 const updateTable = _.debounce((v) => {
