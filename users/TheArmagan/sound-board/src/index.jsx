@@ -28,7 +28,7 @@ function audioBufferSlice(buffer, begin, end) {
         throw new RangeError('begin time must be greater than 0');
     }
 
-    if (end > duration) end = Math.max(0, duration-10);
+    if (end > duration) end = Math.max(0.01, duration-0.01);
 
     let startOffset = rate * begin;
     let endOffset = rate * end;
