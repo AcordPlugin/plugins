@@ -1,0 +1,21 @@
+{
+  "hash": "f222753c342bc8b7faf3cfb258f78c74bd724040f06ba761dc3ea69e3b99def8",
+  "type": "plugin",
+  "about": {
+    "name": "Copy Raw Text",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Copy the raw versions of the messages.",
+    "version": "1.0.0",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "COPY_RAW_MESSAGE": "Copy Raw Message"
+    },
+    "tr": {
+      "COPY_RAW_MESSAGE": "Çiğ Mesajı Kopyala"
+    }
+  }
+}
