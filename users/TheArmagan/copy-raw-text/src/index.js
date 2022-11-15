@@ -23,7 +23,7 @@ export default {
                     )
                 }
             )
-        ); 
+        );
     },
     unload() {
         patchContainer.removeAll();
