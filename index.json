@@ -132,6 +132,24 @@
   },
   {
     "manifest": {
+      "hash": "f222753c342bc8b7faf3cfb258f78c74bd724040f06ba761dc3ea69e3b99def8",
+      "type": "plugin",
+      "about": {
+        "name": "Copy Raw Text",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Copy the raw versions of the messages.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "copy-raw-text",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/copy-raw-text/dist/"
+  },
+  {
+    "manifest": {
       "hash": "23be87ca1fa98157d2d45c61c8a91be7c8927f35c194ed96b6460ba842b07003",
       "type": "plugin",
       "about": {
