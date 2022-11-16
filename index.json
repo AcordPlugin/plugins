@@ -187,6 +187,24 @@
   },
   {
     "manifest": {
+      "hash": "8b0ed26778cc1312d0493387501060794f73461b8f4d7844d1ad30b4eadb5e0b",
+      "type": "plugin",
+      "about": {
+        "name": "Disable Typing",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Sliently type.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "disable-typing",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/disable-typing/dist/"
+  },
+  {
+    "manifest": {
       "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
       "type": "plugin",
       "about": {
