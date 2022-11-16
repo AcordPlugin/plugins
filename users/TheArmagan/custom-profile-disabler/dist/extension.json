@@ -1,5 +1,5 @@
 {
-  "hash": "b8d940966b829425650270d2b34fb6798eb53f459ae43e3ac10d9f859bffb04c",
+  "hash": "b5d8102ca9e4d5fbb47d8b81b9268789175785bcefca7319feadccc19bb9b809",
   "type": "plugin",
   "about": {
     "name": "Custom Profile Disabler",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Disable custom colored profiles on nitro users.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "preview": "https://media.discordapp.net/attachments/887446333047312464/1040540267704492063/Discord_QYexbhK7Ly.png",
     "license": "MIT"
   }
