@@ -1,14 +1,18 @@
 import patchContainer from "./other/patchContainer.js";
 import dom from "@acord/dom";
 import utils from "@acord/utils";
+import { Router, VoiceStateStore, UserStore, VoiceActions } from "@acord/modules/common";
 import patchSCSS from "./styles.scss";
 import { persist } from "@acord/extension";
+
+let lastPath = "";
+let lastVoiceChannel = "";
 
 export default {
     load() {
         patchContainer.add(patchSCSS());
 
-        if (persist.ghost?.locked) {
+        if (persist.ghost?.locked || persist.ghost?.settings?.autoLock) {
             lockApp();
         }
 
@@ -41,6 +45,8 @@ export default {
     },
     unload() {
         patchContainer.removeAll();
+        lastPath = "";
+        lastVoiceChannel = "";
     },
     settings: {
         data: [
@@ -49,10 +55,25 @@ export default {
                 "altType": "text",
                 "property": "passCode",
                 "maxLength": 8,
-                "name": "Pass Code",
+                "name": "Passcode",
                 "size": "small",
-                "value": "1234"
-            }
+                "value": "1234",
+                description: "Password for your Discord."
+            },
+            {
+                type: "checkbox",
+                name: "Auto Lock",
+                description: "Automatically lock the app when starting up the Discord.",
+                property: "autoLock",
+                value: false
+            },
+            {
+                type: "checkbox",
+                name: "Auto Disconnect",
+                description: "Automatically disconnect from voice channel and reconnect on unlock.",
+                property: "autoDisconnect",
+                value: false
+            },
         ],
         update(key, value) {
             if (key == "passCode") {
@@ -69,8 +90,12 @@ function getText() {
 }
 
 function setText(t) {
+    t = t.slice(0, 8).trim();
     utils.ifExists(document.querySelector("#app-lock .text"), (e)=>{
-        e.textContent = t.slice(0, 8);
+        e.textContent = t;
+    });
+    utils.ifExists(document.querySelector("#app-lock .input-container"), (e)=>{
+        e.classList[t ? "add" : "remove"]("active")
     });
 }
 
@@ -85,7 +110,7 @@ function lockApp() {
 
     /** @type {Element} */
     let container = dom.parseHTML(`
-        <div id="app-lock">
+        <div id="app-lock" class="hidden">
             <div class="al--container">
                 <div class="input-container">
                     <div class="text"></div>
@@ -136,7 +161,14 @@ function lockApp() {
     });
 
     appMount.appendChild(container);
+    requestAnimationFrame(()=>{
+        container.classList.remove("hidden");
+    });
     persist.store.locked = true;
+    lastPath = window.location.pathname;
+    Router.transitionTo("/");
+    lastVoiceChannel = VoiceStateStore.getVoiceStateForUser(UserStore.getCurrentUser().id)?.channelId;
+    if (persist.ghost?.settings?.autoDisconnect) VoiceActions.disconnect();
 }
 
 function submit() {
@@ -150,6 +182,15 @@ function submit() {
 function unlockApp() {
     persist.store.locked = false;
     utils.ifExists(document.querySelector("#app-lock"), (elm)=>{
-        elm.remove();
+        requestAnimationFrame(()=>{
+            elm.classList.add("hidden");
+            setTimeout(()=>{
+                elm.remove();
+            }, 150);
+        })
     });
+    Router.transitionTo(lastPath);
+    lastPath = "";
+    if (lastVoiceChannel && persist.ghost?.settings?.autoDisconnect) VoiceActions.selectVoiceChannel(lastVoiceChannel);
+    lastVoiceChannel = "";
 }
