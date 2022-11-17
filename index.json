@@ -20,7 +20,7 @@
   },
   {
     "manifest": {
-      "hash": "501c1294e4ae45cc41d426408e23548db39fa3b0ea2a5acb066df898d00a98d4",
+      "hash": "1d20ee669a7048607a1ab3feb26d2784522a6e75011ba2f026a264774ee07e83",
       "type": "plugin",
       "about": {
         "name": "App Lock",
@@ -28,7 +28,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Lock the app using CTRL+L, default password is 1234.",
-        "version": "0.0.1",
+        "version": "1.0.1",
         "license": "MIT",
         "preview": "https://media.discordapp.net/attachments/887446333047312464/1037115824625963008/unknown.png"
       }
