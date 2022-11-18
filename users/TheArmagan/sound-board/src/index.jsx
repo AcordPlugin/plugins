@@ -50,13 +50,14 @@ async function playSound(src, volume = 0.5, slice = { begin: 0, end: 1000 }, wan
 
     let buff = mem.buffCache[`${src}`] || (await mem.audioContext.decodeAudioData((await (await fetch(`https://api.codetabs.com/v1/proxy/?quest=${src}`)).arrayBuffer())));
     if (!mem.buffCache[`${src}`]) mem.buffCache[`${src}`] = buff;
+    let id = `${Math.random()}`;
 
     try {
         let slicedBuff = audioBufferSlice(buff, slice.begin, slice.end);
 
-        mem.last = `${src};${volume}`;
+        mem.last = id;
         conns[0].startSamplesPlayback(slicedBuff, volume, (err, msg) => { 
-            if (mem.last == `${src};${volume}`) {
+            if (mem.last == id) {
                 setTimeout(()=>{
                     playSound(src, volume, { begin: slice.end, end: slice.end + 1000 }, wantedEnd);
                 }, 0);
