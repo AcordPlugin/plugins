@@ -1,0 +1,21 @@
+{
+  "hash": "f56159c948e4d6e9ed8cfa4f8ad07b71c636f7104570ec68718992f6985aa440",
+  "type": "plugin",
+  "about": {
+    "name": "See Hidden Channels",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Option to see not allowed channels.",
+    "version": "1.0.0",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "SEE_HIDDEN_CHANNELS": "See Hidden Channels"
+    },
+    "tr": {
+      "SEE_HIDDEN_CHANNELS": "Gizli Kanalları Gör"
+    }
+  }
+}
