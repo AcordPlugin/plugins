@@ -28,29 +28,25 @@ function audioBufferSlice(buffer, begin, end) {
     let startOffset = rate * begin;
     let endOffset = rate * end;
     let frameCount = Math.max(endOffset - startOffset, 0);
-    let newArrayBuffer;
 
     if (!frameCount) throw "No audio left."
 
-    try {
-        newArrayBuffer = mem.audioContext.createBuffer(channels, frameCount, rate);
-        let anotherArray = new Float32Array(frameCount);
-        let offset = 0;
+    let newArrayBuffer = mem.audioContext.createBuffer(channels, frameCount, rate);
+    let anotherArray = new Float32Array(frameCount);
+    let offset = 0;
 
-        for (let channel = 0; channel < channels; channel++) {
-            buffer.copyFromChannel(anotherArray, channel, startOffset);
-            newArrayBuffer.copyToChannel(anotherArray, channel, offset);
-        }
-    } catch (e) {
-        throw e;
+    for (let channel = 0; channel < channels; channel++) {
+        buffer.copyFromChannel(anotherArray, channel, startOffset);
+        newArrayBuffer.copyToChannel(anotherArray, channel, offset);
     }
 
     return newArrayBuffer;
 }
 
-async function playSound(src, volume = 0.5, slice = { begin: 0, end: 1000 }, wantedEnd) {
+
+async function playSound(src, volume = 0.5, slice = { begin: 0, end: 1000 }, wantedEnd=Infinity) {
     if (wantedEnd && slice.end > wantedEnd) return;
-    let conns = [...MediaEngineStore.getMediaEngine().connections];
+    let conns = [...MediaEngineStore.getMediaEngine().connections].filter(i=>i.context=="default");
 
     let buff = mem.buffCache[`${src}`] || (await mem.audioContext.decodeAudioData((await (await fetch(`https://api.codetabs.com/v1/proxy/?quest=${src}`)).arrayBuffer())));
     if (!mem.buffCache[`${src}`]) mem.buffCache[`${src}`] = buff;
@@ -59,16 +55,21 @@ async function playSound(src, volume = 0.5, slice = { begin: 0, end: 1000 }, wan
         let slicedBuff = audioBufferSlice(buff, slice.begin, slice.end);
 
         mem.last = `${src};${volume}`;
-        conns[0].startSamplesPlayback(slicedBuff, volume, (err) => { 
-            if (!err && mem.last == `${src};${volume}`) {
-                playSound(src, volume, { begin: slice.end, end: slice.end + 1000 }, wantedEnd);
+        conns[0].startSamplesPlayback(slicedBuff, volume, (err, msg) => { 
+            if (mem.last == `${src};${volume}`) {
+                setTimeout(()=>{
+                    playSound(src, volume, { begin: slice.end, end: slice.end + 1000 }, wantedEnd);
+                }, 0);
             }
         });
 
         conns.slice(1).forEach(conn => {
             conn.startSamplesPlayback(slicedBuff, volume, () => { });
         });
-    } catch (err) {}
+    } catch {
+        
+    }
+
 }
 
 const updateTable = _.debounce((v) => {
