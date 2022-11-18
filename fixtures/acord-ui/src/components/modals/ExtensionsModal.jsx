@@ -25,12 +25,22 @@ export function ExtensionsModal({ extensionsType }) {
   useNest(extensions.nests.loaded);
   useNest(extensions.nests.enabled);
   const [importURL, setImportURL] = React.useState("");
+  const [searchText, setSearchText] = React.useState("");
 
   let extensionsTypeUpper = extensionsType.toUpperCase();
 
   return <>
-    <div className="import-container">
-      <div className="input-container">
+    <div className="inputs-container">
+      <div className="search-container">
+        <TextInput
+          placeholder={i18n.format(`SEARCH`)}
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value.toLowerCase());
+          }}
+        />
+      </div>
+      <div className="import-container">
         <TextInput
           placeholder={i18n.format(`IMPORT_${extensionsTypeUpper}_PLACEHOLDER`)}
           value={importURL}
@@ -39,7 +49,7 @@ export function ExtensionsModal({ extensionsType }) {
           }}
         />
       </div>
-      <div className="button-container">
+      <div className="import-button-container">
         <Button
           size={Button.Sizes.MEDIUM}
           onClick={async () => {
@@ -68,7 +78,7 @@ export function ExtensionsModal({ extensionsType }) {
     </div>
     <div className={`extensions-container ${scrollClasses.thin}`}>
       {
-        Object.entries(extensions.nests.loaded.ghost).filter(i => !i[1].manifest.locked && i[1].manifest.type == extensionsType).map(([url, extension]) => {
+        Object.entries(extensions.nests.loaded.ghost).filter(i => (!i[1].manifest.locked && i[1].manifest.type == extensionsType) && (i[1].manifest.about.name.toLowerCase().includes(searchText))).map(([url, extension]) => {
           return <div className={`extension ${extension.manifest.locked ? "locked" : ""}`}>
             <div className="top">
               <div className="right">

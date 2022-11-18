@@ -38,13 +38,23 @@
     contain: content;
 
     &--extensions {
-      .import-container {
+      .inputs-container {
         display: flex;
         align-items: center;
         gap: 8px;
         margin-bottom: 16px;
 
-        .input-container {
+        .search-container {
+          width: 25%;
+          min-width: 0%;
+          transition: width 100ms ease-in-out, min-width 100ms ease-in-out;
+          &:focus-within {
+            width: 100%;
+            min-width: 65%;
+          }
+        }
+
+        .import-container {
           width: 100%;
         }
       }
