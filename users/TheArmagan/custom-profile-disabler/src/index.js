@@ -19,7 +19,7 @@ export default {
                     let container = elm.querySelector('[class*="overlayBackground-"] [class*="scrollerBase-"]');
 
                     let toAppend = dom.parseHTML(`
-                        <div style="${!elm.className.includes("userProfileModalOuter-") ? "padding-left: 12px; " : ""}padding-top: 12px; display: flex; align-items: center; gap: 4px;">
+                        <div style="padding-top: 12px; display: flex; align-items: center; gap: 4px;">
                             <div class="color" style="cursor: pointer; border-radius: 50%; width: 14px; height: 14px; background-color: ${color1}; border: 1px solid ${isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)'};"></div>
                             <div class="color" style="cursor: pointer; border-radius: 50%; width: 14px; height: 14px; background-color: ${color2}; border: 1px solid ${isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)'};"></div>
                         </div>
