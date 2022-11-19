@@ -205,6 +205,24 @@
   },
   {
     "manifest": {
+      "hash": "0b5586ced7811d5518a0f471a3b1a11c72cb00ff67b846a4786c55a895a1b3b9",
+      "type": "plugin",
+      "about": {
+        "name": "Free Spotify Listen Along",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Listen along with people without Spotify Premium.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "free-spotify-listen-along",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/free-spotify-listen-along/dist/"
+  },
+  {
+    "manifest": {
       "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
       "type": "plugin",
       "about": {
