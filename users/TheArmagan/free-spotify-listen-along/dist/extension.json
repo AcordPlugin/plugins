@@ -1,0 +1,13 @@
+{
+  "hash": "0b5586ced7811d5518a0f471a3b1a11c72cb00ff67b846a4786c55a895a1b3b9",
+  "type": "plugin",
+  "about": {
+    "name": "Free Spotify Listen Along",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Listen along with people without Spotify Premium.",
+    "version": "1.0.0",
+    "license": "MIT"
+  }
+}
