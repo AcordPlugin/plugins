@@ -7,12 +7,10 @@ const PAGE_SIZE = 28;
 
 export function Modal({names, table, playSound, e}) {
     const [data, setData] = React.useState({ page: 0, names: [] });
-    const [hasMore, setHasMore] = React.useState(false);
 
     async function onChange(page=0) {
         let d = names.slice(page*PAGE_SIZE, page*PAGE_SIZE + PAGE_SIZE);
         setData({ page, names: d });
-        setHasMore(!!d[(page*PAGE_SIZE)+1]);
     }
 
     React.useEffect(()=>{
@@ -49,7 +47,7 @@ export function Modal({names, table, playSound, e}) {
                 <div className={`controls`}>
                     <div className={`back ${data.page == 0 ? "disabled" : ""} arrow`} onClick={()=>{ onChange(data.page-1, data.type); }}>&lt;&lt;</div>
                     <div className="page">{data.page+1}</div>
-                    <div className={`next ${!hasMore ? "disabled" : ""} arrow`} onClick={()=>{ onChange(data.page+1, data.type); }}>&gt;&gt;</div>
+                    <div className={`next arrow`} onClick={()=>{ onChange(data.page+1, data.type); }}>&gt;&gt;</div>
                 </div>
             </div>
         </div>
