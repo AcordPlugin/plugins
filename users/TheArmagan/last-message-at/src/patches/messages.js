@@ -9,7 +9,7 @@ export function patchMessages() {
 
         function onMessage({ message }) {
             if (!message.author) return;
-            localCache.updateCache[message.author.id] = Date.now();
+            localCache.updateCache[message.author.id] = new Date().toISOString();
         }
 
         FluxDispatcher.subscribe("MESSAGE_CREATE", onMessage);

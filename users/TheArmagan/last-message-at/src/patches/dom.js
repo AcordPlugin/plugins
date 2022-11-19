@@ -13,7 +13,7 @@ let colorClasses2 = webpack.find(i=>i?.defaultColor && Object.keys(i).length == 
 let titleClasses = webpack.find(i=>i?.title && i?.body && Object.keys(i).length == 2);
 
 function formatDateNum(n) {
-    let date = new Date(n + (new Date().getTimezoneOffset() * 60000));
+    let date = new Date(n);
     return `${date.toLocaleString(mainI18N.locale, { month: 'short' })} ${(new Date().getDate()).toString().padStart(2, "0")}, ${date.getFullYear()} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
 }
 
