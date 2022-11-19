@@ -134,3 +134,11 @@
     }
   }
 }
+
+.sb--add-sound {
+  cursor: pointer;
+
+  .exists {
+    color: #faa81a !important;
+  }
+}
