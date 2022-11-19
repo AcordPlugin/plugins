@@ -4,7 +4,6 @@ import { PermissionStore, Router } from "@acord/modules/common";
 import { contextMenus } from "@acord/ui";
 import { i18n } from "@acord/extension";
 
-
 const mem = {
     guildsToSee: new Set()
 };
