@@ -1,0 +1,13 @@
+{
+  "hash": "aa4141b819b28e75f7655a792983ca9812067d624a1d915d4aa05af0a7fda0e9",
+  "type": "plugin",
+  "about": {
+    "name": "See Original Name",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "See original names of the members.",
+    "version": "1.0.0",
+    "license": "MIT"
+  }
+}
