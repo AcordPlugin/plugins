@@ -1,5 +1,5 @@
 {
-  "hash": "e1941d27a6725711456153618959cb68d8884c63ca4c197a7a1e874a8936ad30",
+  "hash": "d5c745271f058dd04370ef0cc71f88fd83d664a4d1ae465cfa7197bcd9d1e23a",
   "type": "plugin",
   "about": {
     "name": "Better Role Colors",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Show member's role colors everywhere.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "preview": "https://media.discordapp.net/attachments/887446333047312464/1044237383127806092/image.png",
     "license": "MIT"
   }

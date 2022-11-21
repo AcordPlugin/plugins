@@ -28,7 +28,7 @@ export default {
                     let props = utils.react.getProps(elm, i => i?.message);
                     if (!props?.message) return;
                     let member = GuildMemberStore.getMember(SelectedGuildStore.getGuildId(), props.message.author.id);
-                    if (!member) return;
+                    if (!member?.colorString) return;
                     elm.style.color = color([color(member.colorString).hue(), 20, 255], "hsv").hexa();
                 }
             )
