@@ -14,6 +14,8 @@ import { showModal } from "../other/apis.js";
 import { ModalBase } from "../components/modals/ModalBase.jsx";
 import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
+import { DOMSidebarItem } from "../components/dom/DOMSidebarItem.js";
+import { SponsorsModal } from "../components/modals/SponsorsModal.jsx";
 
 const optionsClasses = webpack.findByProps("item", "selected", "separator");
 const anchorClasses = webpack.findByProps("anchor", "anchorUnderlineOnHover");
@@ -231,15 +233,44 @@ export function patchDOM() {
     })
   )
 
-  // patchContainer.add(
-  //   dom.patch(
-  //     `[class*="sidebar-"] [class*="privateChannels-"] [class*="scrollerBase-"] [class*="privateChannelsHeaderContainer-"]`,
-  //     /** @param {Element} elm */ (elm)=>{
-  //       let parent = elm.parentElement;
+  const interactiveClasses = webpack.findByProps("interactiveSelected", "interactive");
+  const containerClasses = webpack.find(i=>i?.container && Object.keys(i).length === 1);
+  patchContainer.add(
+    dom.patch(
+      `[class*="sidebar-"] [class*="privateChannels-"] [class*="scrollerBase-"] [class*="privateChannelsHeaderContainer-"]`,
+      /** @param {Element} elm */ (elm)=>{
 
-        
-  //     }
-  //   )
-  // )
+        // TODO: REMOVE
+        return;
+
+        let parent = elm.parentElement;
+
+        let item = dom.parseHTML(
+          `
+            <li class="${interactiveClasses.channel} ${containerClasses.container}">
+              ${
+                DOMSidebarItem({
+                  icon: `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                      <path fill="currentColor" d="M17 15.245v6.872a.5.5 0 0 1-.757.429L12 20l-4.243 2.546a.5.5 0 0 1-.757-.43v-6.87a8 8 0 1 1 10 0zm-8 1.173v3.05l3-1.8 3 1.8v-3.05A7.978 7.978 0 0 1 12 17a7.978 7.978 0 0 1-3-.582zM12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+                    </svg>
+                  `,
+                  name: i18n.format("FEATURED")
+                })
+              }
+            </li>
+          `
+        );
+
+        item.onclick = () => {
+          showModal((e) => {
+            return <SponsorsModal e={e} />
+          });
+        }
+
+        parent.insertBefore(item, elm);
+      }
+    )
+  )
 }
 

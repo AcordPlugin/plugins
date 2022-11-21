@@ -10,9 +10,11 @@ export default {
             dom.patch(
                 '[class*="voiceUser-"] > [class*="content-"] > [class*="username-"]',
                 (elm)=>{
-                    let props = utils.react.getProps(elm, i => i?.guildId);
-                    if (!props?.guildId || !props?.user) return;
-                    let member = GuildMemberStore.getMember(props.guildId, props.user.id);
+                    let uA = elm.parentElement.querySelector('[class*="userAvatar-"]');
+                    if (!uA) return;
+                    let userId = uA.style.backgroundImage.split("/")[4];
+                    if (!userId) return;
+                    let member = GuildMemberStore.getMember(SelectedGuildStore.getGuildId(), userId);
                     if (!member?.colorString || member?.colorString == "#ffffff") return;
                     let l = color(member?.colorString).l();
                     if (l < 2 || l > 98) return;
