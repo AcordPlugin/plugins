@@ -369,6 +369,24 @@
   },
   {
     "manifest": {
+      "hash": "aa4141b819b28e75f7655a792983ca9812067d624a1d915d4aa05af0a7fda0e9",
+      "type": "plugin",
+      "about": {
+        "name": "See Original Name",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "See original names of the members.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "see-original-name",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/see-original-name/dist/"
+  },
+  {
+    "manifest": {
       "hash": "d3d678cef70f51e2e61ab08f515cab8a09d35d79714ebdc46a86026a67951671",
       "type": "plugin",
       "about": {
