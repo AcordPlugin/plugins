@@ -11,10 +11,11 @@ export default {
                 /** @param {Element} elm */ (elm)=>{
                     let message = utils.react.getProps(elm, i=>i?.message)?.message;
                     if (!message) return;
+                    let nick = elm.textContent.trim();
 
-                    if (elm.textContent.trim() == message.author.username) return;
-
-                    elm.textContent = `${elm.textContent} (${message.author.username})`;
+                    if (nick == message.author.username) return;
+                    
+                    elm.textContent = `${nick} (${message.author.username})`;
                 }
             )
         )
