@@ -1,14 +1,14 @@
 [
   {
     "manifest": {
-      "hash": "b19472a1bc9e54c7f53b0889de158a1b6d337ad869dd620116d2c33fa3b5789a",
+      "hash": "b19472a1bc9e54c7f53b0889de158a1b6d337ad869dd620116d2c33fa3b5789b",
       "type": "plugin",
       "about": {
         "name": "Always On Top",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Make Discord always on to; Adds button to title-bar.",
+        "description": "Make Discord always on top; Adds button to title-bar.",
         "version": "1.0.0",
         "license": "MIT"
       }
