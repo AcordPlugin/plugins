@@ -6,7 +6,7 @@ let lastCSSPatch;
 function loadCustomCSS(css) {
     if (lastCSSPatch) lastCSSPatch();
     if (!css?.trim?.()) return;
-    cssPatches = patcher.injectCSS(css);
+    lastCSSPatch = patcher.injectCSS(css);
 }
 
 const debouncedLoad = _.debounce(lastCSSPatch, 3500);
