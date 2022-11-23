@@ -8,13 +8,13 @@ let unloader;
 export default {
   load() {
     // patcher is spitroast
-    unloader = patcher.instead('sendMessage', common.MessageActions, (original, args) => {
+    unloader = patcher.instead('sendMessage', common.MessageActions, (args, original) => {
 
-      const [channelId, message, callback] = args;
+      const [channelId, message, _] = args;
 
       const words = persist.ghost?.settings?.words?.split(`\n`);
 
-      if (!words?.length) return original(args);
+      if (!words?.length) return original(...args);
 
       let content = message.content.split(' ');
 
@@ -27,8 +27,9 @@ export default {
       }
 
       message.content = content.join(' ');
+      args[1] = message;
 
-      return original([channelId, message, callback]);
+      return original(...args);
     });
   },
   unload() {
