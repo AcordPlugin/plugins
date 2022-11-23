@@ -18,8 +18,8 @@ export default {
       if (message.content) goodWords.forEach(word => {
         if (message.content.length < 2000) {
           contentArr = contentArr.map(content => {
-            if (content.toLowerCase().includes(word.toLowerCase())) {
-              return content.replace(word, word.split("").join(noCharChar));
+            if (content.toLowerCase() == (word.toLowerCase())) {
+              return content.split("").join(noCharChar);
             }
             return content;
           });
