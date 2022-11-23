@@ -242,7 +242,7 @@
   },
   {
     "manifest": {
-      "hash": "0b5586ced7811d5518a0f471a3b1a11c72cb00ff67b846a4786c55a895a1b3b9",
+      "hash": "08273a1937aa1364f3ed7c707af5eda1ec93ef8b9e48359ab35c364093184b99",
       "type": "plugin",
       "about": {
         "name": "Free Spotify Listen Along",
@@ -250,7 +250,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Listen along with people without Spotify Premium.",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "license": "MIT"
       }
     },
