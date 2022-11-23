@@ -4,12 +4,10 @@ import { patcher } from "@acord";
 
 const noCharChar = '󠇰' || '󠇰󠇰󠇰' || '\u200B';
 
-let ref = { enabled: true };
 let unloader;
 export default {
   load() {
     unloader = patcher.instead(common.MessageActions, 'sendMessage', (original, ...args) => {
-      if (!ref.enabled) return original(...args);
 
       const [channelId, message, callback] = args;
 
