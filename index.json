@@ -205,6 +205,24 @@
   },
   {
     "manifest": {
+      "hash": "dad281b0fa211e644315d06649bd1c06ddc2d1233a5bdce9e93193ec78491fd8",
+      "type": "plugin",
+      "about": {
+        "name": "Custom CSS",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Allows you to apply custom CSS to your Discord.",
+        "version": "1.0.2",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "custom-css",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/custom-css/dist/"
+  },
+  {
+    "manifest": {
       "hash": "14b520dca5309380b263c257aed06111e88f7df31e60ac89d0c3d2dc820bc786",
       "type": "plugin",
       "about": {
