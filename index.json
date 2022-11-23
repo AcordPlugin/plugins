@@ -461,7 +461,7 @@
   },
   {
     "manifest": {
-      "hash": "8759ce58f82787d9d8feaf47e1934b3db718d75dd935f776da3a929071506d87",
+      "hash": "ca1c6a028a42d2b6e5e59a45546cfbcf9999c46783f55d41880ab4394a2804cf",
       "type": "plugin",
       "about": {
         "name": "Stereo Microphone",
@@ -469,7 +469,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Allows you to use stereo microphone on Discord.",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "license": "MIT"
       }
     },
