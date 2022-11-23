@@ -19,7 +19,7 @@ export default {
                             };
                         }
                         if (arg.fec) arg.fec = false;
-                        if (obj.encodingVoiceBitRate) obj.encodingVoiceBitRate = 5120000;
+                        if (arg.encodingVoiceBitRate) arg.encodingVoiceBitRate = 5120000;
                         return arg;
                     });
                     return response;
