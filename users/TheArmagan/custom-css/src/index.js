@@ -9,7 +9,7 @@ function loadCustomCSS(css) {
     cssPatches = patcher.injectCSS(css);
 }
 
-const debouncedLoad = _.debouncedLoad(lastCSSPatch, 3500);
+const debouncedLoad = _.debounce(lastCSSPatch, 3500);
 
 export default {
     load() {
