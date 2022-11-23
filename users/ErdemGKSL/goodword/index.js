@@ -1,36 +1,39 @@
 import { common } from "@acord/modules";
 import { persist } from "@acord/extension"
+import { patcher } from "@acord";
 
 const noCharChar = '󠇰' || '󠇰󠇰󠇰' || '\u200B';
 
 let ref = { enabled: true };
-
+let unloader;
 export default {
   load() {
-    ref.enabled = true;
-    let sendMessage = common.MessageActions.sendMessage;
-    common.MessageActions.sendMessage = function (...args) {
-      if (!ref.enabled) return sendMessage.call(this, ...args);
-      const goodWords = persist.ghost?.settings?.words?.split("\n");
-      if (!goodWords?.length) return sendMessage.call(this, ...args);
-      const [channelId, message, _] = args;
-      let contentArr = message.content.split(" ");
-      if (message.content && message.content.length < 1000) goodWords.forEach(word => {
-        if (message.content.length < 2000) {
-          contentArr = contentArr.map(content => {
-            if (content.toLowerCase() == (word.toLowerCase())) {
-              return content.split("").join(noCharChar);
-            }
-            return content;
-          });
-          message.content = contentArr.join(" ");
-        }
-      });
-      sendMessage.call(this, channelId, message, _);
-    }
+    unloader = patcher.instead(common.MessageActions, 'sendMessage', (original, ...args) => {
+      if (!ref.enabled) return original(...args);
+
+      const [channelId, message, callback] = args;
+
+      const words = persist.ghost?.settings?.words?.split(`\n`);
+
+      if (!words?.length) return original(...args);
+
+      const content = message.content.split(' ');
+
+      if (message.content && message.content.length < 1000) {
+        words.forEach(word => {
+          if (message.content.length < 2000) {
+            content = content.map(part => part.toLowerCase() === word.toLowerCase() ? part.split('').join(noCharChar) : part);
+          }
+        });
+      }
+
+      message.content = content.join(' ');
+
+      return original(channelId, message, callback);
+    });
   },
   unload() {
-    ref.enabled = false;
+    unloader?.();
   },
   settings: {
     data: [
