@@ -2,12 +2,13 @@ import { common } from "@acord/modules";
 import { persist } from "@acord/extension"
 import { patcher } from "@acord";
 
-const noCharChar = '󠇰' || '󠇰󠇰󠇰' || '\u200B';
+const noCharChar = '󠇰' || '\u200B';
 
 let unloader;
 export default {
   load() {
-    unloader = patcher.instead('sendMessage', common.MessageActions, (args, original) => {
+    // patcher is spitroast
+    unloader = patcher.instead('sendMessage', common.MessageActions, (original, args) => {
 
       const [channelId, message, callback] = args;
 
@@ -15,7 +16,7 @@ export default {
 
       if (!words?.length) return original(...args);
 
-      const content = message.content.split(' ');
+      let content = message.content.split(' ');
 
       if (message.content && message.content.length < 1000) {
         words.forEach(word => {
