@@ -242,7 +242,7 @@
   },
   {
     "manifest": {
-      "hash": "0b5586ced7811d5518a0f471a3b1a11c72cb00ff67b846a4786c55a895a1b3b9",
+      "hash": "08273a1937aa1364f3ed7c707af5eda1ec93ef8b9e48359ab35c364093184b99",
       "type": "plugin",
       "about": {
         "name": "Free Spotify Listen Along",
@@ -250,7 +250,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Listen along with people without Spotify Premium.",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "license": "MIT"
       }
     },
@@ -260,7 +260,7 @@
   },
   {
     "manifest": {
-      "hash": "26e9550c92b05479a468f35dcf9e5e843e340b183f8984e7fca16e5a443f5ea5",
+      "hash": "a7294d1c107993cb81b657f74d3ecee11abdb4356fd2038a802b9e5a1917c346",
       "type": "plugin",
       "about": {
         "name": "Goodwords",
@@ -268,7 +268,7 @@
           "Erdem Göksel"
         ],
         "description": "Makes you able to say 'good words' into strict chats that word is banned.",
-        "version": "0.0.1",
+        "version": "1.0.0",
         "license": "MIT"
       }
     },
@@ -458,6 +458,24 @@
     "user": "TheArmagan",
     "slug": "sound-board",
     "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/sound-board/dist/"
+  },
+  {
+    "manifest": {
+      "hash": "8759ce58f82787d9d8feaf47e1934b3db718d75dd935f776da3a929071506d87",
+      "type": "plugin",
+      "about": {
+        "name": "Stereo Microphone",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Allows you to use stereo microphone on Discord.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "stereo-microphone",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/stereo-microphone/dist/"
   },
   {
     "manifest": {

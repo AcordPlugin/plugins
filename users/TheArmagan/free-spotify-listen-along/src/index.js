@@ -9,7 +9,9 @@ export default {
                 "getActiveSocketAndDevice",
                 SpotifyStore,
                 async function(args, response) {
-                    if (response?.socket) response.socket.isPremium = true;
+                    if (response?.socket) return Object.assign(response, {
+                        socket: Object.assign({}, response.socket, { isPremium: true })
+                    });
                     return response;
                 }
             )
