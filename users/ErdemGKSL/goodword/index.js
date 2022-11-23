@@ -9,7 +9,6 @@ export default {
   load() {
     ref.enabled = true;
     let sendMessage = common.MessageActions.sendMessage;
-
     common.MessageActions.sendMessage = function (...args) {
       if (!ref.enabled) return sendMessage.call(this, ...args);
       const goodWords = persist.ghost?.settings?.words?.split("\n");
