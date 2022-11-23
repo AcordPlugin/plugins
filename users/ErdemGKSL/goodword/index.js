@@ -1,7 +1,7 @@
 import { common } from "@acord/modules";
 import { persist } from "@acord/extension"
 
-const noCharChar = '󠇰󠇰󠇰' || '\u200B';
+const noCharChar = '󠇰' || '󠇰󠇰󠇰' || '\u200B';
 
 let ref = { enabled: true };
 
