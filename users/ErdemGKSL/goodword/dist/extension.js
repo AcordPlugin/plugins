@@ -1,0 +1,3 @@
+(function(e,c){"use strict";const i="\u{E01F0}\u{E01F0}\u{E01F0}";var r={load(){let n=e.common.MessageActions.sendMessage;e.common.MessageActions.sendMessage=function(...s){const o=c.persist.ghost?.settings?.words?.split(`
+`);if(!o?.length)return n.call(this,...s);const[l,t,d]=s;t.content&&o.forEach(a=>{t.content.length<2e3&&(t.content=t.content.replaceAll(a,a.split("").join(i)))}),n.call(this,l,t,d)}},unload(){},settings:{data:[{type:"textarea",name:"Good words",rows:6,property:"words",description:"The words you want to say in chat without blocking by the bot.",placeholder:`shit
+bitch`,value:""}]}};return r})(acord.modules,acord.extension);
