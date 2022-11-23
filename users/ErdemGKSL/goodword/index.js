@@ -7,7 +7,7 @@ const noCharChar = '󠇰' || '󠇰󠇰󠇰' || '\u200B';
 let unloader;
 export default {
   load() {
-    unloader = patcher.instead(common.MessageActions, 'sendMessage', (original, ...args) => {
+    unloader = patcher.instead('sendMessage', common.MessageActions, (args, original) => {
 
       const [channelId, message, callback] = args;
 
