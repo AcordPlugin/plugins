@@ -11,11 +11,21 @@ export default {
     let sendMessage = common.MessageActions.sendMessage;
 
     common.MessageActions.sendMessage = function (...args) {
+      if (!ref.enabled) return sendMessage.call(this, ...args);
       const goodWords = persist.ghost?.settings?.words?.split("\n");
       if (!goodWords?.length) return sendMessage.call(this, ...args);
       const [channelId, message, _] = args;
+      let contentArr = message.content.split(" ");
       if (message.content) goodWords.forEach(word => {
-        if (message.content.length < 2000) message.content = message.content.replaceAll(word, word.split("").join(noCharChar));
+        if (message.content.length < 2000) {
+          contentArr = contentArr.map(content => {
+            if (content.toLowerCase().includes(word.toLowerCase())) {
+              return content.replace(word, word.split("").join(noCharChar));
+            }
+            return content;
+          });
+          message.content = contentArr.join(" ");
+        }
       });
       sendMessage.call(this, channelId, message, _);
     }
