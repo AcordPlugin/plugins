@@ -1,7 +1,7 @@
 [
   {
     "manifest": {
-      "hash": "b19472a1bc9e54c7f53b0889de158a1b6d337ad869dd620116d2c33fa3b5789b",
+      "hash": "f82f509f6aee1157a9fca9e6eda82766720d494ef511a2241dd4f7f0a0e4bb90",
       "type": "plugin",
       "about": {
         "name": "Always On Top",
@@ -9,7 +9,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Make Discord always on top; Adds button to title-bar.",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "license": "MIT"
       }
     },
@@ -260,7 +260,7 @@
   },
   {
     "manifest": {
-      "hash": "91927d51077968bca5c59a4a1ed59811b8dbfa8c97986b7a1aaf5410b34a62d6",
+      "hash": "16524d18cceab86ce048781fab0a1281b9030af4ebde4c5cc2d0ef979c3accd9",
       "type": "plugin",
       "about": {
         "name": "Goodwords",
@@ -268,7 +268,7 @@
           "Erdem Göksel"
         ],
         "description": "Makes you able to say 'good words' into strict chats that word is banned.",
-        "version": "1.1.0",
+        "version": "1.2.2",
         "license": "MIT"
       }
     },
@@ -461,7 +461,7 @@
   },
   {
     "manifest": {
-      "hash": "ca1c6a028a42d2b6e5e59a45546cfbcf9999c46783f55d41880ab4394a2804cf",
+      "hash": "04de00c1d0b05d43c9711132373806e3ebf25e3182b6c627b9ea34a4f2af32c6",
       "type": "plugin",
       "about": {
         "name": "Stereo Microphone",
@@ -469,7 +469,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Allows you to use stereo microphone on Discord.",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "license": "MIT"
       }
     },
