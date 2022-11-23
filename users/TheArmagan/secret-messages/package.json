@@ -2,5 +2,8 @@
   "scripts": {
     "build": "npx acord-cli@latest build",
     "dev": "npx acord-cli@latest dev"
+  },
+  "dependencies": {
+    "google-translate-api-x": "^10.4.2"
   }
 }
