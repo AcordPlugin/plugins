@@ -205,7 +205,7 @@
   },
   {
     "manifest": {
-      "hash": "4e17f36c6af5f86d07141af66bb1414f221d1f1ad1a44b1b8c7ccd1c70750cd5",
+      "hash": "d0fe3798d265a51d84a57154f8e5909e4f584a31f859cff0f77f1860fef0209c",
       "type": "plugin",
       "about": {
         "name": "Custom CSS",
@@ -213,7 +213,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Allows you to apply custom CSS to your Discord.",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "license": "MIT"
       }
     },
