@@ -260,6 +260,24 @@
   },
   {
     "manifest": {
+      "hash": "9b6a855c8e565fada9ae00db57a28ead640353da6fb4f25eb4d652586b306e4a",
+      "type": "plugin",
+      "about": {
+        "name": "Goodwords",
+        "authors": [
+          "Erdem Göksel"
+        ],
+        "description": "Makes you able to say 'good words' into strict chats that word is banned.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "goodword",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/goodword/dist/"
+  },
+  {
+    "manifest": {
       "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
       "type": "plugin",
       "about": {
