@@ -15,7 +15,7 @@ export default {
       if (!goodWords?.length) return sendMessage.call(this, ...args);
       const [channelId, message, _] = args;
       let contentArr = message.content.split(" ");
-      if (message.content) goodWords.forEach(word => {
+      if (message.content && message.content.length < 1000) goodWords.forEach(word => {
         if (message.content.length < 2000) {
           contentArr = contentArr.map(content => {
             if (content.toLowerCase() == (word.toLowerCase())) {
