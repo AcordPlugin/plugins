@@ -260,7 +260,7 @@
   },
   {
     "manifest": {
-      "hash": "c3e5b8bd4c27d96a02fb70aaf8d5d45f51023e3f06dcf5a3edc283c060e01292",
+      "hash": "50ee346b1a4880c7d35338755b71d7364412225cf8c69c62450a17cffc005ffa",
       "type": "plugin",
       "about": {
         "name": "Goodwords",
@@ -268,7 +268,7 @@
           "Erdem Göksel"
         ],
         "description": "Makes you able to say 'good words' into strict chats that word is banned.",
-        "version": "1.2.0",
+        "version": "1.2.1",
         "license": "MIT"
       }
     },
