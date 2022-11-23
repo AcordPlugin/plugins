@@ -14,7 +14,7 @@ export default {
 
       const words = persist.ghost?.settings?.words?.split(`\n`);
 
-      if (!words?.length) return original(...args);
+      if (!words?.length) return original(args);
 
       let content = message.content.split(' ');
 
@@ -28,7 +28,7 @@ export default {
 
       message.content = content.join(' ');
 
-      return original(channelId, message, callback);
+      return original([channelId, message, callback]);
     });
   },
   unload() {
