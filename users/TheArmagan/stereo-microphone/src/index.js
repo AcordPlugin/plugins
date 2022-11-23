@@ -15,7 +15,7 @@ export default {
                         if (arg.audioEncoder) {
                             arg.audioEncoder.channels = 8;
                             arg.audioEncoder.params = {
-                                stereo: 8
+                                stereo: "8"
                             };
                         }
                         if (arg.fec) arg.fec = false;
