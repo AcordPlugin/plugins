@@ -1,5 +1,5 @@
 {
-  "hash": "b19472a1bc9e54c7f53b0889de158a1b6d337ad869dd620116d2c33fa3b5789b",
+  "hash": "f82f509f6aee1157a9fca9e6eda82766720d494ef511a2241dd4f7f0a0e4bb90",
   "type": "plugin",
   "about": {
     "name": "Always On Top",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Make Discord always on top; Adds button to title-bar.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT"
   }
 }

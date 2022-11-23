@@ -1,5 +1,4 @@
 import patchContainer from "./other/patchContainer.js";
-import utils from "@acord/utils";
 import dom from "@acord/dom";
 import webpack from "@acord/modules/webpack";
 
@@ -48,5 +47,6 @@ export default {
   },
   unload() {
     patchContainer.removeAll();
+    DiscordNative.window.setAlwaysOnTop(0, false);
   },
 };
