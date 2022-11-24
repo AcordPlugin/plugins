@@ -45,7 +45,7 @@ export default {
                 MessageActions,
                 async function (args, original) {
                     if (args[1]?.content && HIDE_REGEX.test(args[1]?.content)) {
-                        let originalContent = args[1].content.slice(3, -2);
+                        let originalContent = args[1].content.replace(HIDE_REGEX, "$2");
                         args[1].content = `${noSpaceWhitespace}${args[1].content.length > 2000 ? args[1].content.slice(0, -2) : args[1].content}`;
                         let map = data[i18n.locale] || data.default;
                         let mapLength = map.length;
