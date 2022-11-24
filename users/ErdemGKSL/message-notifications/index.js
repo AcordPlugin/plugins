@@ -59,6 +59,6 @@ export default {
 }
 
 const formatWordSettings = _.debounce((function (value) {
-  persist.store.settings.words = (persist.ghost.settings?.words || value)?.split(/ *(\n|,) */g).join(", ");
+  persist.store.settings.words = (persist.ghost.settings?.words || value)?.split(/,|\n/).map(x => x.trim()).join(", ");
   wordArr = persist.ghost.settings?.words.split(", ")
 }), 5000);
