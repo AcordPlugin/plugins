@@ -14,9 +14,12 @@ export function ExtensionSettings({ url, extension }) {
   const extensionSrc = extensions.nests.enabled.ghost[url];
   const persist = extensionSrc.api.extension.persist;
 
-  const callUpdate = typeof extensionSrc.settings?.update == "function"
-    ? extensionSrc.settings.update
-    : () => { };
+  const callUpdate = async (key, value)=>{
+    if (extensionSrc.settings?.update == "function") {
+      let newVal = extensionSrc.settings.update(key, value);
+      if (typeof newVal != "undefined") persist.store.settings[key] = newVal;
+    }
+  };
 
   const types = {
     header: (setting) => {
