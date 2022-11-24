@@ -424,6 +424,25 @@
   },
   {
     "manifest": {
+      "hash": "88dfc294d6d151b62109107784f9641d46d63491333aa87c6becef05fbf87c6b",
+      "type": "plugin",
+      "about": {
+        "name": "Secret Messages",
+        "authors": [
+          "Kıraç Armağan Önal",
+          "Erdem Göksel"
+        ],
+        "description": "Send hidden messages across the Acord platform.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "secret-messages",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/secret-messages/dist/"
+  },
+  {
+    "manifest": {
       "hash": "f56159c948e4d6e9ed8cfa4f8ad07b71c636f7104570ec68718992f6985aa440",
       "type": "plugin",
       "about": {
