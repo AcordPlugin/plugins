@@ -1,10 +1,6 @@
 {
-  "index": "./src/index.js",
+  "hash": "88dfc294d6d151b62109107784f9641d46d63491333aa87c6becef05fbf87c6b",
   "type": "plugin",
-  "out": {
-    "minify": true,
-    "directory": "./dist"
-  },
   "about": {
     "name": "Secret Messages",
     "authors": [
@@ -12,6 +8,7 @@
       "Erdem Göksel"
     ],
     "description": "Send hidden messages across the Acord platform.",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "license": "MIT"
   }
 }
