@@ -1,0 +1,13 @@
+{
+  "hash": "43b99e233055a6c849b387da5ac63f2afe29413f92a6fcd47e1d6fb522766b32",
+  "type": "plugin",
+  "about": {
+    "name": "Message Content Notifications",
+    "authors": [
+      "ErdemGKSL"
+    ],
+    "description": "Send you client notifications when someone sends a message with a specific content.",
+    "version": "0.0.1",
+    "license": "MIT"
+  }
+}
