@@ -1,5 +1,5 @@
 {
-  "hash": "f439bd997138dfc1b7af02c84f55242a259cedfb29c14234b85ab55e54cbf3cd",
+  "hash": "e55ff83d36be6e636443940ea5b75771b5e81d9904978a576c666947001afd13",
   "type": "plugin",
   "about": {
     "name": "Secret Messages",
@@ -8,7 +8,7 @@
       "Erdem Göksel"
     ],
     "description": "Send hidden messages across the Acord platform.",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": "MIT"
   }
 }

@@ -18,24 +18,26 @@ const oneTimeCache = new Map();
 
 export default {
     load() {
+        async function handleMessagePatch(elm) {
+            let message = utils.react.getProps(elm, i=>i?.message)?.message;
+            if (!message) return;
+            if (!message.content.startsWith(noSpaceWhitespace)) return;
+            let newContent;
+            if (oneTimeCache.has(message.id)) {
+                newContent = oneTimeCache.get(message.id);
+                oneTimeCache.delete(message.id);
+            } else {
+                elm.innerHTML = `${elm.innerHTML} 🔏`;
+                newContent = (await awaitResponse("get", { id: message.id, keys: [persist.ghost.settings.myKey, ...persist.ghost.settings.friendKeys.split("\n").filter(i=>i)] }))?.data;
+            }
+            if (!newContent) return;
+            elm.innerHTML = `${dom.formatContent(newContent)} 🔏`;
+        }
+
         patchContainer.add(
             dom.patch(
                 '[id*="message-content-"]',
-                async (elm)=>{
-                    let message = utils.react.getProps(elm, i=>i?.message)?.message;
-                    if (!message) return;
-                    if (!message.content.startsWith(noSpaceWhitespace)) return;
-                    let newContent;
-                    if (oneTimeCache.has(message.id)) {
-                        newContent = oneTimeCache.get(message.id);
-                        oneTimeCache.delete(message.id);
-                    } else {
-                        elm.innerHTML = `${elm.innerHTML} 🔏`;
-                        newContent = (await awaitResponse("get", { id: message.id, keys: [persist.ghost.settings.myKey, ...persist.ghost.settings.friendKeys.split("\n").filter(i=>i)] }))?.data;
-                    }
-                    if (!newContent) return;
-                    elm.innerHTML = dom.formatContent(newContent);
-                }
+                handleMessagePatch
             )
         );
 
@@ -58,6 +60,12 @@ export default {
                             oneTimeCache.set(res.body.id, originalContent);
                             called = true;
                             await awaitResponse("set", { id: res.body.id, key: persist.ghost.settings.myKey, content: originalContent }, 5000);
+                            setTimeout(()=>{
+                                utils.ifExists(
+                                    document.querySelector(`#message-content-${res.body.id}`),
+                                    handleMessagePatch
+                                )
+                            }, 100);
                             return res;
                         } catch (err){
                             console.error(err);
