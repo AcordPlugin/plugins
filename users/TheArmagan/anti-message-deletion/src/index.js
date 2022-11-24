@@ -8,8 +8,6 @@ import patchSCSS from "./styles.scss";
 
 export default {
     async load() {
-        await new Promise(r=>setTimeout(r, 1000));
-
         let modifiedMessages = [];
         patchContainer.add(patchSCSS());
 
@@ -41,7 +39,7 @@ export default {
                     utils.ifExists(
                         elm.querySelector(`#message-content-${msgId}`),
                         (contentElm)=>{
-                            contentElm.innerHTML = `${dom.formatContent(`${d.content} *(original)*`)}${d.edits.map(i=>dom.formatContent(`${i} *(edited)*`)).join("")}`;
+                            contentElm.innerHTML = `${dom.formatContent(`${d.content} *(original)*`)}<br/>${d.edits.map(i=>dom.formatContent(`${i} *(edited)*`)).join("")}`;
                         }
                     )
                 }
@@ -66,15 +64,15 @@ export default {
             let originalActionHandler = ogHandler.actionHandler;
             let storeDidChange = ogHandler.storeDidChange;
 
-            ogHandler.actionHandler = (msg)=>{
+            ogHandler.actionHandler = (arg)=>{
                 if (!persist.ghost.settings.antiDelete) return originalActionHandler.call(this, arg);
-                if (!msg?.id || !msg?.author?.id || UserStore.getUser(msg.author.id)?.bot) return;
+                if (!arg?.id || UserStore.getUser(getRawMessage(arg.channelId, arg.id)?.author?.id)?.bot) return;
                 
-                getModifiedData(msg.id, true).deleted = true;
+                getModifiedData(arg.id, true).deleted = true;
 
                 setTimeout(()=>{
                     utils.ifExists(
-                        document.querySelector(`#chat-messages-${msg?.id}`),
+                        document.querySelector(`#chat-messages-${arg?.id}`),
                         patchMsgElement
                     );
                 }, 100);
@@ -92,7 +90,7 @@ export default {
         })());
 
         while (true) {
-            if (FluxDispatcher?._actionHandlers?._orderedActionHandlers?.MESSAGE_DELETE?.find?.(i=>i?.name == "MessageStore")) break;
+            if (FluxDispatcher?._actionHandlers?._orderedActionHandlers?.MESSAGE_UPDATE?.find?.(i=>i?.name == "MessageStore")) break;
             await new utils.sleep(50);
         }
 
@@ -104,7 +102,7 @@ export default {
 
             ogHandler.actionHandler = function (arg) {
                 if (!persist.ghost.settings.antiEdit) return originalActionHandler.call(this, arg);
-                if (!arg?.message?.id || !arg?.message?.author?.id || UserStore.getUser(arg.message.author.id)?.bot) return;
+                if (!arg?.message?.id || !arg?.message?.author?.id || UserStore.getUser(arg?.message?.author?.id)?.bot) return;
 
                 if (arg.message.content) {
                     let oldMsg = getRawMessage(arg.message.channel_id, arg.message.id);
