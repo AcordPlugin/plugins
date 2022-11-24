@@ -424,7 +424,7 @@
   },
   {
     "manifest": {
-      "hash": "f439bd997138dfc1b7af02c84f55242a259cedfb29c14234b85ab55e54cbf3cd",
+      "hash": "5454d4151934fbc5d2cd82378118fcda27ba01a153bae655894b573f47a43143",
       "type": "plugin",
       "about": {
         "name": "Secret Messages",
@@ -433,7 +433,7 @@
           "Erdem Göksel"
         ],
         "description": "Send hidden messages across the Acord platform.",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "license": "MIT"
       }
     },
