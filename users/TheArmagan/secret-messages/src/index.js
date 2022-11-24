@@ -28,7 +28,7 @@ export default {
                 oneTimeCache.delete(message.id);
             } else {
                 elm.innerHTML = `${elm.innerHTML} 🔏`;
-                newContent = (await awaitResponse("get", { id: message.id, keys: [persist.ghost.settings.myKey, ...persist.ghost.settings.friendKeys.split("\n").filter(i=>i)] }))?.data;
+                newContent = (await awaitResponse("get", { id: message.id, keys: [persist.ghost.settings.myKey, ...persist.ghost.settings.friendKeys.split(/,|\n/).filter(i=>i)] }))?.data;
             }
             if (!newContent) return;
             elm.innerHTML = `${dom.formatContent(newContent)} 🔏`;
@@ -91,9 +91,9 @@ export default {
                 "property": "myKey",
                 "value": "defaultKey",
                 "name": "My Key",
-                "maxLength": "32",
+                "maxLength": 32,
                 "description": "That's your key! Share that key with your friends for seeing your secret messages!",
-                "size": "large"
+                "size": "medium"
             },
             {
                 "type": "textarea",
@@ -111,13 +111,15 @@ export default {
                     persist.store.settings.myKey = value.replaceAll(KEY_REGEX, "");
                     debouncedCb(()=>{
                         if (!persist.ghost.settings.myKey.trim()) {
-                            persist.store.settings.myKey = "default";
+                            persist.store.settings.myKey = "defaultKey";
                         }
                     });
                     break;
                 }
                 case "friendKeys": {
-                    persist.store.settings.friendKeys = value.split("\n").map(i=>i.trim().slice(0, 32).replaceAll(KEY_REGEX, "")).filter(i=>i).join("\n");
+                    debouncedCb(()=>{
+                        persist.store.settings.friendKeys = value.split(/,|\n/).map(i=>i.trim().slice(0, 32).replaceAll(KEY_REGEX, "")).join("\n");
+                    });
                     break;
                 }
             }
