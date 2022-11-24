@@ -4,6 +4,7 @@
     "dev": "npx acord-cli@latest dev"
   },
   "dependencies": {
-    "google-translate-api-x": "^10.4.2"
+    "google-translate-api-x": "^10.4.2",
+    "socket.io-client": "^4.5.4"
   }
 }

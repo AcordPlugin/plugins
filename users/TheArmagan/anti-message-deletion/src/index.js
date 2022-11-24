@@ -1,7 +1,8 @@
 import patchContainer from "./other/patchContainer.js"
-import { FluxDispatcher, MessageStore, SimpleMarkdown } from "@acord/modules/common";
+import { FluxDispatcher, MessageStore, UserStore } from "@acord/modules/common";
 import dom from "@acord/dom";
 import utils from "@acord/utils";
+import { persist } from "@acord/extension";
 
 import patchSCSS from "./styles.scss";
 
@@ -40,7 +41,7 @@ export default {
                     utils.ifExists(
                         elm.querySelector(`#message-content-${msgId}`),
                         (contentElm)=>{
-                            contentElm.innerHTML = `${d.edits.map(i=>SimpleMarkdown.markdownToHtml(`${i} *(edited)*`)).join("")}${SimpleMarkdown.markdownToHtml(`${d.content} *(original)*`)}`;
+                            contentElm.innerHTML = `${dom.formatContent(`${d.content} *(original)*`)}${d.edits.map(i=>dom.formatContent(`${i} *(edited)*`)).join("")}`;
                         }
                     )
                 }
@@ -66,7 +67,8 @@ export default {
             let storeDidChange = ogHandler.storeDidChange;
 
             ogHandler.actionHandler = (msg)=>{
-                if (!msg?.id || msg?.author?.bot) return;
+                if (!persist.ghost.settings.antiDelete) return originalActionHandler.call(this, arg);
+                if (!msg?.id || !msg?.author?.id || UserStore.getUser(msg.author.id)?.bot) return;
                 
                 getModifiedData(msg.id, true).deleted = true;
 
@@ -101,7 +103,8 @@ export default {
             let storeDidChange = ogHandler.storeDidChange;
 
             ogHandler.actionHandler = function (arg) {
-                if (!arg?.message?.id ||arg?.message?.author?.bot) return;
+                if (!persist.ghost.settings.antiEdit) return originalActionHandler.call(this, arg);
+                if (!arg?.message?.id || !arg?.message?.author?.id || UserStore.getUser(arg.message.author.id)?.bot) return;
 
                 if (arg.message.content) {
                     let oldMsg = getRawMessage(arg.message.channel_id, arg.message.id);
@@ -135,5 +138,21 @@ export default {
     },
     unload() {
         patchContainer.removeAll();
+    },
+    settings: {
+        data: [
+            {
+                type: "checkbox",
+                name: "Anti-Delete",
+                property: "antiDelete",
+                value: true
+            },
+            {
+                type: "checkbox",
+                name: "Anti-Edit",
+                property: "antiEdit",
+                value: false
+            },
+        ]
     }
 }
