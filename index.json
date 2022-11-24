@@ -351,6 +351,24 @@
   },
   {
     "manifest": {
+      "hash": "43b99e233055a6c849b387da5ac63f2afe29413f92a6fcd47e1d6fb522766b32",
+      "type": "plugin",
+      "about": {
+        "name": "Message Content Notifications",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Send you client notifications when someone sends a message with a specific content.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "message-notifications",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/message-notifications/dist/"
+  },
+  {
+    "manifest": {
       "hash": "649ef0a9edd631e1a47060472c2c329feaecbecb9ab3a9bc4a227e520622754b",
       "type": "plugin",
       "about": {
