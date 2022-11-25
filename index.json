@@ -351,15 +351,15 @@
   },
   {
     "manifest": {
-      "hash": "d159e1ed05b4b9a4cfd3c69736e065fa771bff4e810ee167ad0c4add46f54573",
+      "hash": "32d9100aacaf488b52f173ae51a147b1d113459ac8801160771dda210d74e5c5",
       "type": "plugin",
       "about": {
-        "name": "Message Content Notifications",
+        "name": "Message Notifications",
         "authors": [
           "ErdemGKSL"
         ],
         "description": "Send you client notifications when someone sends a message with a specific content.",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "license": "MIT"
       }
     },
