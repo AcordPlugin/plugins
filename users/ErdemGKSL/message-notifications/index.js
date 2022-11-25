@@ -14,13 +14,14 @@ let onMessage = ({ message }) => {
     if (messageIds.has(message.nonce || message.id)) return;
     messageIds.add(message.nonce || message.id);
     const wordIndex = message.content.indexOf(word);
-    const endIndex = wordIndex + word.length + 15;
+    const areaLength = persist.ghost.settings.areaLength || 24;
+    const endIndex = wordIndex + word.length + areaLength;
 
-    const showContent = ((wordIndex -15 > 0 ? "…" : "")
-      + escapeHTML(message.content.slice(Math.max(0,wordIndex - 15), endIndex))
+    const showContent = ((wordIndex - areaLength > 0 ? "…" : "")
+      + escapeHTML(message.content.slice(Math.max(0,wordIndex - areaLength), endIndex))
       + (message.content.length > endIndex ? "…" : "")).replaceAll(word, `<strong>${word}</strong>`);
 
-    notifications.show(`<strong>${escapeHTML(getUser(message.author.id).tag)}:</strong> ${showContent}`, {
+    notifications.show(`<strong><u>${escapeHTML(getUser(message.author.id).tag)}:</u></strong> ${showContent}`, {
       onClick: () => {
         transitionTo(`/channels/${message.guild_id || "@me"}/${message.channel_id}/${message.id}`);
       }
@@ -50,6 +51,15 @@ export default {
         description: "The words that you want to be get notified when a message contains it.",
         placeholder: "hi, how are you?",
         value: ""
+      },
+      {
+        type: "input",
+        altType: "number",
+        name: "Area Length",
+        property: "areaLength",
+        description: "The number of characters to display before and after the specified words.",
+        placeholder: "24",
+        value: 24
       }
     ],
     update(key, value) {
