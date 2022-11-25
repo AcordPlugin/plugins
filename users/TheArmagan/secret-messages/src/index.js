@@ -6,7 +6,11 @@ import { persist } from "@acord/extension";
 import { MessageActions } from "@acord/modules/common";
 import { awaitResponse, socket } from "./connection/socket.js";
 import i18n from "@acord/i18n";
-import data from "./data.json";
+import { toasts } from "@acord/ui";
+
+const mem = {
+    data: []
+}
 
 const noSpaceWhitespace = '󠇰';
 
@@ -18,10 +22,25 @@ const oneTimeCache = new Map();
 
 export default {
     load() {
+        (async ()=>{
+            let req = await fetch("https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/secret-messages/data.json");
+            if (!req.ok) {
+                mem.data = {
+                    default: [],
+                    tr: []
+                };
+                return;
+            }
+            mem.data = await req.json();
+            toasts.show.success("Secret Messages data is loaded.");
+        })();
+
         async function handleMessagePatch(elm) {
             let message = utils.react.getProps(elm, i=>i?.message)?.message;
             if (!message) return;
             if (!message.content.startsWith(noSpaceWhitespace)) return;
+            if (elm.classList.contains("sm--patched")) return;
+
             let newContent;
             if (oneTimeCache.has(message.id)) {
                 newContent = oneTimeCache.get(message.id);
@@ -31,6 +50,7 @@ export default {
                 newContent = (await awaitResponse("get", { id: message.id, keys: [persist.ghost.settings.myKey, ...persist.ghost.settings.friendKeys.split(/,|\n/).filter(i=>i)] }))?.data;
             }
             if (!newContent) return;
+            elm.classList.add("sm--patched");
             elm.innerHTML = `${dom.formatContent(newContent)} 🔏`;
         }
 
@@ -49,7 +69,7 @@ export default {
                     if (args[1]?.content && HIDE_REGEX.test(args[1]?.content)) {
                         let originalContent = args[1].content.replace(HIDE_REGEX, "$2");
                         args[1].content = `${noSpaceWhitespace}${args[1].content.length > 2000 ? args[1].content.slice(0, -2) : args[1].content}`;
-                        let map = data[i18n.locale] || data.default;
+                        let map = mem.data[i18n.locale] || mem.data.default;
                         let mapLength = map.length;
                         args[1].content = args[1].content.replace(HIDE_REGEX, (_)=>{
                             return map[Math.floor(Math.random() * mapLength)];
@@ -83,6 +103,7 @@ export default {
         patchContainer.removeAll();
         socket.disconnect();
         oneTimeCache.clear();
+        mem.data = {};
     },
     settings: {
         data: [
