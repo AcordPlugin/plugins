@@ -1,6 +1,25 @@
 [
   {
     "manifest": {
+      "hash": "e3d7c8e3feea522f53c73e436dd163809bf1dba28392a9822255343e7f6087f5",
+      "type": "theme",
+      "about": {
+        "name": "Aincrad Theme",
+        "authors": [
+          "ErdemGKSL",
+          "Anilcan"
+        ],
+        "description": "Aincrad Theme for Aincrad Bot!",
+        "version": "0.0.2",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "aincrad",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/aincrad/dist/"
+  },
+  {
+    "manifest": {
       "hash": "f82f509f6aee1157a9fca9e6eda82766720d494ef511a2241dd4f7f0a0e4bb90",
       "type": "plugin",
       "about": {
