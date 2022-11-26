@@ -1,0 +1,30 @@
+attachments: []
+author: {avatar: "3a1a4ec3c81579b9fd49de0f6679d265", bot: true, discriminator: "4982", id: "574606689920352256", username: "Sung Jin-Woo", …}
+channel_id: "762625732954030111"
+components: []
+content: ""
+edited_timestamp: null
+embeds: Array(1)
+0:
+  author: {name: "Tebrikler Anilcan 100 seviye oldun!"}
+  color: 0
+  footer: {text: "Bronz Sandık isimli eşyayı kazandın. /use yazarak kullanabilirsin.."}
+  image: {height: 278, proxy_url: "https://images-ext-1.discordapp.net/external/zd0aS…8hQUAAAAC/goku-dragon-ball-level-up-anime-gif.gif", url: "https://c.tenor.com/0pmPIX08hQUAAAAC/goku-dragon-ball-level-up-anime-gif.gif", width: 498}
+  timestamp: "2022-11-25T21:11:37.172000+00:00"
+  title: "Seviye atladın!"
+  type: "rich"
+__proto__: Object
+length: 1
+__proto__: Array(0)
+flags: 0
+guild_id: "640051835960426496"
+id: "1045809011712327760"
+member: {avatar: null, communication_disabled_until: null, deaf: false, flags: 0, joined_at: "2022-09-08T12:39:57.527000+00:00", …}
+mention_everyone: false
+mention_roles: []
+mentions: []
+pinned: false
+referenced_message: null
+timestamp: "2022-11-25T21:11:38.584000+00:00"
+tts: false
+type: 0

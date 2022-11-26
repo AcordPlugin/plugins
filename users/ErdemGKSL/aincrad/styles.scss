@@ -1,0 +1,103 @@
+.aincrad--patched {
+
+  // background color to red
+  // background-color: purple;
+  & [class*="embed-"] {
+    // set background image to "https://cdn.discordapp.com/attachments/762625732954030111/1045820430839193720/unknown.png" with 0.1 opacity important, and fit to cover
+    // background-image: url("https://cdn.discordapp.com/attachments/762625732954030111/1045820430839193720/unknown.png") !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    // display: none;
+
+    // max-width: 600px;
+    // min-width: 600px;
+
+  }
+
+  // create selector that selects if only all the "component-ifCTxY button-f2h6uQ" classes are present
+  // .button-f2h6uQ {} .contents-3ca1mk {}
+
+
+  //#region Gökkuşağı title
+  // .embedAuthorName-pGyUPR, a {
+  //   background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
+  //   -webkit-background-clip: text;
+  //   background-clip: text;
+  //   color: transparent;
+  //   animation: rainbow_animation 6s ease-in-out infinite;
+  //   background-size: 400% 100%;
+  // }
+
+  // @keyframes rainbow_animation {
+
+  //   0%,
+  //   100% {
+  //     background-position: 0 0;
+  //   }
+
+  //   50% {
+  //     background-position: 100% 0;
+  //   }
+  // }
+  //#endregion
+
+
+  //#region Dönen title
+  & [class*="embedAuthorName-"] {
+    position: relative;
+    display: inline-block;
+    // font-size: 40px;
+    color: #fff;
+    text-transform: uppercase;
+    animation: flip 2s infinite;
+    animation-delay: calc(.2s * var(--i))
+  }
+  @keyframes flip {
+    0%,80% {
+      transform: rotateY(360deg) 
+    }
+  }
+  //#endregion
+
+  //#region Dönen title 2
+//   .embedAuthorName-pGyUPR {
+    
+//   // position: absolute;
+//   // top: 50%;
+//   // left: 50%;
+//   // transform: translate(-50%,-50%);
+//   // padding: 12px 48px;
+//   color: #ffffff;
+//   background: linear-gradient(to right, white 0, #4d4d4d 10%, white 20%);
+//   background-position: 0;
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+//   animation: shine 3s infinite linear;
+//   animation-fill-mode: forwards;
+//   -webkit-text-size-adjust: none;
+//   font-weight: 600;
+//   font-size: 16px;
+//   text-decoration: none;
+//   white-space: nowrap;
+//   }
+
+// @keyframes shine {
+  
+  // 0% {
+  //   background-position: 0;
+  // }
+    
+  // 60% {
+  //   background-position: 180px;
+  // }
+    
+  // 100% {
+  //   background-position: 180px;
+  // }
+    
+// }
+//#endregion
+
+}
