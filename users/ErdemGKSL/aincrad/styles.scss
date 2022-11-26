@@ -1,18 +1,10 @@
 .aincrad--patched {
 
-  // background color to red
-  // background-color: purple;
   & [class*="embed-"] {
-    // set background image to "https://cdn.discordapp.com/attachments/762625732954030111/1045820430839193720/unknown.png" with 0.1 opacity important, and fit to cover
-    // background-image: url("https://cdn.discordapp.com/attachments/762625732954030111/1045820430839193720/unknown.png") !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-color: rgba(0, 0, 0, 0.2) !important;
-    // display: none;
-
-    // max-width: 600px;
-    // min-width: 600px;
 
   }
 
