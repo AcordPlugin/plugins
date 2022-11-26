@@ -3,6 +3,8 @@ import i18n from "@acord/i18n";
 
 export function SponsorGuildCard({ guild, selected = false }) {
 
+    
+
     return <div 
         className={`acord--sponsor-guild-card ${selected ? "selected" : ""}`} 
         style={{"--banner": `url('https://cdn.discordapp.com/banners/${guild.id}/${guild.banner}.png?size=1024')`, "--icon": `url('https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=1024')`}}

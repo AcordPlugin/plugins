@@ -241,7 +241,7 @@ export function patchDOM() {
       /** @param {Element} elm */ (elm)=>{
 
         // TODO: REMOVE
-        return;
+        // return;
 
         let parent = elm.parentElement;
 

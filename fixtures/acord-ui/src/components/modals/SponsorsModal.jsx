@@ -43,6 +43,9 @@ export function SponsorsModal({ e, guildId = undefined } = {}) {
                     </div>
                     <div className="guilds">
                         <SponsorGuildCard guild={exampleGuild} selected={false} />
+                        <SponsorGuildCard guild={exampleGuild} selected={false} />
+                        <SponsorGuildCard guild={exampleGuild} selected={true} />
+                        <SponsorGuildCard guild={exampleGuild} selected={true} />
                     </div>
                 </div>
             </div>
