@@ -16,7 +16,7 @@ export function ExtensionSettings({ url, extension }) {
 
   const callUpdate = async (key, value)=>{
     if (extensionSrc.settings?.update == "function") {
-      let newVal = extensionSrc.settings.update(key, value);
+      let newVal = await extensionSrc.settings.update(key, value);
       if (typeof newVal != "undefined") persist.store.settings[key] = newVal;
     }
   };

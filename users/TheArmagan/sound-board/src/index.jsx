@@ -199,6 +199,7 @@ export default {
         update(key, value) {
             switch (key) {
                 case "sounds": {
+                    console.log(value);
                     updateTable(value);
                     break;
                 }
