@@ -442,7 +442,7 @@
   },
   {
     "manifest": {
-      "hash": "8f7b49ee69e62898335f672f61d5aa0881c5de97ea3dbecffa11af12259e8f4e",
+      "hash": "47d03b2a53d8ef582618a604c9b6fd123d8f87519313bee1aa1f6ee48df8df31",
       "type": "plugin",
       "about": {
         "name": "Platform Indicators",
