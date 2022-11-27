@@ -152,15 +152,15 @@
   },
   {
     "manifest": {
-      "hash": "cb933716dd6d3415e1a86d4c1a62d4bee27825d5cfe93c9b9215e26baf1fbf3f",
+      "hash": "7895ab2c995b22b12ad3c5a0e7b34161fe0342a1ed3bcbf88d27b2dc42af1fc6",
       "type": "plugin",
       "about": {
         "name": "Better Spotify Activity",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Changes Listening Spotify with Listening <songName>.",
-        "version": "0.0.1",
+        "description": "Changes Listening Spotify with Listening songName.",
+        "version": "1.0.0",
         "license": "MIT"
       }
     },
