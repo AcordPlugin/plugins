@@ -1,0 +1,13 @@
+{
+  "hash": "cb933716dd6d3415e1a86d4c1a62d4bee27825d5cfe93c9b9215e26baf1fbf3f",
+  "type": "plugin",
+  "about": {
+    "name": "Better Spotify Activity",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Changes Listening Spotify with Listening <songName>.",
+    "version": "0.0.1",
+    "license": "MIT"
+  }
+}
