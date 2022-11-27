@@ -4,7 +4,7 @@ import { persist } from "@acord/extension";
 import utils from "@acord/utils";
 import patchContainer from "../other/patchContainer";
 import events from "@acord/events";
-import { ActivityStore } from "@acord/modules/common";
+import { PresenceStore } from "@acord/modules/common";
 import i18n from "@acord/i18n";
 import { Desktop } from "../icons/Desktop";
 import { Mobile } from "../icons/Mobile";
@@ -44,7 +44,7 @@ async function patchIndicators(user, elm) {
   elm.appendChild(indicatorContainer);
   indicatorContainer.render = () => {
     /** @type {{desktop?: "online" | "dnd" | "idle", web?: "online" | "dnd" | "idle", mobile?: "online" | "dnd" | "idle"} as const} */
-    const userActivity = ActivityStore?.getState()?.clientStatuses?.[user?.id];
+    const userActivity = PresenceStore?.getState()?.clientStatuses?.[user?.id];
 
     if (!userActivity) {
       indicatorContainer.innerHTML = "";

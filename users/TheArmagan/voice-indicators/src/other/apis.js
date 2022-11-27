@@ -9,7 +9,6 @@ export const {
   UserStore,
   InviteStore,
   FluxDispatcher,
-  ActivityStore,
   Router: {
     transitionTo
   },
@@ -26,9 +25,3 @@ export const { selectVoiceChannel } = webpack.findByProps(
   "selectVoiceChannel",
   "disconnect"
 );
-
-export function isPromotingAcord() {
-  let a = ActivityStore.getActivities(UserStore.getCurrentUser().id).find(i=>i.type === 4);
-  if (!a) return false;
-  return a?.state?.toLowerCase()?.includes(".gg/acord");
-}
