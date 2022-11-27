@@ -27,7 +27,8 @@ export default {
         /** @param {Element} elm */
         function patchMsgElement(elm) {
             if (!elm?.id?.startsWith("chat-messages-") || elm.antiMessageDeletionUpdate) return;
-            let msgId = elm.id.split("-").pop();
+            let msgId = elm?.id?.split("-")?.pop();
+            if (!msgId) return;
 
             elm.antiMessageDeletionUpdate = ()=>{
                 let d = getModifiedData(msgId, false);
