@@ -589,7 +589,7 @@
   },
   {
     "manifest": {
-      "hash": "16ee8484845333a43e4c333cb7e1a6014da14a635bb940dee9c465a55b96376c",
+      "hash": "9a60bd8de792aec8d9e0aa6e20a0fd91d402d870432f5495015dc5b5e431bfef",
       "type": "plugin",
       "about": {
         "name": "Voice Indicators",
