@@ -2,7 +2,7 @@ import webpack from "@acord/modules/webpack";
 import utils from "@acord/utils";
 import toasts from "@acord/ui/toasts";
 import { fetchVoiceMembers } from "../../other/api";
-import { InviteStore, ModalRoot, selectVoiceChannel, React, transitionTo, PermissionStore, Permissions, ChannelStore } from "../../other/apis";
+import { InviteActions, ModalRoot, selectVoiceChannel, React, transitionTo, PermissionStore, Permissions, ChannelStore } from "../../other/apis";
 import { COLORS } from "../../other/constants";
 import { ArrowIcon } from "./ArrowIcon";
 import { CloseIcon } from "./CloseIcon";
@@ -71,7 +71,7 @@ export function Modal({ e, states }) {
                       onClick={(ev) => {
                         ev.preventDefault();
                         if (!state.guildVanity) return;
-                        InviteStore.acceptInviteAndTransitionToInviteChannel({ inviteKey: state.guildVanity });
+                        InviteActions.acceptInviteAndTransitionToInviteChannel({ inviteKey: state.guildVanity });
                         e.onClose();
                       }}
                     >

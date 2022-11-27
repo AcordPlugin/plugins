@@ -7,7 +7,7 @@ export const {
   ChannelStore,
   GuildStore,
   UserStore,
-  InviteStore,
+  InviteActions,
   FluxDispatcher,
   Router: {
     transitionTo
