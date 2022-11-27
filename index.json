@@ -38,7 +38,7 @@
   },
   {
     "manifest": {
-      "hash": "bb38c79b82964ee0785bb3db5ad7f7efdaccf24282a00f2b07f0672fd87f2e21",
+      "hash": "fe185d151262b35c58cdf299b09f5f471e5b04624dbd195021cee451f197990f",
       "type": "plugin",
       "about": {
         "name": "Anti Message Deletion",
