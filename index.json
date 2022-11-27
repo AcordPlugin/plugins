@@ -152,6 +152,24 @@
   },
   {
     "manifest": {
+      "hash": "cb933716dd6d3415e1a86d4c1a62d4bee27825d5cfe93c9b9215e26baf1fbf3f",
+      "type": "plugin",
+      "about": {
+        "name": "Better Spotify Activity",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Changes Listening Spotify with Listening <songName>.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "better-spotify-activity",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/better-spotify-activity/dist/"
+  },
+  {
+    "manifest": {
       "hash": "110874ff6535af73a474cbf6a6b81a2d352daebc9677e20de0dbce3e7419adcc",
       "type": "plugin",
       "about": {
