@@ -94,6 +94,7 @@ export function patchDOM() {
       `.${anchorClasses.anchor}.${anchorClasses.anchorUnderlineOnHover}`,
       async (elm) => {
         let originalHref = elm.href;
+        if (!originalHref) return;
         if (!originalHref.endsWith("/")) originalHref += "/";
         if (!extensionsRegex.test(originalHref)) return;
 

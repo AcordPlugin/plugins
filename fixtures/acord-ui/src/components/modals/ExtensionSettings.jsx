@@ -5,7 +5,7 @@ import { React } from "../../other/apis.js";
 import { TextInput } from "../TextInput.jsx";
 import { TextArea } from "../TextArea.jsx";
 
-export function ExtensionSettings({ url, extension }) {
+export function ExtensionSettings({ url }) {
   useNest(extensions.nests.enabled);
   useNest(extensions.nests.enabled.ghost[url].api.extension.persist);
   const [updater, setUpdater] = React.useState("");

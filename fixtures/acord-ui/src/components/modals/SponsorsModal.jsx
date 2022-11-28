@@ -11,7 +11,7 @@ const exampleGuild = {
     name: "Minecraft",
     description: "The official Minecraft Discord!",
     id: "302094807046684672",
-    size: 865011,
+    members: 865011,
     votes: 4614,
     invite: "minecraft"
 }
@@ -42,10 +42,9 @@ export function SponsorsModal({ e, guildId = undefined } = {}) {
                         </div>
                     </div>
                     <div className="guilds">
-                        <SponsorGuildCard guild={exampleGuild} selected={false} />
-                        <SponsorGuildCard guild={exampleGuild} selected={false} />
-                        <SponsorGuildCard guild={exampleGuild} selected={true} />
-                        <SponsorGuildCard guild={exampleGuild} selected={true} />
+                        <SponsorGuildCard guild={exampleGuild} />
+                        <SponsorGuildCard guild={exampleGuild} />
+                        <SponsorGuildCard guild={exampleGuild} />
                     </div>
                 </div>
             </div>
