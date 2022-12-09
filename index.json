@@ -406,6 +406,24 @@
   },
   {
     "manifest": {
+      "hash": "ce132d9cdcef7c2f18672bb1aa96e182c88a0ca6c88e51117453776111ed27ed",
+      "type": "plugin",
+      "about": {
+        "name": "Minesweeper Sender",
+        "authors": [
+          "ErdemGKSL"
+        ],
+        "description": "Type '!!minesweeper 4'.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "ErdemGKSL",
+    "slug": "minesweeper",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/ErdemGKSL/minesweeper/dist/"
+  },
+  {
+    "manifest": {
       "hash": "649ef0a9edd631e1a47060472c2c329feaecbecb9ab3a9bc4a227e520622754b",
       "type": "plugin",
       "about": {
