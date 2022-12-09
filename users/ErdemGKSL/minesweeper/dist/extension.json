@@ -1,0 +1,13 @@
+{
+  "hash": "ce132d9cdcef7c2f18672bb1aa96e182c88a0ca6c88e51117453776111ed27ed",
+  "type": "plugin",
+  "about": {
+    "name": "Minesweeper Sender",
+    "authors": [
+      "ErdemGKSL"
+    ],
+    "description": "Type '!!minesweeper 4'.",
+    "version": "0.0.1",
+    "license": "MIT"
+  }
+}
