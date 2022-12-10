@@ -1,17 +1,19 @@
-import { Button, ModalRoot } from "../other/apis.js";
+import { Button, ModalRoot, UserStore } from "../other/apis.js";
 import { COLORS } from "../other/constants.js";
 import { CloseIcon } from "./CloseIcon.jsx";
 import webpack from "@acord/modules/webpack";
 import { useNest } from "nests/react";
-import { persist } from "@acord/extension";
+import { persist, i18n } from "@acord/extension";
 
 const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
 export function Modal({ e }) {
   useNest(persist);
 
-  if (!Array.isArray(persist.ghost.unfriends)) persist.store.unfriends = [];
-  if (!Array.isArray(persist.ghost.leavedGuilds)) persist.store.leavedGuilds = [];
+  let currentUserId = UserStore.getCurrentUser().id;
+
+  if (!Array.isArray(persist.ghost.users?.[currentUserId]?.unfriends)) persist.ghost.users[currentUserId].unfriends = [];
+  if (!Array.isArray(persist.ghost.users?.[currentUserId]?.leavedGuilds)) persist.ghost.users[currentUserId].leavedGuilds = [];
 
   return (
     <ModalRoot
@@ -20,7 +22,7 @@ export function Modal({ e }) {
       className="uagll--modal-root"
     >
       <div className="uagll--modal-header">
-        <h1 className="uagll--modal-title">Unfriend And Guild Leaves</h1>
+        <h1 className="uagll--modal-title">{i18n.format("TITLE")}</h1>
         <div className="uagll--modal-close" onClick={e.onClose}>
           <CloseIcon color={COLORS.SECONDARY} />
         </div>
@@ -29,17 +31,17 @@ export function Modal({ e }) {
 
         <section>
           <div className="section-title">
-            <h1 class="header">Unfriends</h1>
+            <h1 class="header">{i18n.format("UNFRIENDS")}</h1>
             <Button
               size={Button.Sizes.TINY}
               color={Button.Colors.TRANSPARENT}
               onClick={() => {
-                persist.store.unfriends = [];
+                persist.store.users[currentUserId].unfriends = [];
               }}
-            >Clear</Button>
+            >{i18n.format("CLEAR")}</Button>
           </div>
           <div className="section-content">
-            {(persist.ghost.unfriends || []).map((i, index) => (
+            {(persist.ghost.users?.[currentUserId]?.unfriends || []).map((i, index) => (
               <div className="item">
                 <div className="left" style={{ backgroundImage: `url('https://cdn.discordapp.com/avatars/${i.id}/${i.avatar}.png?size=256')` }}></div>
                 <div className="right">
@@ -53,8 +55,8 @@ export function Modal({ e }) {
                       </span>
                     </div>
                     <div className="right" onClick={() => {
-                      persist.store.unfriends.splice(persist.store.unfriends.findIndex(j=>j._id == i._id), 1);
-                      persist.store.unfriends = persist.store.unfriends;
+                      persist.store.users[currentUserId].unfriends.splice(persist.store.users[currentUserId].unfriends.findIndex(j => j._id == i._id), 1);
+                      persist.store.users[currentUserId].unfriends = persist.store.users[currentUserId].unfriends;
                     }}>
                       <CloseIcon color={COLORS.SECONDARY} />
                     </div>
@@ -74,17 +76,17 @@ export function Modal({ e }) {
         </section>
         <section>
           <div className="section-title">
-            <h1 class="header">Guild Leaves</h1>
+            <h1 class="header">{i18n.format("GUILD_LEAVES")}</h1>
             <Button
               size={Button.Sizes.TINY}
               color={Button.Colors.TRANSPARENT}
               onClick={() => {
-                persist.store.leavedGuilds = [];
+                persist.store.users[currentUserId].leavedGuilds = [];
               }}
-            >Clear</Button>
+            >{i18n.format("CLEAR")}</Button>
           </div>
           <div className="section-content">
-            {(persist.ghost.leavedGuilds || []).map((i, index) => (
+            {(persist.ghost.users?.[currentUserId]?.leavedGuilds || []).map((i, index) => (
               <div className="item">
                 <div className="left" style={{ backgroundImage: `url('https://cdn.discordapp.com/icons/${i.id}/${i.icon}.png?size=256')` }}></div>
                 <div className="right">
@@ -93,8 +95,8 @@ export function Modal({ e }) {
                       {i.name}
                     </div>
                     <div className="right" onClick={() => {
-                      persist.store.leavedGuilds.splice(persist.store.leavedGuilds.findIndex(j=>j._id == i._id), 1);
-                      persist.store.leavedGuilds = persist.store.leavedGuilds;
+                      persist.store.users[currentUserId].leavedGuilds.splice(persist.store.users[currentUserId].leavedGuilds.findIndex(j => j._id == i._id), 1);
+                      persist.store.users[currentUserId].leavedGuilds = persist.store.users[currentUserId].leavedGuilds;
                     }}>
                       <CloseIcon color={COLORS.SECONDARY} />
                     </div>

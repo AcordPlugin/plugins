@@ -10,6 +10,7 @@ export const {
     },
     ModalRoot
   },
-
-  Button
+  components: {
+    Button
+  }
 } = common;
