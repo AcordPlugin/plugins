@@ -1,0 +1,13 @@
+{
+  "hash": "38743fd14072bf6459f35db82fc540c3e9a87a66e5966bff78b98c5774b5ff1b",
+  "type": "plugin",
+  "about": {
+    "name": "Unlimited Accounts",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Allows you to bypass 5 accounts limit on account-switcher.",
+    "version": "1.0.0",
+    "license": "MIT"
+  }
+}
