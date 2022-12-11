@@ -625,6 +625,24 @@
   },
   {
     "manifest": {
+      "hash": "38743fd14072bf6459f35db82fc540c3e9a87a66e5966bff78b98c5774b5ff1b",
+      "type": "plugin",
+      "about": {
+        "name": "Unlimited Accounts",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Allows you to bypass 5 accounts limit on account-switcher.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "unlimited-accounts",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/unlimited-accounts/dist/"
+  },
+  {
+    "manifest": {
       "hash": "9a60bd8de792aec8d9e0aa6e20a0fd91d402d870432f5495015dc5b5e431bfef",
       "type": "plugin",
       "about": {
