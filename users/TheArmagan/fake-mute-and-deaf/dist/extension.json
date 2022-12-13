@@ -1,0 +1,25 @@
+{
+  "hash": "398f94045f7f3361aa68853d8fea86d4e0ec5f28709119ef91d91ef032fb351d",
+  "type": "plugin",
+  "about": {
+    "name": "Fake Mute and Deaf",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Allows you to fake mute and deaf your self.",
+    "version": "1.0.0",
+    "license": "MIT"
+  },
+  "i18n": {
+    "tr": {
+      "FAKE_MUTE": "Sahte Susturma",
+      "FAKE_DEAF": "Sahte Sağırlaştırma",
+      "FAKE_CAMERA": "Sahte Kamera"
+    },
+    "default": {
+      "FAKE_MUTE": "Fake Mute",
+      "FAKE_DEAF": "Fake Deaf",
+      "FAKE_CAMERA": "Fake Camera"
+    }
+  }
+}
