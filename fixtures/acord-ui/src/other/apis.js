@@ -1,7 +1,7 @@
 import common from "@acord/modules/common";
 
 export const {
-  InviteStore,
+  InviteActions,
   React,
   components: {
     Button
