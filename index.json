@@ -297,6 +297,24 @@
   },
   {
     "manifest": {
+      "hash": "398f94045f7f3361aa68853d8fea86d4e0ec5f28709119ef91d91ef032fb351d",
+      "type": "plugin",
+      "about": {
+        "name": "Fake Mute and Deaf",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Allows you to fake mute and deaf your self.",
+        "version": "1.0.0",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "fake-mute-and-deaf",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/fake-mute-and-deaf/dist/"
+  },
+  {
+    "manifest": {
       "hash": "08273a1937aa1364f3ed7c707af5eda1ec93ef8b9e48359ab35c364093184b99",
       "type": "plugin",
       "about": {
