@@ -1,15 +1,26 @@
 import patchContainer from "./other/patchContainer.js"
 import patcher from "@acord/patcher";
-import { GatewayConnectionStore, MediaEngineActions } from "@acord/modules/common";
+import { GatewayConnectionStore, MediaEngineActions, NotificationSettingsStore } from "@acord/modules/common";
 import { contextMenus } from "@acord/ui";
 import { i18n } from "@acord/extension";
 import utils from "@acord/utils";
 
+let updating = false;
 
 async function update() {
+    if (updating) return setTimeout(update, 125);
+    updating = true;
+    let state = NotificationSettingsStore.getState();
+    let toDisable = [];
+    if (!state.disabledSounds.includes("mute")) toDisable.push("mute");
+    if (!state.disabledSounds.includes("unmute")) toDisable.push("unmute");
+
+    state.disabledSounds.push(...toDisable);
     await MediaEngineActions.toggleSelfMute();
     await utils.sleep(100);
     await MediaEngineActions.toggleSelfMute();
+    state.disabledSounds = state.disabledSounds.filter(i => !toDisable.includes(i));
+    updating = false;
 }
 
 export default {
@@ -98,5 +109,6 @@ export default {
     },
     unload() {
         patchContainer.removeAll();
+        update();
     },
 }
