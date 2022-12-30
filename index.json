@@ -297,7 +297,7 @@
   },
   {
     "manifest": {
-      "hash": "7abe706a141ac668d36e9369ddf1b6ed86861fb78e34fb6778f222cc58f5eb6f",
+      "hash": "60ca0d326aba07d69e2015076703a329b9dd3af0473c18f8e1e0fada51c2fa63",
       "type": "plugin",
       "about": {
         "name": "Fake Mute and Deaf",
@@ -305,7 +305,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "Allows you to fake mute and deaf your self.",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "license": "MIT"
       }
     },
