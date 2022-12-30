@@ -28,9 +28,27 @@ export default {
         let socket = GatewayConnectionStore.getSocket();
 
         let fakeStates = {
-            selfMute: false,
-            selfDeaf: false,
-            selfVideo: false
+            _selfMute: false,
+            _selfDeaf: false,
+            _selfVideo: false,
+            get selfMute() {
+                return this._selfDeaf || this._selfMute;
+            },
+            set selfMute(val) {
+                this._selfMute = val;
+            },
+            get selfDeaf() {
+                return this._selfDeaf;
+            },
+            set selfDeaf(val) {
+                this._selfDeaf = val;
+            },
+            get selfVideo() {
+                return this._selfVideo;
+            },
+            set selfVideo(val) {
+                this._selfVideo = val;
+            }
         }
 
         let stateKeys = Object.keys(fakeStates);
