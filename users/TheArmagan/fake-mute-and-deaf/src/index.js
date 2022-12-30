@@ -2,6 +2,7 @@ import patchContainer from "./other/patchContainer.js"
 import patcher from "@acord/patcher";
 import { GatewayConnectionStore, MediaEngineActions, NotificationSettingsStore } from "@acord/modules/common";
 import { contextMenus } from "@acord/ui";
+import { persist } from "@acord/extension";
 import { i18n } from "@acord/extension";
 import utils from "@acord/utils";
 
@@ -32,6 +33,7 @@ export default {
             _selfDeaf: false,
             _selfVideo: false,
             get selfMute() {
+                if (!persist.ghost.settings.autoMute) return this._selfMute;
                 return this._selfDeaf || this._selfMute;
             },
             set selfMute(val) {
@@ -129,4 +131,15 @@ export default {
         patchContainer.removeAll();
         update();
     },
+    settings: {
+    data: [
+      {
+        type: "checkbox",
+        name: "Auto Mute",
+        description: "Auto Fake Mute on Fake Deaf.",
+        property: "autoMute",
+        value: true
+      },
+    ]
+  }
 }
