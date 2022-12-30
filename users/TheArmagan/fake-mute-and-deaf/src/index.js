@@ -51,7 +51,7 @@ export default {
             }
         }
 
-        let stateKeys = Object.keys(fakeStates);
+        let stateKeys = ["selfDeaf", "selfMute", "selfVideo"];
 
         patchContainer.add(
             patcher.before(
