@@ -75,7 +75,8 @@ export default {
 
             addTab("Loading..", "/channels/@me", true);
 
-            function updateTabElmAsSelected(elm) {
+            async function updateTabElmAsSelected(elm) {
+                await new Promise(r => setTimeout(r, 1));
                 let pathName = window.location.pathname;
                 elm.setAttribute("data-pathname", pathName);
                 elm.querySelector(".tabs--item--title").textContent = document.title;
