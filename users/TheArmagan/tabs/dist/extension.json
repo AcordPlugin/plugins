@@ -1,0 +1,13 @@
+{
+  "hash": "0c2a2629dec1d1def788589c9fc2dcc0eb5f840adec88438228e8240f873e02c",
+  "type": "plugin",
+  "about": {
+    "name": "Tabs",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Organize your Discord using tabs.",
+    "version": "0.0.1",
+    "license": "MIT"
+  }
+}
