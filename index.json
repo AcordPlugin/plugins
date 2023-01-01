@@ -607,6 +607,24 @@
   },
   {
     "manifest": {
+      "hash": "0c2a2629dec1d1def788589c9fc2dcc0eb5f840adec88438228e8240f873e02c",
+      "type": "plugin",
+      "about": {
+        "name": "Tabs",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Organize your Discord using tabs.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "tabs",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/tabs/dist/"
+  },
+  {
+    "manifest": {
       "hash": "60db14a14f9ce21c08603bc0ce34d1d0d8bd8781429ac4f517bf244e6279bb35",
       "type": "plugin",
       "about": {
