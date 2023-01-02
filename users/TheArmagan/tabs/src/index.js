@@ -49,8 +49,7 @@ export default {
                 item.setAttribute("data-pathname", startPath);
                 async function select() {
                     await new Promise(r => setTimeout(r, 1));
-                    if (location.pathname === item.getAttribute("data-pathname"))
-                        Router.transitionTo(item.getAttribute("data-pathname"));
+                    Router.transitionTo(item.getAttribute("data-pathname"));
                     document.querySelectorAll(".tabs--item--selected").forEach(e => e.classList.remove("tabs--item--selected"));
                     item.classList.add("tabs--item--selected");
 
