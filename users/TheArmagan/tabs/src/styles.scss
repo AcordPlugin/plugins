@@ -75,6 +75,12 @@
             width: 12px;
             height: 12px;
             cursor: pointer;
+            transition: 100ms ease-in-out opacity;
+
+            &--hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
         }
 
         &--disabled {

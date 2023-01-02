@@ -1,7 +1,7 @@
 import dom from "@acord/dom";
 import utils from "@acord/utils";
 import patchSCSS from "./styles.scss";
-import { subscriptions } from "@acord/extension";
+import { subscriptions, persist } from "@acord/extension";
 import { Router, ChannelStore, UserStore, GuildStore } from "@acord/modules/common";
 import { DOMCloseIcon } from "./components/DOMCloseIcon.js";
 
@@ -27,17 +27,17 @@ export default {
             `);
 
             newTabElm.onclick = () => {
-                addTab("Loading..", "/channels/@me", true);
+                addTab("Loading..", "/channels/@me", null, true);
             }
 
             container.appendChild(newTabElm);
 
-            function addTab(title, startPath, selectedByDefault) {
+            function addTab(title, startPath, iconStyleStr, selectedByDefault) {
                 /** @type {Element} */
                 let item = dom.parseHTML(`
                     <div class="tabs--item">
                         <span class="tabs--item--info">
-                            <span class="tabs--item--icon"></span>
+                            <span class="tabs--item--icon" style="${iconStyleStr || `background-color: #5865f2;`}"></span>
                             <span class="tabs--item--title">${dom.escapeHTML(title)}</span>
                         </span>
                         <span class="tabs--item--close">
@@ -49,21 +49,35 @@ export default {
                 item.setAttribute("data-pathname", startPath);
                 async function select() {
                     await new Promise(r => setTimeout(r, 1));
-                    Router.transitionTo(item.getAttribute("data-pathname"));
+                    if (location.pathname === item.getAttribute("data-pathname"))
+                        Router.transitionTo(item.getAttribute("data-pathname"));
                     document.querySelectorAll(".tabs--item--selected").forEach(e => e.classList.remove("tabs--item--selected"));
                     item.classList.add("tabs--item--selected");
+
+                    document.querySelectorAll(".tabs--item--close.tabs--item--close--hidden").forEach(e => e.classList.remove("tabs--item--close--hidden"));
+                    if (document.querySelectorAll(".tabs--item").length === 1) {
+                        document.querySelector(".tabs--item--close").classList.add("tabs--item--close--hidden");
+                    }
+
+                    saveTabs();
                 }
                 function close() {
                     document.querySelector(".tabs--item").onclick();
                     item.remove();
+                    if (document.querySelectorAll(".tabs--item").length === 1) {
+                        document.querySelector(".tabs--item--close").classList.add("tabs--item--close--hidden");
+                    }
+                    saveTabs();
                 }
                 item.select = select;
                 item.close = close;
                 item.onclick = async () => {
-                    if (location.pathname != item.getAttribute("data-pathname")) select()
+                    if (location.pathname !== item.getAttribute("data-pathname")) {
+                        select();
+                    }
                 }
                 item.querySelector(".tabs--item--close").onclick = () => {
-                    if (document.querySelectorAll(".tabs--item").length == 1) return;
+                    if (document.querySelectorAll(".tabs--item").length === 1) return;
                     close();
                 }
                 container.querySelector(".tabs--new-tab").insertAdjacentElement("beforebegin", item);
@@ -73,7 +87,14 @@ export default {
                 }
             }
 
-            addTab("Loading..", "/channels/@me", true);
+            function saveTabs() {
+                persist.store.userTabs[UserStore.getCurrentUser().id] = [...document.querySelectorAll(".tabs--item")].map(i => ({
+                    pathname: i.getAttribute("data-pathname"),
+                    title: i.querySelector(".tabs--item--title").textContent,
+                    icon: i.querySelector(".tabs--item--icon").getAttribute("style"),
+                    selected: i.classList.contains("tabs--item--selected")
+                }));
+            }
 
             async function updateTabElmAsSelected(elm) {
                 await new Promise(r => setTimeout(r, 1));
@@ -109,9 +130,7 @@ export default {
             }
 
             const mainIntervalClearer = utils.interval(() => {
-                let tabElms = [...document.querySelectorAll(".tabs--item")];
-
-                let selectedElm = tabElms.find(el => el.classList.contains("tabs--item--selected"));
+                let selectedElm = document.querySelector(".tabs--item--selected");
                 if (selectedElm) {
                     if (selectedElm.getAttribute("data-pathname") === window.location.pathname) return;
                     updateTabElmAsSelected(selectedElm);
@@ -119,6 +138,14 @@ export default {
                     [...document.querySelectorAll(".tabs--item")].pop()?.select?.();
                 }
             }, 100);
+
+            {
+                let tabs = persist.ghost.userTabs?.[UserStore.getCurrentUser().id] || [{ title: "Loading..", pathname: "/channels/@me", selected: true }];
+                console.log(tabs);
+                tabs.forEach((e) => {
+                    addTab(e.title, e.pathname, e.icon, e.selected);
+                });
+            }
 
             return () => {
                 mainIntervalClearer();
