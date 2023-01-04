@@ -3,7 +3,7 @@ import utils from "@acord/utils";
 import { contextMenus } from "@acord/ui";
 import patchSCSS from "./styles.scss";
 import { subscriptions, persist, i18n } from "@acord/extension";
-import { Router, ChannelStore, UserStore, GuildStore, modals, React } from "@acord/modules/common";
+import { Router, ChannelStore, UserStore, GuildStore, modals, React, ReadStateStore, SelectedChannelStore } from "@acord/modules/common";
 import { DOMCloseIcon } from "./components/DOMCloseIcon.js";
 import { TextInput } from "./components/TextInput.jsx";
 
@@ -58,6 +58,7 @@ export default {
                             <span class="icon" style="${iconStyleStr || `background-color: #5865f2;`}"></span>
                             <span class="title">${dom.escapeHTML(title)}</span>
                         </span>
+                        <span class="unread hidden">0</span>
                     </div>
                 `);
 
@@ -140,10 +141,12 @@ export default {
                         <span class="close">
                             ${DOMCloseIcon()}
                         </span>
+                        <span class="unread hidden">0</span>
                     </div>
                 `);
 
                 item.setAttribute("data-pathname", startPath);
+
                 async function select() {
                     await new Promise(r => setTimeout(r, 1));
                     Router.transitionTo(item.getAttribute("data-pathname"));
@@ -237,10 +240,10 @@ export default {
                 }));
             }
 
-            async function updateItemAsSelected(elm, notPath) {
+            async function updateItemAsSelected(elm) {
                 await new Promise(r => setTimeout(r, 1));
                 let pathName = window.location.pathname;
-                if (!notPath) elm.setAttribute("data-pathname", pathName);
+                elm.setAttribute("data-pathname", pathName);
                 elm.querySelector(".title").textContent = document.title;
                 let pathNameSplitted = pathName.split("/");
                 let iconStr = "";
@@ -270,6 +273,19 @@ export default {
                 elm.querySelector(".icon").setAttribute("style", iconStr ? `background-image: ${iconStr};` : `background-color: #5865f2;`);
             }
 
+            function updateItem(elm) {
+                let unreadElm = elm.querySelector(".unread");
+                let pathName = elm.getAttribute("data-pathname");
+                let pathNameSplitted = pathName.split("/");
+                if (pathNameSplitted[1] === "channels") {
+                    if (unreadElm) {
+                        let unreadCount = ReadStateStore.getUnreadCount(pathNameSplitted[3]);
+                        unreadElm.classList[unreadCount ? "remove" : "add"]("hidden");
+                        unreadElm.textContent = unreadCount;
+                    }
+                }
+            }
+
             const mainIntervalClearer = utils.interval(() => {
                 let selectedTabItemEl = document.querySelector(".tab-item.selected");
                 if (selectedTabItemEl) {
@@ -280,6 +296,8 @@ export default {
                     let item = [...document.querySelectorAll(".tab-item")].pop();
                     item ? item.select() : addTabItem(i18n.format("LOADING"), location.pathname, null, true);
                 }
+
+                document.querySelectorAll(".tab-item, .bookmark-item").forEach(updateItem);
 
                 updateBookmarks();
             }, 100);
