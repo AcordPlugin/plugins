@@ -184,6 +184,15 @@
             height: 12px;
             cursor: pointer;
             transition: 100ms ease-in-out opacity;
+            border-radius: 50%;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
 
             &.hidden {
                 opacity: 0;

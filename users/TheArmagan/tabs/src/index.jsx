@@ -25,6 +25,8 @@ export default {
             const tabItemsEl = tabsContainer.querySelector(".tab-items");
             const bookmarksEl = tabsContainer.querySelector(".bookmarks");
 
+            const closedTabs = [];
+
             utils.ifExists(document.querySelector('div[class*="bg-"]'), (e) => e.remove());
             document.querySelector('[class*="appDevToolsWrapper-"]').insertAdjacentElement("beforebegin", tabsContainer);
 
@@ -53,7 +55,7 @@ export default {
                 let itemId = Math.random().toString(36).slice(2);
                 /** @type {Element} */
                 let item = dom.parseHTML(`
-                    <div class="bookmark-item" data-id="${itemId}">
+                    <div class="bookmark-item">
                         <span class="info">
                             <span class="icon" style="${iconStyleStr || `background-color: #5865f2;`}"></span>
                             <span class="title">${dom.escapeHTML(title)}</span>
@@ -62,6 +64,7 @@ export default {
                     </div>
                 `);
 
+                item.setAttribute("data-id", itemId);
                 item.setAttribute("data-pathname", path);
 
                 async function select() {
@@ -133,7 +136,7 @@ export default {
                 let itemId = Math.random().toString(36).slice(2);
                 /** @type {Element} */
                 let item = dom.parseHTML(`
-                    <div class="tab-item" data-id="${itemId}">
+                    <div class="tab-item">
                         <span class="info">
                             <span class="icon" style="${iconStyleStr || `background-color: #5865f2;`}"></span>
                             <span class="title">${dom.escapeHTML(title)}</span>
@@ -145,6 +148,7 @@ export default {
                     </div>
                 `);
 
+                item.setAttribute("data-id", itemId);
                 item.setAttribute("data-pathname", startPath);
 
                 async function select() {
@@ -159,16 +163,23 @@ export default {
                     saveTabs();
                 }
                 function close() {
+                    let d = getTabItemData(item);
+                    if (d.pathname === closedTabs?.[0]?.pathname) closedTabs.unshift(d);
                     item.remove();
-                    document.querySelector(".tab-item").select();
+                    if (item.classList.contains("selected")) {
+                        document.querySelector(".tab-item").select();
+                    }
                     if (document.querySelectorAll(".tab-item").length === 1) {
                         document.querySelector(".close").classList.add("hidden");
                     }
+                    if (closedTabs.length > 16) closedTabs.length = 16;
                     saveTabs();
                 }
                 item.select = select;
                 item.close = close;
-                item.onclick = async () => {
+                item.onclick = async (e) => {
+                    if (e.target.classList.contains("close")) return;
+
                     if (location.pathname !== item.getAttribute("data-pathname")) {
                         select();
                     }
@@ -249,12 +260,7 @@ export default {
 
             function saveTabs() {
                 let userId = UserStore.getCurrentUser().id;
-                persist.store.userTabs[userId] = [...document.querySelectorAll(".tab-item")].map(i => ({
-                    pathname: i.getAttribute("data-pathname"),
-                    title: i.querySelector(".title").textContent,
-                    icon: i.querySelector(".icon").getAttribute("style"),
-                    selected: i.classList.contains("selected")
-                }));
+                persist.store.userTabs[userId] = [...document.querySelectorAll(".tab-item")].map(getTabItemData);
             }
 
             function saveBookmarks() {
@@ -338,21 +344,47 @@ export default {
                 });
             }
 
+            function getTabItemData(i) {
+                return {
+                    pathname: i.getAttribute("data-pathname"),
+                    title: i.querySelector(".title").textContent,
+                    icon: i.querySelector(".icon").getAttribute("style"),
+                    selected: i.classList.contains("selected")
+                }
+            }
+
             /**
              * @param {KeyboardEvent} e 
              */
-            function handleKeyUp(e) {
+            async function handleKeyUp(e) {
                 if (!(e.ctrlKey && e.shiftKey)) return;
-                if (!e.code.startsWith("Digit")) return;
 
-                let pageNumber = Math.max(Number(e.code.slice(5)) - 1, 0);
-                let tabs = [...document.querySelectorAll(".tab-item")];
-                if (tabs[pageNumber] && !tabs[pageNumber].classList.contains("selected")) tabs[pageNumber].select();
+                if (e.code === "KeyP") {
+                    let i = closedTabs.shift();
+                    if (i) {
+                        let e = addTabItem(i18n.format("LOADING"), i.pathname, i.icon);
+                        await new Promise(r => setTimeout(r, 1));
+                        e.select();
+                        await new Promise(r => setTimeout(r, 1));
+                        saveTabs();
+                    }
+                } else if (e.code.startsWith("Digit")) {
+                    let pageNumber = Math.max(Number(e.code.slice(5)) - 1, 0);
+                    let tabs = [...document.querySelectorAll(".tab-item")];
+                    if (
+                        tabs[pageNumber]
+                        && !tabs[pageNumber].classList.contains("selected")
+                        && location.pathname !== tabs[pageNumber].getAttribute("data-pathname")
+                    ) {
+                        tabs[pageNumber].select();
+                    };
+                }
             }
 
             window.addEventListener("keyup", handleKeyUp);
 
             return () => {
+                closedTabs.length = 0;
                 window.removeEventListener("keyup", handleKeyUp)
                 mainIntervalClearer();
                 tabsContainer.remove();
