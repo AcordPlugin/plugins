@@ -2,11 +2,11 @@
   "hash": "1de2e090cecbfb100ee887881946d0c3c73b23531706cc4d1674cfea575b9182",
   "type": "plugin",
   "about": {
-    "name": "Tabs",
+    "name": "Un-mirror Camera Preview",
     "authors": [
       "Kıraç Armağan Önal"
     ],
-    "description": "Un-flips your camera preview.",
+    "description": "Unmirrors your camera preview.",
     "version": "0.0.1",
     "license": "MIT"
   }
