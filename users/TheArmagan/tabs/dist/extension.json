@@ -1,5 +1,5 @@
 {
-  "hash": "588fe3f63d23a80330cb5ad564804861356ecf4367538c138281bfa88ab8f035",
+  "hash": "139e709a5623961c4e6e914bfd6bb02fcacae0f55e267fbb52f5e2a17e657c63",
   "type": "plugin",
   "about": {
     "name": "Tabs",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Organize your Discord using tabs. Support bookmarks too.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "license": "MIT"
   },
   "i18n": {
@@ -18,7 +18,10 @@
       "DELETE": "Delete",
       "CLOSE_TABS_TO_RIGHT": "Close tabs to right",
       "ADD_TO_BOOKMARKS": "Add to bookmarks",
-      "RENAME": "Rename"
+      "RENAME": "Rename",
+      "CLOSE_OTHER_TABS": "Close other tabs",
+      "MOVE_TAB_TO_LEFT": "Move tab to left",
+      "MOVE_TAB_TO_RIGHT": "Move tab to right"
     },
     "tr": {
       "LOADING": "Yükleniyor..",
@@ -27,7 +30,10 @@
       "DELETE": "Sil",
       "CLOSE_TABS_TO_RIGHT": "Sağ taraftaki sekmeleri kapat",
       "ADD_TO_BOOKMARKS": "Kitaplığa Ekle",
-      "RENAME": "Yeniden Adlandır"
+      "RENAME": "Yeniden Adlandır",
+      "CLOSE_OTHER_TABS": "Diğer sekmeleri kapat",
+      "MOVE_TAB_TO_LEFT": "Sekmeyi sola kaydır",
+      "MOVE_TAB_TO_RIGHT": "Sekmeyi sağa kaydır"
     }
   }
 }

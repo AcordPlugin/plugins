@@ -184,7 +184,6 @@ export default {
                             disabled: !!item.querySelector(".close.hidden"),
                             action() {
                                 close();
-                                saveBookmarks();
                             }
                         },
                         {
@@ -192,7 +191,34 @@ export default {
                             label: i18n.format("CLOSE_TABS_TO_RIGHT"),
                             disabled: !tabsAfterMe.length,
                             action() {
-                                tabsAfterMe.forEach(i => i.close());
+                                tabs.filter((_, idx) => idx != myIndex).forEach(i => i.close());
+                            }
+                        },
+                        {
+                            type: "separator"
+                        },
+                        {
+                            type: "text",
+                            label: i18n.format("MOVE_TAB_TO_LEFT"),
+                            disabled: !myIndex,
+                            action() {
+                                let cache = [...tabs];
+                                let [item] = cache.splice(myIndex, 1);
+                                cache.splice(myIndex - 1, 0, item);
+                                tabItemsEl.replaceChildren(...cache);
+                                saveTabs();
+                            }
+                        },
+                        {
+                            type: "text",
+                            label: i18n.format("MOVE_TAB_TO_RIGHT"),
+                            disabled: myIndex === (tabs.length - 1),
+                            action() {
+                                let cache = [...tabs];
+                                let [item] = cache.splice(myIndex, 1);
+                                cache.splice(myIndex + 1, 0, item);
+                                tabItemsEl.replaceChildren(...cache);
+                                saveTabs();
                             }
                         },
                         {
@@ -312,7 +338,22 @@ export default {
                 });
             }
 
+            /**
+             * @param {KeyboardEvent} e 
+             */
+            function handleKeyUp(e) {
+                if (!(e.ctrlKey && e.shiftKey)) return;
+                if (!e.code.startsWith("Digit")) return;
+
+                let pageNumber = Math.max(Number(e.code.slice(5)) - 1, 0);
+                let tabs = [...document.querySelectorAll(".tab-item")];
+                if (tabs[pageNumber] && !tabs[pageNumber].classList.contains("selected")) tabs[pageNumber].select();
+            }
+
+            window.addEventListener("keyup", handleKeyUp);
+
             return () => {
+                window.removeEventListener("keyup", handleKeyUp)
                 mainIntervalClearer();
                 tabsContainer.remove();
             }
