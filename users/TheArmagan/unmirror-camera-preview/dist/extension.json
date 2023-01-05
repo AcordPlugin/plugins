@@ -1,12 +1,12 @@
 {
-  "hash": "1de2e090cecbfb100ee887881946d0c3c73b23531706cc4d1674cfea575b9182",
+  "hash": "1de2e090cecbfb100ee887881946d0c3c73b23531706cc4d1674cfea575b9183",
   "type": "plugin",
   "about": {
     "name": "Un-mirror Camera Preview",
     "authors": [
       "Kıraç Armağan Önal"
     ],
-    "description": "Unmirrors your camera preview.",
+    "description": "Un-mirrors your camera preview.",
     "version": "0.0.1",
     "license": "MIT"
   }
