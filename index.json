@@ -625,24 +625,6 @@
   },
   {
     "manifest": {
-      "hash": "1de2e090cecbfb100ee887881946d0c3c73b23531706cc4d1674cfea575b9182",
-      "type": "plugin",
-      "about": {
-        "name": "Tabs",
-        "authors": [
-          "Kıraç Armağan Önal"
-        ],
-        "description": "Un-flips your camera preview.",
-        "version": "0.0.1",
-        "license": "MIT"
-      }
-    },
-    "user": "TheArmagan",
-    "slug": "unflip-camera-preview",
-    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/unflip-camera-preview/dist/"
-  },
-  {
-    "manifest": {
       "hash": "60db14a14f9ce21c08603bc0ce34d1d0d8bd8781429ac4f517bf244e6279bb35",
       "type": "plugin",
       "about": {
@@ -658,6 +640,24 @@
     "user": "TheArmagan",
     "slug": "typing-indicators",
     "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/typing-indicators/dist/"
+  },
+  {
+    "manifest": {
+      "hash": "1de2e090cecbfb100ee887881946d0c3c73b23531706cc4d1674cfea575b9182",
+      "type": "plugin",
+      "about": {
+        "name": "Un-mirror Camera Preview",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Unmirrors your camera preview.",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "unmirror-camera-preview",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/unmirror-camera-preview/dist/"
   },
   {
     "manifest": {
