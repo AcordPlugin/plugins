@@ -2,15 +2,21 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
     -webkit-app-region: drag;
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
 
     & > .tab-items,
     & > .bookmarks {
         box-sizing: border-box;
         display: flex;
         align-items: center;
-        width: 100%;
+        width: 100vw;
+        max-width: 100vw;
         --item-h: 30px;
         height: var(--item-h);
         min-height: var(--item-h);
@@ -18,6 +24,7 @@
         padding: 0 4px;
         transition: 100ms ease-in-out opacity;
         -webkit-app-region: drag;
+        overflow-x: auto;
     }
 
     & > .bookmarks {
@@ -35,13 +42,16 @@
         color: white;
         width: 12px;
         height: 12px;
+        min-width: 12px;
+        min-height: 12px;
         transform: rotateZ(45deg);
         cursor: pointer;
-        margin-left: 4px;
+        margin: 0 4px;
         -webkit-app-region: no-drag;
     }
 
     .bookmark-item {
+        box-sizing: border-box;
         -webkit-app-region: no-drag;
         background-color: rgba(0, 0, 0, 0.25);
         border-radius: 4px;
@@ -111,6 +121,7 @@
     }
 
     .tab-item {
+        box-sizing: border-box;
         -webkit-app-region: no-drag;
         color: white;
         background-color: rgba(0, 0, 0, 0.25);
@@ -156,6 +167,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            flex: 2;
             gap: 8px;
         }
 
@@ -176,6 +188,7 @@
             white-space: nowrap;
             min-width: 150px;
             max-width: 250px;
+            flex: 1;
         }
 
         .close {

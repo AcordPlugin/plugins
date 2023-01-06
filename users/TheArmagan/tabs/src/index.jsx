@@ -17,13 +17,22 @@ export default {
             /** @type {Element} */
             const tabsContainer = dom.parseHTML(`
                 <div class="tabs--container">
-                    <div class="tab-items"></div>
-                    <div class="bookmarks"></div>
+                    <div class="tab-items w-scroll"></div>
+                    <div class="bookmarks w-scroll"></div>
                 </div>
             `);
 
             const tabItemsEl = tabsContainer.querySelector(".tab-items");
             const bookmarksEl = tabsContainer.querySelector(".bookmarks");
+
+            tabsContainer.querySelectorAll(".w-scroll").forEach(/** @param {HTMLDivElement} item */(item) => {
+                item.onwheel = (e) => {
+                    item.scrollBy({
+                        left: e.deltaY,
+                        behavior: "smooth"
+                    });
+                }
+            })
 
             const closedTabs = [];
 
@@ -45,8 +54,13 @@ export default {
                 </div>
             `);
 
-            newTabElm.onclick = () => {
+            newTabElm.onclick = async () => {
                 addTabItem(i18n.format("LOADING"), "/channels/@me", null, true);
+                await new Promise(r => setTimeout(r, 1));
+                tabItemsEl.scrollTo({
+                    left: tabItemsEl.scrollWidth,
+                    behavior: "smooth"
+                });
             }
 
             tabItemsEl.appendChild(newTabElm);
