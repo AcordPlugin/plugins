@@ -35,10 +35,10 @@ export default {
                     let ackedChannels = 0;
 
                     while (true) {
-                        let chIds = channelIds.splice(0, 50);
-                        if (!chIds.length) break;
-                        AckActions.bulkAck(chIds.map(i => ({ channelId: i, readStateType: 0 })));
-                        ackedChannels += chIds.length;
+                        let chId = channelIds.pop();
+                        if (!chId) break;
+                        AckActions.ack(chId);
+                        ackedChannels += 1;
                         buttonElm.setAttribute("style", `--progress: ${((ackedChannels / totalLength) * 100).toFixed(4)}%;`);
                         await new Promise(r => setTimeout(r, 1));
                     }
