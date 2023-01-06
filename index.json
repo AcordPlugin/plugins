@@ -515,6 +515,24 @@
   },
   {
     "manifest": {
+      "hash": "bf3aa7e69106689fa217927024e7771c18d163b9dc13da7111fe987758cab436",
+      "type": "plugin",
+      "about": {
+        "name": "Read All",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Esily read all unread messages!",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "read-all",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/read-all/dist/"
+  },
+  {
+    "manifest": {
       "hash": "e64f4a2fbd85767bac008e1613808f36dceaf1af5a914ff52e51a324e6354d4e",
       "type": "plugin",
       "about": {
