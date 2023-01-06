@@ -25,6 +25,8 @@
         transition: 100ms ease-in-out opacity;
         -webkit-app-region: drag;
         overflow-x: auto;
+        overflow-y: hidden;
+        padding-top: 8px;
     }
 
     & > .bookmarks {
@@ -32,6 +34,8 @@
         min-height: var(--item-h);
         background-color: rgba(0, 0, 0, 0.1);
         -webkit-app-region: no-drag;
+        padding-top: 4px;
+        padding-bottom: 4px;
 
         &.hidden {
             display: none;

@@ -170,6 +170,10 @@ export default {
                     Router.transitionTo(item.getAttribute("data-pathname"));
                     document.querySelectorAll(".selected").forEach(e => e.classList.remove("selected"));
                     item.classList.add("selected");
+                    tabItemsEl.scrollTo({
+                        behavior: "smooth",
+                        left: item.getBoundingClientRect().left
+                    });
                     document.querySelectorAll(".close.hidden").forEach(e => e.classList.remove("hidden"));
                     if (document.querySelectorAll(".tab-item").length === 1) {
                         document.querySelector(".close").classList.add("hidden");
@@ -407,3 +411,4 @@ export default {
     },
     unload() { }
 }
+
