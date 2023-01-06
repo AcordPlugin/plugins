@@ -1,0 +1,21 @@
+{
+  "hash": "bf3aa7e69106689fa217927024e7771c18d163b9dc13da7111fe987758cab436",
+  "type": "plugin",
+  "about": {
+    "name": "Read All",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Esily read all unread messages!",
+    "version": "0.0.1",
+    "license": "MIT"
+  },
+  "i18n": {
+    "default": {
+      "READ_ALL": "Read All"
+    },
+    "tr": {
+      "READ_ALL": "Hepsini Oku"
+    }
+  }
+}
