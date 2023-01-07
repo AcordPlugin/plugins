@@ -2,25 +2,47 @@ import { subscriptions } from "@acord/extension";
 import patcher from "@acord/patcher";
 import { MessageActions, PremiumActions, EmojiStore, SelectedGuildStore, FluxDispatcher } from "@acord/modules/common";
 
-const acordEmoteRegex = /<\$(a)?(\d+)>/g;
+const acordEmoteRegex = /<(a)?;?([^:]{2,})+;(\d+)>/g;
 const customEmoteRegex = /<(a)?:?([^:]{2,})+:(\d+)>/g;
 
 export default {
     load() {
-        subscriptions.push(
-            patcher.before(
-                "dispatch",
-                FluxDispatcher,
-                (args) => {
-                    if (args[0].type === "MESSAGE_CREATE" && args[0]?.message?.content) {
-                        args[0].message.content = args[0].message.content.replace(acordEmoteRegex, (match, animStr, emoteId) => {
-                            return `<${animStr == "a" ? "a:" : ""}_:${emoteId}>`;
-                        });
-                    }
-                    return args[0];
-                }
-            )
-        )
+
+        // subscriptions.push(
+        //     patcher.instead(
+        //         "dispatch",
+        //         FluxDispatcher,
+        //         function (args, instead) {
+        //             try {
+        //                 switch (args[0].type) {
+        //                     case "MESSAGE_CREATE":
+        //                     case "MESSAGE_UPDATE": {
+        //                         if (args[0].message.content) {
+        //                             args[0].message.content = args[0].message.content.replace(acordEmoteRegex, (match, animStr, emoteName, emoteId) => {
+        //                                 return `<${animStr == "a" ? "a:" : ""}${emoteName}:${emoteId}>`;
+        //                             });
+        //                         }
+        //                         break;
+        //                     }
+        //                     case "LOAD_MESSAGES_SUCCESS": {
+        //                         if (args[0].messages.length) {
+        //                             for (let i = 0; i < args[0].messages.length; i++) {
+        //                                 const message = args[0].messages[i];
+        //                                 if (message.content) {
+        //                                     message.content = message.content.replace(acordEmoteRegex, (match, animStr, emoteName, emoteId) => {
+        //                                         return `<${animStr == "a" ? "a:" : ""}${emoteName}:${emoteId}>`;
+        //                                     });
+        //                                 }
+        //                             }
+        //                         }
+        //                         break;
+        //                     }
+        //                 }
+        //             } catch { };
+        //             return instead.call(this, ...args);
+        //         }
+        //     )
+        // );
 
         subscriptions.push(
             patcher.instead(
@@ -37,8 +59,7 @@ export default {
                                 if (!emoteName.trim()) return match;
                                 let emoji = EmojiStore.getCustomEmojiById(emoteId);
                                 if (emoji && !emoji.animated && selectedGuildId && emoji.guildId == selectedGuildId) return match;
-                                console.log(`<$${animStr || ""}${emoteId}>`);
-                                return `<$${animStr || ""}${emoteId}>`;
+                                return `<${animStr == "a" ? "a;" : ""}${emoteName};${emoteId}>`;
                             }
                         ).trim();
                     }

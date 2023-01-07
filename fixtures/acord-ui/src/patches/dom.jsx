@@ -8,6 +8,7 @@ import modals from "@acord/ui/modals";
 import toasts from "@acord/ui/toasts";
 import events from "@acord/events";
 import extensions from "@acord/extensions";
+import patcher from "@acord/patcher";
 import internal from "@acord/internal";
 import patchContainer from "../other/patchContainer.js";
 import { showModal } from "../other/apis.js";
@@ -241,13 +242,36 @@ export function patchDOM() {
   )
 
   patchContainer.add((() => {
-
+    let className = Array(2).fill("").map(() => Math.random().toString(36).slice(2)).join("").replace(/^[0-9]/, "");
     const containerElm = dom.parseHTML(`
-      <div class="acord--supporter-container">
-        <span class="text">
-          ${i18n.format("SUPPORT_ACORD")}
-        </span>
+      <div class="${className}">
+        ${i18n.format("SUPPORT_ACORD")}
       </div>
+    `);
+
+    const unInjectCSS = patcher.injectCSS(`
+    .${className} {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+    
+        padding: 6px;
+        background-color: #2f3136;
+        border-top-left-radius: 4px;
+        color: rgb(227, 227, 227);
+        cursor: pointer;
+        transition: 100ms ease-in-out opacity;
+        font-size: 12px;
+        min-width: 224px;
+        text-align: center;
+        font-weight: 800;
+        text-transform: uppercase;
+    
+        z-index: 999999999999999;
+    }
+    .${className}:hover {
+      text-decoration: underline;
+    }
     `);
 
     containerElm.onclick = () => {
@@ -260,6 +284,7 @@ export function patchDOM() {
 
     return () => {
       containerElm.remove();
+      unInjectCSS();
     }
   })())
 

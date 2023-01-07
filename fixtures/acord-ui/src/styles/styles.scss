@@ -683,28 +683,4 @@
     border-radius: 9999px;
     pointer-events: none;
   }
-
-  &--supporter-container {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-
-    padding: 6px;
-    background-color: #2f3136;
-    border-top-left-radius: 4px;
-    color: rgb(227, 227, 227);
-    cursor: pointer;
-    transition: 100ms ease-in-out opacity;
-    font-size: 12px;
-    width: 224px;
-    text-align: center;
-    font-weight: 800;
-    text-transform: uppercase;
-
-    z-index: 999999999999999;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
