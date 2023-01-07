@@ -10,7 +10,7 @@ export function patchMessages() {
         function onMessage({ message }) {
             if (!message.author) return;
             let channel = ChannelStore.getChannel(message.channel_id);
-            let guild = GuildStore.getGuild(guild);
+            let guild = GuildStore.getGuild(message.guild_id);
             localCache.updateCache[message.author.id] = [
                 new Date().toISOString(),
                 `${guild ? `${guild.name} > ` : ""}${(channel.name || [...new Map([...channel.recipients.map(i => [i, UserStore.getUser(i)]), [UserStore.getCurrentUser().id, UserStore.getCurrentUser()]]).values()].filter(i => i).map(i => i.tag).sort((a, b) => a > b).join(", ") || "Unknown")}`
