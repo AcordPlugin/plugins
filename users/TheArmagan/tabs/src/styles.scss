@@ -10,6 +10,10 @@
         height: 0px;
     }
 
+    &.hidden {
+        display: none;
+    }
+
     & > .tab-items,
     & > .bookmarks {
         box-sizing: border-box;

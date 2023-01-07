@@ -3,7 +3,7 @@ import utils from "@acord/utils";
 import { contextMenus } from "@acord/ui";
 import patchSCSS from "./styles.scss";
 import { subscriptions, persist, i18n } from "@acord/extension";
-import { Router, ChannelStore, UserStore, GuildStore, modals, React, ReadStateStore, SelectedChannelStore } from "@acord/modules/common";
+import { Router, ChannelStore, UserStore, GuildStore, modals, React, ReadStateStore, FluxDispatcher, SelectedChannelStore } from "@acord/modules/common";
 import { DOMCloseIcon } from "./components/DOMCloseIcon.js";
 import { TextInput } from "./components/TextInput.jsx";
 
@@ -336,6 +336,7 @@ export default {
                 }
             }
 
+            const translateYRegex = /translateY\(([^)]+)\)/;
             const mainIntervalClearer = utils.interval(() => {
                 let selectedTabItemEl = document.querySelector(".tab-item.selected");
                 if (selectedTabItemEl) {
@@ -354,7 +355,7 @@ export default {
 
             {
                 let userId = UserStore.getCurrentUser().id;
-                (persist.ghost.userTabs?.[userId] || [{ title: i18n.format("LOADING"), pathname: "/channels/@me", selected: true }]).forEach((e) => {
+                ((persist.ghost.userTabs?.[userId] || []).length ? persist.ghost.userTabs?.[userId] : [{ title: i18n.format("LOADING"), pathname: "/channels/@me", selected: true }]).forEach((e) => {
                     addTabItem(e.title, e.pathname, e.icon, e.selected);
                 });
                 (persist.ghost.userBookmarks?.[userId] || []).forEach((e) => {
@@ -401,11 +402,26 @@ export default {
 
             window.addEventListener("keyup", handleKeyUp);
 
+            function onFullscreenChange(e) {
+                if (e.windowId !== "window-1") return;
+
+                if (e.isElementFullscreen) {
+                    tabsContainer.classList.add("hidden");
+                } else {
+                    tabsContainer.classList.remove("hidden");
+                    tabsContainer.remove();
+                    document.querySelector('[class*="appDevToolsWrapper-"]').insertAdjacentElement("beforebegin", tabsContainer);
+                }
+            }
+
+            FluxDispatcher.subscribe("WINDOW_FULLSCREEN_CHANGE", onFullscreenChange);
+
             return () => {
                 closedTabs.length = 0;
-                window.removeEventListener("keyup", handleKeyUp)
+                window.removeEventListener("keyup", handleKeyUp);
                 mainIntervalClearer();
                 tabsContainer.remove();
+                FluxDispatcher.unsubscribe("WINDOW_FULLSCREEN_CHANGE", onFullscreenChange);
             }
         })())
     },
