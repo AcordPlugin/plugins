@@ -405,7 +405,7 @@
   },
   {
     "manifest": {
-      "hash": "7a04959d8281fd2284b37b219ed7df930e71ba64642ea0cca7d9651962c472ca",
+      "hash": "63ce9fb4982d267c50e368f1be025091570aa988355c4244812be9f5d90e037f",
       "type": "plugin",
       "about": {
         "name": "Last Message At",
