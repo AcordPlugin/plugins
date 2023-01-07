@@ -1,24 +1,6 @@
 [
   {
     "manifest": {
-      "hash": "a0dc2af7793cf6c68b03fe8329d33316e50b4fc1bba182c414320dc475ca56b3",
-      "type": "plugin",
-      "about": {
-        "name": "Acord Nitro Emojis",
-        "authors": [
-          "Kıraç Armağan Önal"
-        ],
-        "description": "Use nitro emojis between Acord users. (Without using image links.)",
-        "version": "0.0.3",
-        "license": "MIT"
-      }
-    },
-    "user": "TheArmagan",
-    "slug": "acord-nitro-emojis",
-    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/acord-nitro-emojis/dist/"
-  },
-  {
-    "manifest": {
       "hash": "e3d7c8e3feea522f53c73e436dd163809bf1dba28392a9822255343e7f6087f5",
       "type": "theme",
       "about": {
@@ -423,7 +405,7 @@
   },
   {
     "manifest": {
-      "hash": "f480918172dcf941ef906d1dc048f94bd4ce5c670f556154f5563e9d3ae50f44",
+      "hash": "a027501128e5a829dcde7186cd1cebb70197705eb69b508c8e49a85bd7348f38",
       "type": "plugin",
       "about": {
         "name": "Last Message At",
