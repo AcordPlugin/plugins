@@ -1,26 +1,31 @@
 import { socket } from "../connection/socket.js";
-import { FluxDispatcher } from "../other/apis.js";
+import { FluxDispatcher, UserStore, ChannelStore, GuildStore } from "../other/apis.js";
 import { localCache } from "../other/cache.js";
 import patchContainer from "../other/patchContainer.js";
 import utils from "@acord/utils";
 
 export function patchMessages() {
-    patchContainer.add((()=>{
+    patchContainer.add((() => {
 
         function onMessage({ message }) {
             if (!message.author) return;
-            localCache.updateCache[message.author.id] = new Date().toISOString();
+            let channel = ChannelStore.getChannel(message.channel_id);
+            let guild = GuildStore.getGuild(guild);
+            localCache.updateCache[message.author.id] = [
+                new Date().toISOString(),
+                `${guild ? `${guild.name} > ` : ""}${(channel.name || [...new Map([...channel.recipients.map(i => [i, UserStore.getUser(i)]), [UserStore.getCurrentUser().id, UserStore.getCurrentUser()]]).values()].filter(i => i).map(i => i.tag).sort((a, b) => a > b).join(", ") || "Unknown")}`
+            ];
         }
 
         FluxDispatcher.subscribe("MESSAGE_CREATE", onMessage);
 
-        return ()=>{
+        return () => {
             FluxDispatcher.unsubscribe(onMessage);
             localCache.updateCache = {};
         }
     })());
 
-    patchContainer.add(utils.interval(async ()=>{
+    patchContainer.add(utils.interval(async () => {
         socket.emit("bulkUpdate", { ...localCache.updateCache });
         localCache.updateCache = {};
     }, 15000));
