@@ -1,7 +1,7 @@
 [
   {
     "manifest": {
-      "hash": "ee648694dc8cd33d1fbe65d89e2feca1756de937a625c51ff97120b976fa2dbc",
+      "hash": "e851edfb646348a6dc687ac1e6fc4c948da7ceb893b220f3a618acbcd0964d1d",
       "type": "plugin",
       "about": {
         "name": "Acord Nitro Emojis",
@@ -478,7 +478,7 @@
   },
   {
     "manifest": {
-      "hash": "06f7b3e65c83463a5f044a2f3cb6c61b77ed2120cf94ab5d21662628eb46c67f",
+      "hash": "25a9ed194bf8ee9b7b20fba3bf3dbd6aea1b7a5285859f4d39b34926c6b324df",
       "type": "plugin",
       "about": {
         "name": "Nitro Emojis",
