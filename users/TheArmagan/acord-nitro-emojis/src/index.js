@@ -3,7 +3,7 @@ import patcher from "@acord/patcher";
 import { MessageActions, PremiumActions, EmojiStore, SelectedGuildStore, FluxDispatcher } from "@acord/modules/common";
 
 const acordEmoteRegex = /<\$(a)?(\d+)>/g;
-const customEmoteRegex = /<(a:)?([^:]{2,})+:(\d+)>/g;
+const customEmoteRegex = /<(a)?:?([^:]{2,})+:(\d+)>/g;
 
 export default {
     load() {
@@ -14,7 +14,6 @@ export default {
                 (args) => {
                     if (args[0].type === "MESSAGE_CREATE" && args[0]?.message?.content) {
                         args[0].message.content = args[0].message.content.replace(acordEmoteRegex, (match, animStr, emoteId) => {
-                            console.log(match, `<${animStr == "a" ? "a:" : ""}_:${emoteId}>`);
                             return `<${animStr == "a" ? "a:" : ""}_:${emoteId}>`;
                         });
                     }

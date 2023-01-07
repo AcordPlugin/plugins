@@ -3,7 +3,7 @@ import patcher from "@acord/patcher";
 import { persist } from "@acord/extension";
 import { MessageActions, PremiumActions, EmojiStore, SelectedGuildStore } from "@acord/modules/common";
 
-const customEmoteRegex = /<(a:)?([^:]{2,})+:(\d+)>/g;
+const customEmoteRegex = /<(a)?:?([^:]{2,})+:(\d+)>/g;
 
 export default {
     load() {
