@@ -5,12 +5,12 @@ import webpack from "@acord/modules/webpack";
 
 const scrollClasses = webpack.findByProps("thin", "scrollerBase");
 
-export function ModalBase({ e, body, name, bodyId }) {
+export function ModalBase({ e, body, name, bodyId, size = "large" }) {
 
   return (
     <ModalRoot
       transitionState={e.transitionState}
-      size="large"
+      size={size}
       className="acord--modal-root"
     >
       <div className="acord--modal-header">

@@ -16,6 +16,7 @@ import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
 import { DOMSidebarItem } from "../components/dom/DOMSidebarItem.js";
 import { SponsorsModal } from "../components/modals/SponsorsModal.jsx";
+import { SupportModal } from "../components/modals/SupportModal.jsx";
 
 const optionsClasses = webpack.findByProps("item", "selected", "separator");
 const eyebrowClasses = webpack.findByProps("heading-lg/bold", "eyebrow");
@@ -238,6 +239,29 @@ export function patchDOM() {
       })();
     })
   )
+
+  patchContainer.add((() => {
+
+    const containerElm = dom.parseHTML(`
+      <div class="acord--supporter-container">
+        <span class="text">
+          ${i18n.format("SUPPORT_ACORD")}
+        </span>
+      </div>
+    `);
+
+    containerElm.onclick = () => {
+      showModal((e) => {
+        return <ModalBase e={e} name={i18n.format("SUPPORT_HERE")} body={<SupportModal onClose={e.onClose} />} size="medium" bodyId="support" />
+      });
+    }
+
+    document.body.appendChild(containerElm);
+
+    return () => {
+      containerElm.remove();
+    }
+  })())
 
   const interactiveClasses = webpack.findByProps("interactiveSelected", "interactive");
   const containerClasses = webpack.find(i => i?.container && Object.keys(i).length === 1);

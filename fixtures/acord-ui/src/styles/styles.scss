@@ -22,7 +22,7 @@
     width: 24px;
     height: 24px;
     cursor: pointer;
-    
+
     svg {
       width: 24px;
       height: 24px;
@@ -32,7 +32,6 @@
   &--modal-body {
     display: flex;
     flex-direction: column;
-    height: 550px;
     overflow: auto;
     contain: content;
 
@@ -324,6 +323,55 @@
         }
       }
     }
+
+    &--support {
+      .container {
+        width: 100%;
+        display: flex;
+        gap: 16px;
+        .image-container {
+          width: 35%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            width: auto;
+            height: 350px;
+          }
+        }
+
+        .info-container {
+          color: whitesmoke;
+
+          h1 {
+            font-size: 24px;
+            font-weight: 600;
+          }
+
+          code {
+            background-color: #292b2f;
+            padding: 4px;
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 2px;
+          }
+
+          .half-opacity {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
   }
 
   &--sponsors-root {
@@ -372,7 +420,7 @@
           flex-direction: column;
           align-items: center;
           gap: 8px;
-          
+
           .close {
             display: flex;
             align-items: center;
@@ -416,7 +464,7 @@
           flex-wrap: wrap;
           justify-content: center;
           align-items: center;
-          
+
           .guild-container {
             width: 100%;
           }
@@ -430,7 +478,7 @@
     height: 360px;
 
     border-radius: 8px;
-    
+
     background-color: #292b2f;
     contain: content;
     box-sizing: border-box;
@@ -634,5 +682,29 @@
     padding: 0.1em;
     border-radius: 9999px;
     pointer-events: none;
+  }
+
+  &--supporter-container {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+
+    padding: 6px;
+    background-color: #2f3136;
+    border-top-left-radius: 4px;
+    color: rgb(227, 227, 227);
+    cursor: pointer;
+    transition: 100ms ease-in-out opacity;
+    font-size: 12px;
+    width: 224px;
+    text-align: center;
+    font-weight: 800;
+    text-transform: uppercase;
+
+    z-index: 999999999999999;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
