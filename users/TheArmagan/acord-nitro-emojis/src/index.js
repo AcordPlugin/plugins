@@ -37,8 +37,8 @@ export default {
                                 if (!emoteName.trim()) return match;
                                 let emoji = EmojiStore.getCustomEmojiById(emoteId);
                                 if (emoji && !emoji.animated && selectedGuildId && emoji.guildId == selectedGuildId) return match;
-                                console.log(`<$${animStr}${emoteId}>`);
-                                return `<$${animStr}${emoteId}>`;
+                                console.log(`<$${animStr || ""}${emoteId}>`);
+                                return `<$${animStr || ""}${emoteId}>`;
                             }
                         ).trim();
                     }
