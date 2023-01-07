@@ -1,13 +1,29 @@
-import patchContainer from "./other/patchContainer.js"
+import { subscriptions } from "@acord/extension";
 import patcher from "@acord/patcher";
-import { persist } from "@acord/extension";
-import { MessageActions, PremiumActions, EmojiStore, SelectedGuildStore } from "@acord/modules/common";
+import { MessageActions, PremiumActions, EmojiStore, SelectedGuildStore, FluxDispatcher } from "@acord/modules/common";
 
+const acordEmoteRegex = /<\$(a)?(\d+)>/g;
 const customEmoteRegex = /<(a:)?([^:]{2,})+:(\d+)>/g;
 
 export default {
     load() {
-        patchContainer.add(
+        subscriptions.push(
+            patcher.before(
+                "dispatch",
+                FluxDispatcher,
+                (args) => {
+                    if (args[0].type === "MESSAGE_CREATE" && args[0]?.message?.content) {
+                        args[0].message.content = args[0].message.content.replace(acordEmoteRegex, (match, animStr, emoteId) => {
+                            console.log(match, `<${animStr == "a" ? "a:" : ""}_:${emoteId}>`);
+                            return `<${animStr == "a" ? "a:" : ""}_:${emoteId}>`;
+                        });
+                    }
+                    return args[0];
+                }
+            )
+        )
+
+        subscriptions.push(
             patcher.instead(
                 "sendMessage",
                 MessageActions,
@@ -22,7 +38,8 @@ export default {
                                 if (!emoteName.trim()) return match;
                                 let emoji = EmojiStore.getCustomEmojiById(emoteId);
                                 if (emoji && !emoji.animated && selectedGuildId && emoji.guildId == selectedGuildId) return match;
-                                return ` https://cdn.discordapp.com/emojis/${emoteId}.${animStr == "a" ? "gif" : "png"}?size=${persist.ghost.settings.size}`
+                                console.log(`<$${animStr}${emoteId}>`);
+                                return `<$${animStr}${emoteId}>`;
                             }
                         ).trim();
                     }
@@ -32,7 +49,7 @@ export default {
             )
         );
 
-        patchContainer.add(
+        subscriptions.push(
             patcher.instead(
                 "canUseEmojisEverywhere",
                 PremiumActions,
@@ -42,7 +59,7 @@ export default {
             )
         );
 
-        patchContainer.add(
+        subscriptions.push(
             patcher.instead(
                 "canUseAnimatedEmojis",
                 PremiumActions,
@@ -51,21 +68,5 @@ export default {
                 }
             )
         );
-    },
-    unload() {
-        patchContainer.removeAll();
-    },
-    settings: {
-        data: [
-            {
-                "type": "input",
-                "altType": "number",
-                "property": "size",
-                "value": "32",
-                "name": "Emote Size",
-                "description": "Allowed sizes: 16, 32, 48, 64, 96, 128, 256, 512, 1024",
-                "size": "small"
-            }
-        ]
     }
 }

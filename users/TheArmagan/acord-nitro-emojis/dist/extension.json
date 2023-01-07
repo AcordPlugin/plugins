@@ -1,0 +1,13 @@
+{
+  "hash": "ee648694dc8cd33d1fbe65d89e2feca1756de937a625c51ff97120b976fa2dbc",
+  "type": "plugin",
+  "about": {
+    "name": "Acord Nitro Emojis",
+    "authors": [
+      "Kıraç Armağan Önal"
+    ],
+    "description": "Use nitro emojis between Acord users. (Not using links.)",
+    "version": "0.0.1",
+    "license": "MIT"
+  }
+}
