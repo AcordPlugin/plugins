@@ -38,7 +38,7 @@ export function patchDOM() {
                 let section = dom.parseHTML(`
                     <div class="${sectionClasses.section}">
                         <h2 class="${colorClasses.defaultColor} ${eyebrowClasses.eyebrow} ${colorClasses2.defaultColor} ${titleClasses.title}">${i18n.format("LAST_MESSAGE_AT")}</h2>
-                        <div class="${colorClasses.defaultColor} ${titleClasses.body}">${formatDateInfo(dateInfo)}</div>
+                        <div class="${colorClasses.defaultColor} ${titleClasses.body}" style="user-select: text;">${formatDateInfo(dateInfo)}</div>
                     </div>
                 `);
 
@@ -67,7 +67,7 @@ export function patchDOM() {
                 `);
 
                 let contentElm = dom.parseHTML(`
-                    <div class="${colorClasses.defaultColor} ${titleClasses.body}" style="margin-bottom: 16px;">${formatDateInfo(dateInfo)}</div>
+                    <div class="${colorClasses.defaultColor} ${titleClasses.body}" style="margin-bottom: 16px; user-select: text;">${formatDateInfo(dateInfo)}</div>
                 `);
 
                 p.insertBefore(titleElm, p.children[2]);
