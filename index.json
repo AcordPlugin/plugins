@@ -297,6 +297,24 @@
   },
   {
     "manifest": {
+      "hash": "8020c494a86ab42df2d9acdbeaa847f4e01492b53e8b93969d90f2f431df9c26",
+      "type": "plugin",
+      "about": {
+        "name": "Double Click to Edit",
+        "authors": [
+          "Kıraç Armağan Önal"
+        ],
+        "description": "Esily edit messages!",
+        "version": "0.0.1",
+        "license": "MIT"
+      }
+    },
+    "user": "TheArmagan",
+    "slug": "double-click-to-edit",
+    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/TheArmagan/double-click-to-edit/dist/"
+  },
+  {
+    "manifest": {
       "hash": "6fbe40e77635a644698889bb7f2de1b35fedd497f71eb9abe0863ad0a136156c",
       "type": "plugin",
       "about": {
