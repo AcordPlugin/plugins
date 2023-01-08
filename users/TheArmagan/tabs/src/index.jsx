@@ -354,13 +354,11 @@ export default {
 
                 const pipWElm = document.querySelector(`[class*="pictureInPictureWindow-"]`);
                 if (pipWElm) {
-                    if (pipWElm.children[0].getAttribute("style").trim()) {
-                        let style = utils.react.getProps(pipwElm, i => i?.style)?.style;
-                        if (style) {
-                            let v = style.transform.find(i => i.translateY).translateY;
-                            if (typeof v === "object") v = v._parent._value;
-                            pipWElm.setAttribute("style", pipWElm.getAttribute("style").replace(translateYRegex, `translateY(${v - tabsContainer.getBoundingClientRect().height}px)`));
-                        }
+                    let style = utils.react.getProps(pipwElm, i => i?.style)?.style;
+                    if (style) {
+                        let v = style.transform.find(i => i.translateY).translateY;
+                        if (typeof v === "object") v = v._parent._value;
+                        pipWElm.setAttribute("style", pipWElm.getAttribute("style").replace(translateYRegex, `translateY(${v - tabsContainer.getBoundingClientRect().height}px)`));
                     }
                 }
             }, 100);
