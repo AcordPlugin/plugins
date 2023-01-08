@@ -1,18 +1,18 @@
 {
-  "hash": "e8669c17265c3ff99097482cda4711bbbc0d803e0e39506c7103c292fe12b2b1",
+  "hash": "e8669c17265c3ff99097482cda4711bbbc0d803e0e39506c7103c292fe12b2b1ac",
   "type": "plugin",
   "about": {
     "name": "Unfriend and Guild Leave Logger",
     "authors": [
       "Kıraç Armağan Önal"
     ],
-    "description": "Logs when some one removes you from friends or kicks you from a server.",
+    "description": "Logs when someone unfriends you or kicks you from a server.",
     "version": "1.1.0",
     "license": "MIT"
   },
   "i18n": {
     "default": {
-      "GUILD_LEAVE": "You are leaved from {0}!",
+      "GUILD_LEAVE": "You have left {0}!",
       "UNFRIEND": "You are no longer friends with {0}!",
       "TITLE": "Unfriend and Guild Leave Logger",
       "GUILD_LEAVES": "Guild Leaves",
@@ -24,7 +24,7 @@
       "UNFRIEND": "Artık {0} ile arkadaş değilsin!",
       "TITLE": "Arkadaş Çıkarma ve Sunucudan Ayrılma Geçmişi",
       "GUILD_LEAVES": "Sunucudan Ayrılmalar",
-      "UNFRIENDS": "Arkadaştan Çıkarmalar",
+      "UNFRIENDS": "Arkadaşlıktan Çıkarmalar",
       "CLEAR": "Temizle"
     }
   }
