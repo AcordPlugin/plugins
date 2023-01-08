@@ -3,7 +3,7 @@ import utils from "@acord/utils";
 import { contextMenus } from "@acord/ui";
 import patchSCSS from "./styles.scss";
 import { subscriptions, persist, i18n } from "@acord/extension";
-import { Router, ChannelStore, UserStore, GuildStore, modals, React, ReadStateStore, FluxDispatcher, SelectedChannelStore } from "@acord/modules/common";
+import { Router, ChannelStore, UserStore, GuildStore, modals, React, ReadStateStore, FluxDispatcher, WindowStore } from "@acord/modules/common";
 import { DOMCloseIcon } from "./components/DOMCloseIcon.js";
 import { TextInput } from "./components/TextInput.jsx";
 
@@ -354,7 +354,8 @@ export default {
 
                 const pipWElm = document.querySelector(`[class*="pictureInPictureWindow-"]`);
                 if (pipWElm) {
-                    if (pipWElm?.children?.[0]?.getAttribute?.("style")) {
+
+                    if (pipWElm?.children?.[0]?.getAttribute?.("style") && !WindowStore.isElementFullScreen()) {
                         let style = utils.react.getProps(pipWElm, i => i?.style)?.style;
                         if (style) {
                             let v = style.transform.find(i => i.translateY).translateY;
