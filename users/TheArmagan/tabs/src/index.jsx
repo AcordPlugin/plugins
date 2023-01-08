@@ -354,7 +354,7 @@ export default {
 
                 const pipWElm = document.querySelector(`[class*="pictureInPictureWindow-"]`);
                 if (pipWElm) {
-                    let style = utils.react.getProps(pipwElm, i => i?.style)?.style;
+                    let style = utils.react.getProps(pipWElm, i => i?.style)?.style;
                     if (style) {
                         let v = style.transform.find(i => i.translateY).translateY;
                         if (typeof v === "object") v = v._parent._value;
