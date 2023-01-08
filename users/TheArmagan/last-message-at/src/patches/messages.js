@@ -13,7 +13,7 @@ export function patchMessages() {
             let guild = GuildStore.getGuild(message.guild_id);
             localCache.updateCache[message.author.id] = [
                 new Date().toISOString(),
-                `${guild ? `${guild.name} > ` : ""}${(channel.name || [...new Map(channel.recipients.map(i => [i, UserStore.getUser(i)])).values()].filter(i => i).map(i => i.tag).sort((a, b) => a > b).join(", ") || "Unknown")}`
+                `${guild ? `${guild.name} > ` : ""}${((channel.isDM() && !channel.isGroupDM()) ? UserStore.getUser(channel.getRecipientId()).tag : channel.name) || [...new Map(channel.recipients.map(i => [i, UserStore.getUser(i)])).values()].filter(i => i).map(i => i.tag).sort((a, b) => a > b).join(", ")}`
             ];
         }
 
