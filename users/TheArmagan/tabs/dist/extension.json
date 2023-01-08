@@ -1,5 +1,5 @@
 {
-  "hash": "92a3ffe5f6bb97e14df82542c247766aa8a542a796ef9cf4406a943da4914d0f",
+  "hash": "b83f56c6e364212be2a2f3734d0c0a41a428517f5cf4301838a292ae9466b06b",
   "type": "plugin",
   "about": {
     "name": "Tabs",
@@ -7,7 +7,7 @@
       "Kıraç Armağan Önal"
     ],
     "description": "Organize your Discord using tabs. Support bookmarks too.",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "license": "MIT"
   },
   "i18n": {
