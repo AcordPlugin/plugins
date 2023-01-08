@@ -496,14 +496,14 @@
   },
   {
     "manifest": {
-      "hash": "5645adf427d122d96ce8488914ace094f1b8c1bfb8f4072a6549165fbb68044a",
+      "hash": "5645adf427d122d96ce8488914ace094f1b8c1bfb8f4072a6549165fbb68044aac",
       "type": "plugin",
       "about": {
         "name": "Note Indicators",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Esily see user's notes.",
+        "description": "Easily see user's notes.",
         "version": "0.0.1",
         "license": "MIT"
       }
