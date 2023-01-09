@@ -279,14 +279,14 @@
   },
   {
     "manifest": {
-      "hash": "8b0ed26778cc1312d0493387501060794f73461b8f4d7844d1ad30b4eadb5e0b",
+      "hash": "8b0ed26778cc1312d0493387501060794f73461b8f4d7844d1ad30b4eadb5e0c",
       "type": "plugin",
       "about": {
         "name": "Disable Typing",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Sliently type.",
+        "description": "Type silently.",
         "version": "1.0.0",
         "license": "MIT"
       }
