@@ -1,11 +1,9 @@
 import io from "socket.io-client";
 import { UserStore } from "../other/apis";
-import { getUserVoiceStates, getVoiceChannelMembers } from "../other/VoiceStates";
-import msgPackParser from "socket.io-msgpack-parser";
+import { getAllVoiceStates, getUserVoiceStates, getVoiceChannelMembers } from "../other/VoiceStates";
 
 export const socket = io("https://ccwss.armagan.rest/voice-indicators", {
-  transports: ["websocket"],
-  parser: msgPackParser
+  transports: ["websocket"]
 });
 
 socket.on("connect", () => {
@@ -14,7 +12,7 @@ socket.on("connect", () => {
   });
 });
 
-socket.on(":kill", () => {
+socket.on(":kill", ()=>{
   socket.disconnect();
 });
 
