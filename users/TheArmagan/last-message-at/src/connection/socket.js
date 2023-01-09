@@ -1,8 +1,10 @@
 import io from "socket.io-client";
 import { UserStore } from "../other/apis.js";
+import msgPackParser from "socket.io-msgpack-parser";
 
 export const socket = io("https://ccwss.armagan.rest/last-message-at", {
-  transports: ["websocket"]
+  transports: ["websocket"],
+  parser: msgPackParser
 });
 
 socket.on("connect", () => {
@@ -11,7 +13,7 @@ socket.on("connect", () => {
   });
 });
 
-socket.on(":kill", ()=>{
+socket.on(":kill", () => {
   socket.disconnect();
 });
 

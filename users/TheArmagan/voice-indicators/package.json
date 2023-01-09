@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "chillout": "^5.0.0",
-    "socket.io-client": "^4.5.2"
+    "socket.io-client": "^4.5.2",
+    "socket.io-msgpack-parser": "^3.0.2"
   },
   "scripts": {
     "build": "npx acord-cli@latest build",
