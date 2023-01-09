@@ -303,10 +303,10 @@ export function patchDOM() {
 
   patchContainer.add(
     dom.patch(
-      '[class*="username-"][class*="desaturateUserColors-"], [class*="container-"] > [class*="nameTag-"] > [class*="username"], [class*="userText-"] > [class*="nameTag-"] > [class*="username-"], [class*="userText-"] > [class*="nickname-"], [class*="nameAndDecorators-"] > [class*="name-"] > [class*="overflow-"], [class*="listItemContents-"] [class*="discordTag-"] [class*="username-"]',
+      '[class*="username-"][class*="desaturateUserColors-"], [class*="container-"] > [class*="nameTag-"] > [class*="username"], [class*="userText-"] > [class*="nameTag-"] > [class*="username-"], [class*="userText-"] > [class*="nickname-"], [class*="nameAndDecorators-"] > [class*="name-"] > [class*="overflow-"], [class*="listItemContents-"] [class*="discordTag-"] [class*="username-"], [id*="message-username-"] [class*="username-"]',
       /** @param {HTMLDivElement} elm */(elm) => {
         if (elm.getAttribute("style")) return;
-        let user = utils.react.getProps(elm, i => i?.user)?.user;
+        let user = utils.react.getProps(elm, i => i?.user)?.user || utils.react.getProps(elm, i => i?.message)?.message?.author;
         if (!user) return;
         (async () => {
           if (!internal.other?.getUsernameGradient) return;
