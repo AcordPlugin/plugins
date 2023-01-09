@@ -11,7 +11,7 @@ import extensions from "@acord/extensions";
 import patcher from "@acord/patcher";
 import internal from "@acord/internal";
 import patchContainer from "../other/patchContainer.js";
-import { showModal } from "../other/apis.js";
+import { showModal, UserStore } from "../other/apis.js";
 import { ModalBase } from "../components/modals/ModalBase.jsx";
 import { ExtensionsModal } from "../components/modals/ExtensionsModal.jsx";
 import { DOMGiftCard } from "../components/dom/DOMGiftCard.js";
@@ -196,6 +196,8 @@ export function patchDOM() {
     )
   )
 
+  let badgeCache = new Map();
+
   patchContainer.add(
     dom.patch(`[class*="profileBadges-"], [class*="badgeList-"], [class*="userInfo-"] > div > [class*="container-"]`, /** @param {Element} elm */ async (elm) => {
 
@@ -205,25 +207,15 @@ export function patchDOM() {
       // let sizes = ["profileBadges-", "container-1gYwHN"].some(i=>elm.className.includes(i)) ? [22, 14] : [24, 16];ü
       let sizes = [22, 14];
 
-      // (async () => {
-
-      //   if (!internal.other?.isActiveAcordUser) return;
-
-      //   const lastLogin = await internal.other.isActiveAcordUser(user.id);
-
-      //   if (!lastLogin) return;
-
-      //   if (Date.now() - lastLogin > 1000 * 60 * 60 * 24) return;
-
-      //   let badge = createBadge("https://raw.githubusercontent.com/AcordPlugin/assets/main/AcordMember.svg", sizes);
-      //   badge.setAttribute("acord--tooltip-content", i18n.format("ACTIVE_USER"));
-
-      //   elm.appendChild(badge);
-      // })();
-
       (async () => {
         if (!internal.other?.getUserBadges) return;
-        let badges = await internal.other.getUserBadges(user.id);
+        let badges = [];
+        if (!badgeCache.has(user.id)) {
+          badges = await internal.other.getUserBadges(user.id);
+          badgeCache.set(user.id, { badges, at: Date.now() });
+        } else {
+          badges = badgeCache.get(user.id).badges;
+        }
 
         badges.forEach(badge => {
           let badgeElm = createBadge(badge[1], sizes);
@@ -286,45 +278,91 @@ export function patchDOM() {
       containerElm.remove();
       unInjectCSS();
     }
-  })())
+  })());
 
-  const interactiveClasses = webpack.findByProps("interactiveSelected", "interactive");
-  const containerClasses = webpack.find(i => i?.container && Object.keys(i).length === 1);
+  let gradientCache = new Map();
+
+  patchContainer.add(
+    utils.interval(() => {
+      let currentUserId = UserStore.getCurrentUser().id;
+      let caches = [gradientCache, badgeCache];
+      caches.forEach(cache => {
+        cache.forEach((v, k) => {
+          if ((Date.now() - v.at) > (currentUserId === k ? 5000 : 60000 * 30)) {
+            cache.delete(k);
+          }
+        });
+      });
+    }, 5000)
+  )
+
+  patchContainer.add(() => {
+    gradientCache.clear();
+    badgeCache.clear();
+  });
+
   patchContainer.add(
     dom.patch(
-      `[class*="sidebar-"] [class*="privateChannels-"] [class*="scrollerBase-"] [class*="privateChannelsHeaderContainer-"]`,
-      /** @param {Element} elm */(elm) => {
-
-        // TODO: REMOVE
-        return;
-
-        let parent = elm.parentElement;
-
-        let item = dom.parseHTML(
-          `
-            <li class="${interactiveClasses.channel} ${containerClasses.container}">
-              ${DOMSidebarItem({
-            icon: `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                      <path fill="currentColor" d="M17 15.245v6.872a.5.5 0 0 1-.757.429L12 20l-4.243 2.546a.5.5 0 0 1-.757-.43v-6.87a8 8 0 1 1 10 0zm-8 1.173v3.05l3-1.8 3 1.8v-3.05A7.978 7.978 0 0 1 12 17a7.978 7.978 0 0 1-3-.582zM12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
-                    </svg>
-                  `,
-            name: i18n.format("SPONSORED")
-          })
+      '[class*="username-"][class*="desaturateUserColors-"], [class*="container-"] > [class*="nameTag-"] > [class*="username"], [class*="userText-"] > [class*="nameTag-"] > [class*="username-"]',
+      /** @param {HTMLDivElement} elm */(elm) => {
+        if (elm.getAttribute("style")) return;
+        let user = utils.react.getProps(elm, i => i?.user)?.user;
+        if (!user) return;
+        (async () => {
+          if (!internal.other?.getUsernameGradient) return;
+          let colors = [];
+          if (!gradientCache.has(user.id)) {
+            colors = await internal.other.getUsernameGradient(user.id);
+            gradientCache.set(user.id, { colors, at: Date.now() });
+          } else {
+            colors = gradientCache.get(user.id).colors;
           }
-            </li>
-          `
-        );
+          if (!colors.length) return;
 
-        item.onclick = () => {
-          showModal((e) => {
-            return <SponsorsModal e={e} />
-          });
-        }
-
-        parent.insertBefore(item, elm);
+          elm.setAttribute("style", `--gradient-colors: ${colors.join(", ")}`);
+          elm.classList.add("acord--gradient-name");
+        })();
       }
     )
-  )
+  );
+
+  // const interactiveClasses = webpack.findByProps("interactiveSelected", "interactive");
+  // const containerClasses = webpack.find(i => i?.container && Object.keys(i).length === 1);
+  // patchContainer.add(
+  //   dom.patch(
+  //     `[class*="sidebar-"] [class*="privateChannels-"] [class*="scrollerBase-"] [class*="privateChannelsHeaderContainer-"]`,
+  //     /** @param {Element} elm */(elm) => {
+
+  //       // TODO: REMOVE
+  //       return;
+
+  //       let parent = elm.parentElement;
+
+  //       let item = dom.parseHTML(
+  //         `
+  //           <li class="${interactiveClasses.channel} ${containerClasses.container}">
+  //             ${DOMSidebarItem({
+  //           icon: `
+  //                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  //                     <path fill="currentColor" d="M17 15.245v6.872a.5.5 0 0 1-.757.429L12 20l-4.243 2.546a.5.5 0 0 1-.757-.43v-6.87a8 8 0 1 1 10 0zm-8 1.173v3.05l3-1.8 3 1.8v-3.05A7.978 7.978 0 0 1 12 17a7.978 7.978 0 0 1-3-.582zM12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+  //                   </svg>
+  //                 `,
+  //           name: i18n.format("SPONSORED")
+  //         })
+  //         }
+  //           </li>
+  //         `
+  //       );
+
+  //       item.onclick = () => {
+  //         showModal((e) => {
+  //           return <SponsorsModal e={e} />
+  //         });
+  //       }
+
+  //       parent.insertBefore(item, elm);
+  //     }
+  //   )
+  // )
 }
 

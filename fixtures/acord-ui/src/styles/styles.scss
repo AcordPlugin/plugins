@@ -683,4 +683,10 @@
     border-radius: 9999px;
     pointer-events: none;
   }
+
+  &--gradient-name {
+    background: linear-gradient(to right, var(--gradient-colors)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
 }
