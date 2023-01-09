@@ -387,15 +387,15 @@
   },
   {
     "manifest": {
-      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df0",
+      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df1",
       "type": "plugin",
       "about": {
         "name": "Join Guild Notifications",
         "authors": [
           "ErdemGKSL"
         ],
-        "description": "Sets the notification settings when joining a guild.",
-        "version": "1.0.0",
+        "description": "Automatically adjusts the notification settings when joining a guild.",
+        "version": "1.0.1",
         "license": "MIT"
       }
     },
