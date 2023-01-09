@@ -1,12 +1,12 @@
 {
-  "hash": "110564d0aba026e48f7cba8f5b56ea1299244aadd7c3993cb6434478e6dfdda0",
+  "hash": "110564d0aba026e48f7cba8f5b56ea1299244aadd7c3993cb6434478e6dfdda1",
   "type": "plugin",
   "about": {
     "name": "Read All",
     "authors": [
       "Kıraç Armağan Önal"
     ],
-    "description": "Esily read all unread messages!",
+    "description": "Easily read all unread messages!",
     "version": "0.0.2",
     "license": "MIT"
   },

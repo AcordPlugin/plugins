@@ -115,14 +115,14 @@
   },
   {
     "manifest": {
-      "hash": "1d28d76ae58155f492e3334ca5a4e16d96a49a0b34e36b5204f50e61cd483b27",
+      "hash": "1d28d76ae58155f492e3334ca5a4e16d96a49a0b34e36b5204f50e61cd483b28",
       "type": "plugin",
       "about": {
         "name": "Become Mod",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Become mod permissions on any server. (Client Sided)",
+        "description": "Obtain mod permissions on any server. (Client Sided)",
         "version": "1.0.0",
         "license": "MIT"
       }
@@ -188,14 +188,14 @@
   },
   {
     "manifest": {
-      "hash": "b0147d742fe43c15c818750bc531e54272545856bacd605c3e0cc840c06d0d0b",
+      "hash": "b0147d742fe43c15c818750bc531e54272545856bacd605c3e0cc840c06d0d0c",
       "type": "plugin",
       "about": {
         "name": "Copy Image URL",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Esily copy user's banner, avatars and guild's icons, banners!",
+        "description": "Easily copy any user's banners/avatars or any guild's icons, banners!",
         "version": "1.0.0",
         "license": "MIT"
       }
@@ -297,14 +297,14 @@
   },
   {
     "manifest": {
-      "hash": "8020c494a86ab42df2d9acdbeaa847f4e01492b53e8b93969d90f2f431df9c26",
+      "hash": "8020c494a86ab42df2d9acdbeaa847f4e01492b53e8b93969d90f2f431df9c27",
       "type": "plugin",
       "about": {
         "name": "Double Click to Edit",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Esily edit messages!",
+        "description": "Easily edit messages!",
         "version": "0.0.1",
         "license": "MIT"
       }
@@ -496,14 +496,14 @@
   },
   {
     "manifest": {
-      "hash": "5645adf427d122d96ce8488914ace094f1b8c1bfb8f4072a6549165fbb68044a",
+      "hash": "5645adf427d122d96ce8488914ace094f1b8c1bfb8f4072a6549165fbb68044aac",
       "type": "plugin",
       "about": {
         "name": "Note Indicators",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Esily see user's notes.",
+        "description": "Easily see user's notes.",
         "version": "0.0.1",
         "license": "MIT"
       }
@@ -533,14 +533,14 @@
   },
   {
     "manifest": {
-      "hash": "110564d0aba026e48f7cba8f5b56ea1299244aadd7c3993cb6434478e6dfdda0",
+      "hash": "110564d0aba026e48f7cba8f5b56ea1299244aadd7c3993cb6434478e6dfdda1",
       "type": "plugin",
       "about": {
         "name": "Read All",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Esily read all unread messages!",
+        "description": "Easily read all unread messages!",
         "version": "0.0.2",
         "license": "MIT"
       }
@@ -643,7 +643,7 @@
   },
   {
     "manifest": {
-      "hash": "ccaafcd1ade050de559034885078ee0d22cd83b7d07120f2ed3d439aced4db72",
+      "hash": "e1f832a693a8683ee8c270ad57085aa8049698911d18e65b0fd4026145e3ca4d",
       "type": "plugin",
       "about": {
         "name": "Tabs",
@@ -697,14 +697,14 @@
   },
   {
     "manifest": {
-      "hash": "e8669c17265c3ff99097482cda4711bbbc0d803e0e39506c7103c292fe12b2b1",
+      "hash": "e8669c17265c3ff99097482cda4711bbbc0d803e0e39506c7103c292fe12b2b1ac",
       "type": "plugin",
       "about": {
         "name": "Unfriend and Guild Leave Logger",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Logs when some one removes you from friends or kicks you from a server.",
+        "description": "Logs when someone unfriends you or kicks you from a server.",
         "version": "1.1.0",
         "license": "MIT"
       }
@@ -715,14 +715,14 @@
   },
   {
     "manifest": {
-      "hash": "38743fd14072bf6459f35db82fc540c3e9a87a66e5966bff78b98c5774b5ff1b",
+      "hash": "38743fd14072bf6459f35db82fc540c3e9a87a66e5966bff78b98c5774b5ff1ba",
       "type": "plugin",
       "about": {
         "name": "Unlimited Accounts",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Allows you to bypass 5 accounts limit on account-switcher.",
+        "description": "Allows you to bypass 5 account limit on account-switcher.",
         "version": "1.0.0",
         "license": "MIT"
       }
@@ -733,14 +733,14 @@
   },
   {
     "manifest": {
-      "hash": "9a60bd8de792aec8d9e0aa6e20a0fd91d402d870432f5495015dc5b5e431bfef",
+      "hash": "9a60bd8de792aec8d9e0aa6e20a0fd91d402d870432f5495015dc5b5e431bfefa",
       "type": "plugin",
       "about": {
         "name": "Voice Indicators",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Shows voice indicators right side of the users. Supports private calls too.",
+        "description": "Shows voice indicators on the right side of the users. Supports private calls as well.",
         "version": "2.0.4",
         "preview": "https://i.imgur.com/vEuqPmL.png",
         "license": "MIT"

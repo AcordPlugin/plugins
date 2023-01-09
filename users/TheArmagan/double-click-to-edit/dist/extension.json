@@ -1,12 +1,12 @@
 {
-  "hash": "8020c494a86ab42df2d9acdbeaa847f4e01492b53e8b93969d90f2f431df9c26",
+  "hash": "8020c494a86ab42df2d9acdbeaa847f4e01492b53e8b93969d90f2f431df9c27",
   "type": "plugin",
   "about": {
     "name": "Double Click to Edit",
     "authors": [
       "Kıraç Armağan Önal"
     ],
-    "description": "Esily edit messages!",
+    "description": "Easily edit messages!",
     "version": "0.0.1",
     "license": "MIT"
   }

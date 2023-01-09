@@ -1,12 +1,12 @@
 {
-  "hash": "9a60bd8de792aec8d9e0aa6e20a0fd91d402d870432f5495015dc5b5e431bfef",
+  "hash": "9a60bd8de792aec8d9e0aa6e20a0fd91d402d870432f5495015dc5b5e431bfefa",
   "type": "plugin",
   "about": {
     "name": "Voice Indicators",
     "authors": [
       "Kıraç Armağan Önal"
     ],
-    "description": "Shows voice indicators right side of the users. Supports private calls too.",
+    "description": "Shows voice indicators on the right side of the users. Supports private calls as well.",
     "version": "2.0.4",
     "preview": "https://i.imgur.com/vEuqPmL.png",
     "license": "MIT"
@@ -15,7 +15,7 @@
     "default": {
       "VOICE_STATES": "Voice States",
       "X_VIEW_CHANNEL": "Viewing {0}",
-      "X_JOIN_CHANNEL": "Joining to {0}",
+      "X_JOIN_CHANNEL": "Joining {0}",
       "PRIVATE_CALL": "Private Call",
       "JOIN_GUILD": "Join Guild",
       "UNKNOWN": "<Unknown>",
