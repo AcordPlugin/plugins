@@ -303,7 +303,7 @@ export function patchDOM() {
 
   patchContainer.add(
     dom.patch(
-      '[class*="username-"][class*="desaturateUserColors-"], [class*="container-"] > [class*="nameTag-"] > [class*="username"], [class*="userText-"] > [class*="nameTag-"] > [class*="username-"]',
+      '[class*="username-"][class*="desaturateUserColors-"], [class*="container-"] > [class*="nameTag-"] > [class*="username"], [class*="userText-"] > [class*="nameTag-"] > [class*="username-"], [class*="userText-"] > [class*="nickname-"], [class*="nameAndDecorators-"] > [class*="name-"] > [class*="overflow-"], [class*="listItemContents-"] [class*="discordTag-"] [class*="username-"]',
       /** @param {HTMLDivElement} elm */(elm) => {
         if (elm.getAttribute("style")) return;
         let user = utils.react.getProps(elm, i => i?.user)?.user;
@@ -319,7 +319,7 @@ export function patchDOM() {
           }
           if (!colors.length) return;
 
-          elm.setAttribute("style", `--gradient-colors: ${colors.join(", ")}`);
+          elm.setAttribute("style", colors.length === 1 ? `background-color: ${colors[0]};` : `background-image: linear-gradient(to right, ${colors.join(", ")}) !important;`);
           elm.classList.add("acord--gradient-name");
         })();
       }
