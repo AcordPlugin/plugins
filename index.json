@@ -1,10 +1,10 @@
 [
   {
     "manifest": {
-      "hash": "e3d7c8e3feea522f53c73e436dd163809bf1dba28392a9822255343e7f6087f5",
-      "type": "theme",
+      "hash": "e3d7c8e3feea522f53c73e436dd163809bf1dba28392a9822255343e7f6087f6",
+      "type": "plugin",
       "about": {
-        "name": "Aincrad Theme",
+        "name": "Aincrad",
         "authors": [
           "ErdemGKSL",
           "Anilcan"
@@ -94,7 +94,7 @@
   },
   {
     "manifest": {
-      "hash": "380eb60bb30d07cc818aff02d2e9a1f3b84470570c6bc4c32afb48333c3a7bf5",
+      "hash": "380eb60bb30d07cc818aff02d2e9a1f3b84470570c6bc4c32afb48333c3a7bf6",
       "type": "plugin",
       "about": {
         "name": "Auto Response",
@@ -102,12 +102,12 @@
           "ErdemGKSL",
           "Kıraç Armağan Önal"
         ],
-        "description": "Allows you to auto response to discord messages with regex matching.",
+        "description": "Allows you to auto respond to discord messages with regex matching.",
         "version": "1.1.1",
         "license": "MIT",
         "preview": "https://cdn.discordapp.com/attachments/887446333047312464/1039280410481397851/Discord_8NYZaRk4j7.gif"
       },
-      "eula": "When using this plugin, you are responsible of your own account. You must not use this plugin as a self bot automation."
+      "eula": "When using this plugin, you are responsible for your own account. You shouldn't use this plugin as a self bot automation."
     },
     "user": "ErdemGKSL",
     "slug": "auto-response",
@@ -170,14 +170,14 @@
   },
   {
     "manifest": {
-      "hash": "110874ff6535af73a474cbf6a6b81a2d352daebc9677e20de0dbce3e7419adcc",
+      "hash": "110874ff6535af73a474cbf6a6b81a2d352daebc9677e20de0dbce3e7419adcd",
       "type": "plugin",
       "about": {
         "name": "Call Timer",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Shows how much time you spent in voice channel.",
+        "description": "Shows how much time you've spent in that voice channel.",
         "version": "1.0.0",
         "license": "MIT"
       }
@@ -188,14 +188,14 @@
   },
   {
     "manifest": {
-      "hash": "b0147d742fe43c15c818750bc531e54272545856bacd605c3e0cc840c06d0d0c",
+      "hash": "b0147d742fe43c15c818750bc531e54272545856bacd605c3e0cc840c06d0d0d",
       "type": "plugin",
       "about": {
         "name": "Copy Image URL",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Easily copy any user's banners/avatars or any guild's icons, banners!",
+        "description": "Easily copy any user's banner/avatar or any guild's icon/banner!",
         "version": "1.0.0",
         "license": "MIT"
       }
@@ -224,24 +224,6 @@
   },
   {
     "manifest": {
-      "hash": "23be87ca1fa98157d2d45c61c8a91be7c8927f35c194ed96b6460ba842b07003",
-      "type": "plugin",
-      "about": {
-        "name": "Copy Role Color",
-        "authors": [
-          "Risy"
-        ],
-        "description": "Copy role color to clipboard",
-        "version": "0.0.1",
-        "license": "MIT"
-      }
-    },
-    "user": "therisy",
-    "slug": "copy-role-color",
-    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/therisy/copy-role-color/dist/"
-  },
-  {
-    "manifest": {
       "hash": "6811b62ca0f809a205cd0e236b8316536a8ee2aa2f0cbea9191cc3f5ebeeb51d",
       "type": "plugin",
       "about": {
@@ -260,14 +242,14 @@
   },
   {
     "manifest": {
-      "hash": "14b520dca5309380b263c257aed06111e88f7df31e60ac89d0c3d2dc820bc786",
+      "hash": "14b520dca5309380b263c257aed06111e88f7df31e60ac89d0c3d2dc820bc787",
       "type": "plugin",
       "about": {
         "name": "Custom Profile Disabler",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Disable custom colored profiles on nitro users.",
+        "description": "Disable custom colored profiles of nitro users.",
         "version": "1.0.2",
         "preview": "https://media.discordapp.net/attachments/887446333047312464/1040540267704492063/Discord_QYexbhK7Ly.png",
         "license": "MIT"
@@ -279,14 +261,14 @@
   },
   {
     "manifest": {
-      "hash": "8b0ed26778cc1312d0493387501060794f73461b8f4d7844d1ad30b4eadb5e0b",
+      "hash": "8b0ed26778cc1312d0493387501060794f73461b8f4d7844d1ad30b4eadb5e0c",
       "type": "plugin",
       "about": {
         "name": "Disable Typing",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Sliently type.",
+        "description": "Type silently.",
         "version": "1.0.0",
         "license": "MIT"
       }
@@ -315,14 +297,14 @@
   },
   {
     "manifest": {
-      "hash": "6fbe40e77635a644698889bb7f2de1b35fedd497f71eb9abe0863ad0a136156c",
+      "hash": "6fbe40e77635a644698889bb7f2de1b35fedd497f71eb9abe0863ad0a136156d",
       "type": "plugin",
       "about": {
-        "name": "Fake Mute and Deaf",
+        "name": "Fake Mute and Deafen",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Allows you to fake mute and deaf your self.",
+        "description": "Allows you to fake mute/deafen your self.",
         "version": "1.1.3",
         "license": "MIT"
       }
@@ -351,14 +333,14 @@
   },
   {
     "manifest": {
-      "hash": "16524d18cceab86ce048781fab0a1281b9030af4ebde4c5cc2d0ef979c3accd9",
+      "hash": "16524d18cceab86ce048781fab0a1281b9030af4ebde4c5cc2d0ef979c3accd9a",
       "type": "plugin",
       "about": {
         "name": "Goodwords",
         "authors": [
           "Erdem Göksel"
         ],
-        "description": "Makes you able to say 'good words' into strict chats that word is banned.",
+        "description": "Makes you able to say 'good words' into strict chats in which that word is banned.",
         "version": "1.2.2",
         "license": "MIT"
       }
@@ -387,15 +369,15 @@
   },
   {
     "manifest": {
-      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df0",
+      "hash": "c05870b31bbebb8305770c10c332f0e1a39ae499dff7ae59f858c06dab3b3df1",
       "type": "plugin",
       "about": {
         "name": "Join Guild Notifications",
         "authors": [
           "ErdemGKSL"
         ],
-        "description": "Sets the notification settings when joining a guild.",
-        "version": "1.0.0",
+        "description": "Automatically adjusts the notification settings when joining a guild.",
+        "version": "1.0.1",
         "license": "MIT"
       }
     },
@@ -424,14 +406,14 @@
   },
   {
     "manifest": {
-      "hash": "32d9100aacaf488b52f173ae51a147b1d113459ac8801160771dda210d74e5c5",
+      "hash": "32d9100aacaf488b52f173ae51a147b1d113459ac8801160771dda210d74e5c6",
       "type": "plugin",
       "about": {
         "name": "Message Notifications",
         "authors": [
           "ErdemGKSL"
         ],
-        "description": "Send you client notifications when someone sends a message with a specific content.",
+        "description": "Sends you client notifications when someone sends a message with a specific content.",
         "version": "1.0.1",
         "license": "MIT"
       }
@@ -643,14 +625,14 @@
   },
   {
     "manifest": {
-      "hash": "e1f832a693a8683ee8c270ad57085aa8049698911d18e65b0fd4026145e3ca4d",
+      "hash": "e1f832a693a8683ee8c270ad57085aa8049698911d18e65b0fd4026145e3ca4e",
       "type": "plugin",
       "about": {
         "name": "Tabs",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Organize your Discord using tabs. Support bookmarks too.",
+        "description": "Organize your Discord using tabs. Supports bookmarks as well.",
         "version": "0.1.8",
         "license": "MIT"
       }
@@ -715,14 +697,14 @@
   },
   {
     "manifest": {
-      "hash": "38743fd14072bf6459f35db82fc540c3e9a87a66e5966bff78b98c5774b5ff1ba",
+      "hash": "38743fd14072bf6459f35db82fc540c3e9a87a66e5966bff78b98c5774b5ff1bb",
       "type": "plugin",
       "about": {
         "name": "Unlimited Accounts",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Allows you to bypass 5 account limit on account-switcher.",
+        "description": "Allows you to bypass the 5 account limit on account-switcher.",
         "version": "1.0.0",
         "license": "MIT"
       }
