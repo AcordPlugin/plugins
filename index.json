@@ -170,14 +170,14 @@
   },
   {
     "manifest": {
-      "hash": "110874ff6535af73a474cbf6a6b81a2d352daebc9677e20de0dbce3e7419adcc",
+      "hash": "110874ff6535af73a474cbf6a6b81a2d352daebc9677e20de0dbce3e7419adcd",
       "type": "plugin",
       "about": {
         "name": "Call Timer",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Shows how much time you spent in voice channel.",
+        "description": "Shows how much time you've spent in that voice channel.",
         "version": "1.0.0",
         "license": "MIT"
       }
