@@ -242,7 +242,7 @@ export function patchDOM() {
   )
 
   patchContainer.add((() => {
-    let className = Array(2).fill("").map(() => Math.random().toString(36).slice(2)).join("").replace(/^[0-9]/, "");
+    let className = Array(2).fill("").map(() => Math.random().toString(36).slice(2)).join("").replace(/^[0-9]+/, "");
     const containerElm = dom.parseHTML(`
       <div class="${className}">
         ${i18n.format("SUPPORT_ACORD")}
