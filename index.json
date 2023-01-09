@@ -387,7 +387,7 @@
   },
   {
     "manifest": {
-      "hash": "d56d9a129af2c2ee1ec7fc2872be0b31369ce15f380f3a4c35346eafa8921166",
+      "hash": "aa72098080591a6c21328fb5180a8bf83be15fb38ef4dc51aa24ffe0e335f0a5",
       "type": "plugin",
       "about": {
         "name": "Last Message At",
@@ -395,7 +395,7 @@
           "Kıraç Armağan Önal"
         ],
         "description": "See user's last message date and channel.",
-        "version": "1.0.9",
+        "version": "1.0.10",
         "preview": "https://media.discordapp.net/attachments/887446333047312464/1039299708759330956/image.png",
         "license": "MIT"
       }
