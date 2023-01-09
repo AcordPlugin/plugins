@@ -224,24 +224,6 @@
   },
   {
     "manifest": {
-      "hash": "23be87ca1fa98157d2d45c61c8a91be7c8927f35c194ed96b6460ba842b07003",
-      "type": "plugin",
-      "about": {
-        "name": "Copy Role Color",
-        "authors": [
-          "Risy"
-        ],
-        "description": "Copy role color to clipboard",
-        "version": "0.0.1",
-        "license": "MIT"
-      }
-    },
-    "user": "therisy",
-    "slug": "copy-role-color",
-    "url": "https://raw.githubusercontent.com/AcordPlugin/plugins/main/users/therisy/copy-role-color/dist/"
-  },
-  {
-    "manifest": {
       "hash": "6811b62ca0f809a205cd0e236b8316536a8ee2aa2f0cbea9191cc3f5ebeeb51d",
       "type": "plugin",
       "about": {
