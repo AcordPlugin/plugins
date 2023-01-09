@@ -19,21 +19,21 @@ export default {
         name: "Suppres Everyone",
         description: "Suppresses everyone mentions when joining a guild.",
         property: "suppress_everyone",
-        value: false,
+        value: true,
       },
       {
         type: "checkbox",
         name: "Suppres Roles",
         description: "Suppresses role mentions when joining a guild.",
         property: "suppress_roles",
-        value: false,
+        value: true,
       },
       {
         type: "checkbox",
         name: "Suppres Scheduled Events",
         description: "Suppresses scheduled events when joining a guild.",
         property: "mute_scheduled_events",
-        value: false,
+        value: true,
       }
     ]
   }
