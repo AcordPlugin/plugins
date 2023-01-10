@@ -20,54 +20,54 @@ export function getAllVoiceStates(rawString) {
  */
 export function getAllVoiceStatesEntries(rawString) {
   return Object.values(VoiceStateStore.getAllVoiceStates())
-  .map((i) => Object.values(i))
-  .flat()
-  .map((i) => [
-    i.userId,
-    getUserVoiceStates(i.userId, rawString)
-  ]).filter(i=>i[1]?.length)
+    .map((i) => Object.values(i))
+    .flat()
+    .map((i) => [
+      i.userId,
+      getUserVoiceStates(i.userId, rawString)
+    ]).filter(i => i[1]?.length)
 }
 
 export function getVoiceChannelMembers(channelId) {
   let states = VoiceStateStore.getVoiceStatesForChannel(channelId);
   return states ? Object.keys(states).map(i => {
     return rawToParsed(getUserVoiceStates(i))
-  }).filter(i=>i?.id) : [];
+  }).filter(i => i?.id) : [];
 }
 
 /** @returns {VoiceStateRawArray} */
 export function getUserVoiceStates(userId, rawString) {
-  return Object.values(VoiceStateStore.__getLocalVars().users[userId] || {}).map(i=> rawString ? makeRawArray(i).join(";") : makeRawArray(i));
+  return Object.values(VoiceStateStore.__getLocalVars().users[userId] || {}).map(i => rawString ? makeRawArray(i).join(";") : makeRawArray(i));
 }
 
 /** @returns {VoiceStateRawArray} */
-function makeRawArray(i) {
+export function makeRawArray(i) {
   let channelRedacted = persist.ghost.settings?.redacted ?? false;
   let channel = ChannelStore.getChannel(i.channelId);
   let guild = GuildStore.getGuild(channel?.guild_id);
   let user = UserStore.getUser(i.userId);
   return [
     (i.selfDeaf || i.deaf)
-    ? `${i.deaf ? "guildDeaf" : "deaf"}`
-    : (i.selfMute || i.mute || i.suppress)
-    ? `${i.mute ? "guildMute" : "mute"}`
-    : i.selfVideo
-    ? "video"
-    : i.selfStream
-    ? "stream"
-    : "normal",
+      ? `${i.deaf ? "guildDeaf" : "deaf"}`
+      : (i.selfMute || i.mute || i.suppress)
+        ? `${i.mute ? "guildMute" : "mute"}`
+        : i.selfVideo
+          ? "video"
+          : i.selfStream
+            ? "stream"
+            : "normal",
     user.id,
     user.tag,
     user.avatar || "",
     i.channelId || "",
-    !channel ? "" : (channelRedacted ? "Unknown" : (channel.name || [...new Map([...channel.recipients.map(i => [i, UserStore.getUser(i)]), [UserStore.getCurrentUser().id, UserStore.getCurrentUser()]]).values()].filter(i=>i).map(i => i.username).sort((a, b) => a > b).join(", ") || "Unknown")),
+    !channel ? "" : (channelRedacted ? "Unknown" : (channel.name || [...new Map([...channel.recipients.map(i => [i, UserStore.getUser(i)]), [UserStore.getCurrentUser().id, UserStore.getCurrentUser()]]).values()].filter(i => i).map(i => i.username).sort((a, b) => a > b).join(", ") || "Unknown")),
     !channel ? "" : (channelRedacted ? "" : (channel?.icon || "")),
     !channel ? "" : (channelRedacted || ""),
     !guild ? "" : guild.id,
     !guild ? "" : guild.name,
     !guild ? "" : (guild?.vanityURLCode || ""),
     !guild ? "" : (guild?.icon || "")
-  ].map(i=>`${i}`.replaceAll(";", ""));
+  ].map(i => `${i}`.replaceAll(";", ""));
 }
 
 /**
