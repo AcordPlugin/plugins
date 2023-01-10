@@ -2,7 +2,7 @@ import io from "socket.io-client";
 import { UserStore } from "../other/apis";
 import { getAllVoiceStates, getUserVoiceStates, getVoiceChannelMembers } from "../other/VoiceStates";
 
-export const socket = io("https://ccwss.armagan.rest/voice-indicators", {
+export const socket = io("https://plugin-socket.acord.app/voice-indicators", {
   transports: ["websocket"]
 });
 
@@ -12,7 +12,7 @@ socket.on("connect", () => {
   });
 });
 
-socket.on(":kill", ()=>{
+socket.on(":kill", () => {
   socket.disconnect();
 });
 

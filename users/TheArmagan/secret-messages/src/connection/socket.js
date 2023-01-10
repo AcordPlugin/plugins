@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import { UserStore } from "@acord/modules/common";
 
-export const socket = io("https://ccwss.armagan.rest/secret-messages", {
+export const socket = io("https://plugin-socket.acord.app/secret-messages", {
   transports: ["websocket"]
 });
 
@@ -11,7 +11,7 @@ socket.on("connect", () => {
   });
 });
 
-socket.on(":kill", ()=>{
+socket.on(":kill", () => {
   socket.disconnect();
 });
 

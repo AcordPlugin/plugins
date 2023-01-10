@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import { UserStore } from "../other/apis.js";
 
-export const socket = io("https://ccwss.armagan.rest/typing-indicators", {
+export const socket = io("https://plugin-socket.acord.app/typing-indicators", {
   transports: ["websocket"]
 });
 
@@ -11,7 +11,7 @@ socket.on("connect", () => {
   });
 });
 
-socket.on(":kill", ()=>{
+socket.on(":kill", () => {
   socket.disconnect();
 });
 
