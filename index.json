@@ -387,7 +387,7 @@
   },
   {
     "manifest": {
-      "hash": "e73a7ca6c672f400e326d818d25a476700f1f45c236fb18b66c1635e1a1c2361",
+      "hash": "e73a7ca6c672f400e326d818d25a476700f1f45c236fb18b66c1635e1a1c2362",
       "type": "plugin",
       "about": {
         "name": "Last Message At",
@@ -533,7 +533,7 @@
   },
   {
     "manifest": {
-      "hash": "e64f4a2fbd85767bac008e1613808f36dceaf1af5a914ff52e51a324e6354d4e",
+      "hash": "e64f4a2fbd85767bac008e1613808f36dceaf1af5a914ff52e51a324e6354d42",
       "type": "plugin",
       "about": {
         "name": "Secret Messages",
@@ -643,7 +643,7 @@
   },
   {
     "manifest": {
-      "hash": "60db14a14f9ce21c08603bc0ce34d1d0d8bd8781429ac4f517bf244e6279bb35",
+      "hash": "60db14a14f9ce21c08603bc0ce34d1d0d8bd8781429ac4f517bf244e6279bb32",
       "type": "plugin",
       "about": {
         "name": "Typing Indicators",
@@ -715,7 +715,7 @@
   },
   {
     "manifest": {
-      "hash": "9a60bd8de792aec8d9e0aa6e20a0fd91d402d870432f5495015dc5b5e431bfef",
+      "hash": "9a60bd8de792aec8d9e0aa6e20a0fd91d402d870432f5495015dc5b5e431bfe2",
       "type": "plugin",
       "about": {
         "name": "Voice Indicators",
