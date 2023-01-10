@@ -689,3 +689,7 @@
     -webkit-text-fill-color: transparent !important;
   }
 }
+
+[class*="userText-"] > [class*="nickname-"] {
+  width: fit-content;
+}
