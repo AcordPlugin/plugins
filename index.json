@@ -351,14 +351,14 @@
   },
   {
     "manifest": {
-      "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60338",
+      "hash": "2d6eea7b0411d8088c3fc5fe10be28cbd9f952c9c53226616f033a5bbee60339",
       "type": "plugin",
       "about": {
         "name": "Hide Sidebar",
         "authors": [
           "Kıraç Armağan Önal"
         ],
-        "description": "Option for hiding sidebar.",
+        "description": "Option for hiding the sidebar.",
         "version": "0.0.1",
         "license": "MIT"
       }
