@@ -303,24 +303,26 @@ export function patchDOM() {
 
   patchContainer.add(
     dom.patch(
-      '[class*="username-"][class*="desaturateUserColors-"], [class*="container-"] > [class*="nameTag-"] > [class*="username"], [class*="userText-"] > [class*="nameTag-"] > [class*="username-"], [class*="userText-"] > [class*="nickname-"], [class*="nameAndDecorators-"] > [class*="name-"] > [class*="overflow-"], [class*="listItemContents-"] [class*="discordTag-"] [class*="username-"], [id*="message-username-"] [class*="username-"]',
+      '[class*="username-"][class*="desaturateUserColors-"], [class*="container-"] > [class*="nameTag-"] > [class*="username"], [class*="userText-"] > [class*="nameTag-"] > [class*="username-"], [class*="userText-"] > [class*="nickname-"], [class*="nameAndDecorators-"] > [class*="name-"] > [class*="overflow-"], [class*="listItemContents-"] [class*="discordTag-"] [class*="username-"], [id*="message-username-"] [class*="username-"], .mention',
       /** @param {HTMLDivElement} elm */(elm) => {
         if (elm.getAttribute("style")) return;
-        let user = utils.react.getProps(elm, i => i?.user)?.user || utils.react.getProps(elm, i => i?.message)?.message?.author;
-        if (!user) return;
+        let userId = elm.classList.contains("mention") ? (utils.react.getProps(elm, i => i?.userId)?.userId) : (utils.react.getProps(elm, i => i?.user)?.user?.id || utils.react.getProps(elm, i => i?.message)?.message?.author?.id);
+        if (!userId) return;
         (async () => {
           if (!internal.other?.getUsernameGradient) return;
           let colors = [];
-          if (!gradientCache.has(user.id)) {
-            colors = await internal.other.getUsernameGradient(user.id);
-            gradientCache.set(user.id, { colors, at: Date.now() });
+          if (!gradientCache.has(userId)) {
+            colors = await internal.other.getUsernameGradient(userId);
+            gradientCache.set(userId, { colors, at: Date.now() });
           } else {
-            colors = gradientCache.get(user.id).colors;
+            colors = gradientCache.get(userId).colors;
           }
           if (!colors.length) return;
 
-          elm.setAttribute("style", colors.length === 1 ? `background-color: ${colors[0]};` : `background-image: linear-gradient(to right, ${colors.join(", ")}) !important;`);
-          elm.classList.add("acord--gradient-name");
+          if (elm.classList.contains("mention")) colors = colors.map(i => `${i}4d`);
+
+          elm.setAttribute("style", colors.length === 1 ? `background-color: ${colors[0]};` : `background-image: linear-gradient(to right, ${colors.join(", ")});`);
+          elm.classList.add(`acord--gradient-${elm.classList.contains("mention") ? "mention" : "name"}`);
         })();
       }
     )

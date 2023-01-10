@@ -8,7 +8,7 @@ import utils from "@acord/utils"
 
 export function patchBulkUpdater() {
     patchContainer.add(
-        (()=>{
+        (() => {
             let STOP = 0;
             localCache.lastVoiceStates = [];
 
@@ -28,24 +28,24 @@ export function patchBulkUpdater() {
                 //         updates.push(cs);
                 //     }
                 // });
-                
+
                 socket.emit("bulkUpdate", currentStates);
                 // localCache.lastVoiceStates = currentStates;
 
-                await new Promise(r=>setTimeout(r, persist.ghost.settings.performanceMode ? 10000 : 5000));
+                await new Promise(r => setTimeout(r, persist.ghost.settings.performanceMode ? 10000 : 5000));
                 loop();
             }
 
             loop();
 
-            return ()=>{
+            return () => {
                 STOP = 1;
                 localCache.lastVoiceStates = [];
             }
         })()
     );
 
-    patchContainer.add(utils.interval(()=>{
+    patchContainer.add(utils.interval(() => {
         localCache.lastVoiceStates = [];
-    }, 60000*30));
+    }, 60000 * 30));
 }

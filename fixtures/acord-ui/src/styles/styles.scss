@@ -688,6 +688,10 @@
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
   }
+
+  &--gradient-mention {
+    width: fit-content;
+  }
 }
 
 [class*="userText-"] > [class*="nickname-"] {
