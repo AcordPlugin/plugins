@@ -7,7 +7,7 @@ export function SupportModal({ onClose } = {}) {
 
   return <div className="container">
     <div className="image-container">
-      <img src="https://acord.app/api/logo.svg?fg=fafafa" />
+      <img src="https://api.acord.app/logo.svg?fg=fafafa" />
     </div>
     <div className="info-container">
       <p>{acord.i18n.locale == "tr" ? "Sizin desteğinize ihtiyacım var." : "I need yours support."}</p>

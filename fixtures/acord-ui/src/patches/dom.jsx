@@ -288,7 +288,7 @@ export function patchDOM() {
       let caches = [gradientCache, badgeCache];
       caches.forEach(cache => {
         cache.forEach((v, k) => {
-          if ((Date.now() - v.at) > (currentUserId === k ? 5000 : 60000 * 30)) {
+          if ((Date.now() - v.at) > (currentUserId === k ? 5000 : 60000)) {
             cache.delete(k);
           }
         });
